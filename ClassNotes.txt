@@ -1,0 +1,15 @@
+
+
+Revisit the book with parts relating to visual code.
+
+Revisit page 123 & 124 catching exceptions.
+
+
+
+Finish Library tests then
+When using division note that cannot divide by 0.
+
+PUT a Test project in your Bank account.
+    Write some test cases for the banking app.
+
+Then work on Fibonacci and recursive.

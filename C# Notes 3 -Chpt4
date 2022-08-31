@@ -1,0 +1,275 @@
+CHAPTER 4
+
+Writing Debugging and Testing Functions
+
+Functions
+
+        functions are similar to method's but are not contained within 
+        the specific clss.
+
+        Function or Method is a block of statements that return data.
+        if you have a block of statements only once inside a function or method
+        then you can find any errors easily and quickly.
+
+    Gregs own philosophy is get the program to work correctly.  Use whatever.
+            then go back and improve how the program works without changing what it does.
+        You can make small changes and test each method before going to the other methods.
+  
+TIMES TABLE example on page 132 of the book.
+
+  Since we use VOID it can be, otherwise you need the bool . = stuff.
+    TimesTable(); //calling the function above the code for the function.
+    void TimesTable() 
+        {
+            for (int idx = 1; idx <= 12; idx++)
+            {
+                Console.WriteLine($"{idx} X 12 = {idx * 12}");
+            }
+        }
+    
+Defining a parameter in the function,
+     void TimesTable(int number)
+    This allows us to do the same thing but use all numbers, not limited to 12.
+
+        TimesTable(12); //calling the function, basically taking input of what number.
+
+        //Need a number entered since we added parameter int number.
+        void TimesTable(int number = 12) //doing = 12 as the DEFAULT Value!
+        {
+            for (int idx = 1; idx <= 12; idx++) //could put idx <= number, but if its 120 thats way too many
+        {
+             Console.WriteLine($"{idx} X {number} = {idx * number}");
+        } }
+DEFAULT has to be at the end of the parameter list.   
+
+THROW new Exception("TimesTable requires an int 1 <= number <= 12")
+        this will throw an exception when the number is outside range
+        and the "" tells the programmer the variable has to be within 1 to 12.
+        
+                void TimesTable(int number = 12) //doing = 12 as the DEFAULT value for number variable.
+                {
+                    if (number > 12 || number <= 0) //Adding an exception to throw when number is not in range.
+                    {
+                        throw new Exception("TimesTable requires an int 1 <= number <= 12");
+                    }
+                        for (int idx = 1; idx <= 12; idx++)
+                        {
+                            Console.WriteLine($"{idx} X {number} = {idx * number}");
+                        }
+                }
+
+
+Adding in a Function of     int Multiply(int i, int j)
+                            {return i * j;}
+                 Console.WriteLine($"{idx} X {number} = {Multiply(idx, number)}");
+                            //used {Multiply(idx, number)} which assigned the idx, number value to the 
+                            //i & j variables in the multiply function to do the multiplication.
+        must have a RETURN statement with a variable and value of parameter your function would return.
+ Function with a return statement to return a value of a certain type that you said it would return.
+
+ Can right click run to cursor.  Then hit F11 to see how it jumps around to each calculation.
+SEE FUNCTIONS TUTORIAL.
+RETURN on Functions see page 134
+
+FACTORIALS with RECURSION
+             (page 138 & FactorialTut2)
+    Recursion will solve itself
+   Any factorial you can calculate, you can use prior calculations
+    Like 7 factorial is 6 factorial x 7.  10 factorial is 9 factorial x 10.
+    
+    Function to calculate factorial, you can go down the list.
+    1 factorial is terminating condition. 10 factorial, down to 9, down to 8, etc.
+
+    Function body is calling itself - 1.
+                int Factorial(int nbr)
+                    {
+                        return nbr * Factorial(nbr - 1);
+                    }
+
+Because the function calls the function it will hold calculations in place until it hits 
+the terminating condition, then goes back and calculates.
+
+Recursive functions take a lot of memory / resources. Since a function calls itself, the machine has to hold
+    the old ones to resolve at the end.
+    It also takes more time.
+
+If you can do it otherwise, then dont have to do recursively.
+But some loops have to be recursive due to complexity.
+
+FIBONNACCI
+    (FibonnacciNumbers.sln & page )
+
+    Try doing by hand, see the repitition and put it into a loop.
+    doing 1 + 1 and move it up one by placing a = b and b = c.
+
+                int a = 1;
+                int b = 1;
+                int c = 0; 
+
+                while (c < 100)
+                {
+                    c = a + b;
+                    Console.WriteLine($"{c},");
+                    a = b;
+                    b = c;
+                }
+
+DEBUGGING 
+
+    Setting a breakpoint and start Debugging
+  click the grey circle on the left to make it red and put a breakpoint.  
+
+  Step points with the blue circle at the bottom on top of visual studio
+    step out of means finish the body then step out of.
+    F11 or F10
+    Single stepping through the lines of code to see what the data is at that time.
+
+    F10 or F11 only makes a difference when you are sitting on a Method call
+        step over, I will skip over the entire method.
+    
+    BreakPoint Hit Count
+        Hover over breakpoint and hit settings.  Then condition, and Hit Count.
+        you can put 5 and when it hits that spot 5 times.
+
+    Condition expression b == 8, so it will break once it hits value 8 for b.
+
+    Run to Cursor on a variable, then right click and Quick Watch.
+
+    ADD To Watch
+        you can add the variable to the watch and watch it change as you go 
+        through your program.
+
+        You can see if it is running correctly or not!
+
+    While Debugging there are windows with data;
+    Call Stack window - shows the location of the call
+    Immediate Window - blank, greg is going to look it up.
+
+  C# Interactive Window - outside of debugging modeling
+    you can enter in Console.WriteLine something hit enter and it displays
+    you can also run a loop if you want, we did foreach with ints array.
+
+DEBUG Messages
+Using System.Diagnostics;
+            Could use System.Diagnostics.Debug.WriteLine, but its easier
+            to add a using statement at the top.
+
+    Put in the code after the while loop.
+        c = Add(a, b);
+        Debug.WriteLine($"a = {a}, b = {b}, c = {c}");
+        Console.WriteLine($"{c},");
+        a = b;
+        b = c;
+   
+   This DEBUG will not affect the code and will run correctly.
+   But it will display in Output what each variable equals that is put in. 
+    In the FibonacciNumbers.sln this spit out like..    
+                    a = 1, b = 1, c = 2
+                    a = 1, b = 2, c = 3
+                    a = 2, b = 3, c = 5
+   These will never show up in production, only in output portion.
+
+Trace
+
+if you want to send a Message in realease mode use 
+    Trace.WriteLine instead of Debug.
+
+pasted code from Teams chat at the top and it creates a file on desktop that will 
+display the trace messages.
+
+Switching Trace Levels
+
+    So not all will be output. Since there are different levels of severity to the messages.
+    Come back around to this, Greg doing some research.
+
+
+
+UNIT TESTING
+
+  (see MathLibrary.sln page 162)
+    Write code that will test your program. TDD -test drive development.
+
+  created a clss and added 5 methods with add, subtract, etc.
+  Moduolo % is actually a - (a / b * b)
+  
+MS Test 
+n unit -derived from java j unit. converted to .net n unit.
+x unit -newer one that is little better than n unit. typically use for automated testing.
+
+Add another project to the solution to do automated testing. Add project to solution, 
+    test and xUnit. 
+
+Attributes have [] around them that are in the class but not in a method or function.
+    specialty classes that modify things about our code.
+    Test defaulted to FACT, we are using Theory.
+
+Must Connect the 2 projects
+    can only go one way, test library call into the Math Library.
+    create a reference. right click dependencies in Test and check MathLibrary.
+
+InLineData -values must match the Method variables in teh same order.
+
+Public, Private, and Internal in a Class
+        access modifiers, everything created has a defautl access.
+    When you create a class, it puts internal on there, which means any other class in the project 
+    can access it.
+
+    If you set to Public, it means any other class regardless of where it is can access it.
+
+         public class TestAdd
+            {
+                [Theory]
+                [InlineData(1, 2, 3)]
+                 public void Test1(int a, int b, int expected)
+                {
+                    var mathlib = new MaxMathLibrary();
+                    Assert.Equal(expected, mathlib.Add(a, b));
+            
+                }}}
+   
+   Theory test we can add in line data, which is test case values that are passed into the 
+   method and used in there and checked with Assert.Equal.  
+    Set the first two numbers and the third is what you expect as the answer or result.
+    1, 2, we expect adding to be 3.
+
+           Updated it too this with constructor that will be explained later
+            
+                                public class TestAdd
+                                {
+
+                                MaxMathLibrary mathlib; //Declaring it inside the class
+
+                                // Constructor -always the same name.
+                                public TestAdd()
+                                {
+                                    mathlib = new MaxMathLibrary(); //creating an instance of MaxMathLibrary
+                                }
+
+
+                                [Theory]
+                                [InlineData(1, 2, 3)]
+                                [InlineData(0, 0, 0)]
+                                [InlineData(-11, 10, -1)]
+                                public void Test1(int a, int b, int expected)
+                                {
+                                    Assert.Equal(expected, mathlib.Add(a, b));}}
+
+This is testing the MaxMathLibrary clss usinG Method of Add that we created previously.
+Created a new one with TestSubtract and can just follow the same format.
+
+You can put all tests in one file or do multiple tests.
+
+FACT does not use inlinedata.  What is in a FACT should always be true.
+
+We do not have to create an instance of the MaxMathLibrary since we are calling a CONSTANT number
+    by calling in PI.  
+
+                    public class TestPI
+                    {
+                        [Fact]
+                        public void TestPIValue()
+                        {
+                            Assert.Equal(3.1415927m, MaxMathLibrary.PI, 7);}}
+
+
+
