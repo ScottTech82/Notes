@@ -1,0 +1,57 @@
+CHAPTER 5
+    OOP
+
+GeometricShapes
+        (see VS sln same name, page 177)
+    Define each side as property. prop + tab. It puts in get; set for you.
+    Then a method, perimeter that returns all sides added up.
+
+    constructor allows you to initialize the properties of new instance
+            match the properties being passed in, slightly different.
+            Side1 = side1.  --preferred method.
+            this.Side1 = Side1.
+
+Object-Oriented Programming (OOP) 
+   
+    3 Tenants:
+       
+        Encapsulation -taking properties and methods (like perimeter/area) and put in a container.
+                        you can control access to the contents of the class.
+
+        Inheritance -creating something new by referencing something that already exists and 
+                        describing the differences, only the differences.
+                        (example: taking quad class and making rect, only describing what is different)
+
+        Polymorphism -A method/function that can adapt to the object it is attached to.
+                        able to override an inherited action to provide custom behavior
+
+    
+    Anything that is not private gets inherited into the new clss, constructor is also not included.
+        internal clss Rect : Quad // meaning Rect is now inheriting anything not private.        
+
+    See the geometric shapes solution in visual studio.  We took the perimeter from quad and area from rect in sqr.
+    this passed sqr values into rect area and quad perimeter, since rect inherited from quad.
+
+
+   When you create a variable it gets created at compile time.  If you create a Rect variable as new sqr
+   it will print two sides instead of 1, since its a Rect variable and that class has two sides.
+
+public virtual string Print() --putting virtual here so they are treated not as quads, but as each other.
+public override string Print() --placing override means treat it as current class even though its from another.
+                            in our example the rectangle class treated as rect not as declared quad.
+
+    Virtual says it can be overridden at runtime.
+    Override says it will override that virtual.
+    -this only works if you have the same Method and parameters in each class.
+    -then this works correctly.  Otherwise wont use it.
+
+Composition is similar to Inheritance - but some developers think its better.
+
+    get; set; is saying we are going to read and set that value.
+    now we are doing get code block, returing the account class
+    if someone is going to set the accountno of saving comp we are storing it in account.accountno.
+    IN SavingsComp we had to write 2 properties where we do not with Inheritance.
+
+
+
+

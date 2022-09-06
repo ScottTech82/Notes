@@ -5,7 +5,7 @@ Revisit the book with parts relating to visual code.
 Revisit page 123 & 124 catching exceptions.
 
 
-
+8/30;
 Finish Library tests then
 When using division note that cannot divide by 0.
 
@@ -13,3 +13,31 @@ PUT a Test project in your Bank account.
     Write some test cases for the banking app.
 
 Then work on Fibonacci and recursive.
+
+---------------
+8/31;
+
+To get more practice, try to do Factorial without looking.
+get to know recursion more.  But its not the most efficient way.
+
+        the only time he did recursive fibonacci was a couple weeks ago.
+        employer asked prior student if they could code it.
+
+Read Chapter 5 tonight.
+Read a part of Chapter 8 g 337 to 347.
+
+-------
+9/01;
+Go to website list of names and create and Array, then try changing to a dictionary.
+Or do a list of 100 numbers.
+
+Microsoft Docs to browse through the lists, since we use it a ton.
+
+Chapter 9 files pg 369 - skip writing to XML Streams
+    optional page 386 Compressing Streams. skip Brotli Algor, skip Encoding/Decoding Text,
+    skip Encoding strings as byte arrays. Econding/Decoding text, skip Serializing XML, 
+
+    but read Serializing JSON.
+
+    
+

@@ -1,0 +1,146 @@
+CHAPTER 6 (page 232, interfaces tutorial)
+Interfaces
+
+    IInterface is a contract between two classes.
+    Used if you have multiple classes that you need to call.
+
+    if you need to call a method that someone else is working on for 3 months, 
+    you use an interface to keep them in sync. as both work.
+
+    You dont put statements that get executed inside of interfaces.
+    Forced to have a method as showing in the Interface.
+        if you tr y to change it, you get red squiggly lines.
+
+    Return Type, Method Name, Parameter List    
+        must all match from Interface to classes.
+
+
+BY creating an Interface we created a Type.
+
+                Boxer joe = new();
+                Parrot poly = new();
+                Frog bart = new();
+                ISpeakable joe2 = new Boxer();
+
+                List<ISpeakable> pets = new() { joe, poly, bart};
+
+    If you declare IEnumberable then you cannot do a ForEach on the list.
+    it would be better to do an Array than a List.
+
+
+
+CHAPTER 8 (page 337 to 347).
+
+COLLECTIONS
+
+    Generic vs Lists
+        Generic are classes written and are part of the .Net library.  
+        you specificy what type of data you store in the generic collections.
+
+        List allows you to manually control the order and adding one in the middle of the list.
+
+        List<int> ints = new();
+
+        for(int idx = 1; idx < 100; idx+=13)
+        {
+            ints.Add(idx);
+        }
+
+
+    Collections/Lists are much better than Arrays.  Arrays are fixed with space, you set 100, but
+        then might need over 100.  A list allows over the original amount but takes time creating a 
+        larger fixed array and copying and pasting the info over.  
+        example array has 8, you need to add a 9th, it will create a double space array, 16 spaces, copying
+        over the 8 then adding in the new ones and deleting the old 8 array.  Taking system resources.
+
+        You can specify a default capacity to prevent resources being taken up.
+
+    You can .Add() to the list or even .Clear(); to remove all data.  
+    Remove allows you to remove some if you need to as well.
+
+    Can always check Microsoft Docs for more info.
+        List<T>() --initializes a new instance that is empty and has default initial capacity.
+            capacity goes into the parens.
+        List<T>(IEnumberable<T>) --allows you to conver arrays to a list.
+
+
+    Could also do a list inside of a list.  List<List<string>>, which would allow you to have a 
+    list of states and inside that list another list of Cities.
+
+    Capacity is how many spaces you are allocating
+
+    listname.Count is how many are in there.  List name.Count and it will count how many are in the list
+    listname[#] -You can also write line which ever item in the list using listname[4] for the 4th item in the list.
+
+    ForEach is the same as a regular foreach statement with a slightly different syntax.
+            ints.ForEach(turkey => sum += turkey); 
+            listname.ForEach(variable1 => variable2 += variable1)
+                                    LAMBDA syntax
+                    always a variable on left side, and body of foreach loop on right.
+    Action typically means Lambda syntax on the microsoft docs.
+
+DICTIONARY
+
+    Dictionary gets a key value that is used to access the data.
+
+    Dictionary<TypeKey, TypeValue> example;
+    Dictionary<string, string> states = new();
+    states.Add("OH", "Ohio");
+    states.Add("KY", "Kentucky");
+    states.Add("IN", "Indiana");
+
+
+    Can do var x = states.Values.ToList(); which takes everything from the Dictionary and puts it in 
+    a List that can be displayed.  Can do the Key values as well.
+
+
+    Creating a new Class of Student and added 3 properties to it.
+    Then to enter them in the Dictrionary we call the Student class as the TValue.
+            The key is an int, and value is class Student. Variable students = new();
+            then we do var students.Add the key, value of new Student and list properties.
+            Dictionary<int, Student> students = new();
+            students.Add(10, new Student { Id = 10, Name = "Noah Phence", SAT = 1200 });
+            students.Add(20, new Student { Id = 20, Name = "Graham Krakr", SAT = 1000 });
+
+Might get a Test from Employer on this with 100 values and find each one starting with a certain number.
+
+    If we have a collection of 50 names and need to find ones that start with A.
+    There is an array sting[] names with each of the 50 names (only Greg had).
+
+        Dictionary<string, int> dictionary = new Dictionary<string, int>();
+        foreach(string name in names) {
+            //using substring to pull just a portion of the name, 0, 1 is first initial
+            string ch = name.Substring(0, 1).ToUpper();
+            if(!dictionary.ContainsKey(ch)) {  //saying if its not in dictionary, then add key.
+                dictionary.Add(ch, 0);         //this is adding the array sting names to the dictionary.
+            } 
+            dictionary[ch]++;  //increment that integer for the key.
+        }
+        foreach(string key in dictionary.Keys) {
+            Console.WriteLine($"{key} : {dictionary[key]}");
+        }
+
+
+STACKS
+
+    think of stacks of lunch trays at cafeteria on a spring, remove the top one they all move up.
+    adding something to the stack, they all get pushed down.
+    LIFO - last in first out. Order.
+
+    One of the first data structures to be used to build computer software.
+    stack.Push(1) //pushes the number 1 onto stack.
+    stack.Push(2) //now pushes number 2 onto top of stack.
+    int i = stack.Pop(); //removes the top of stack into variable i, which would be 2.
+
+    Calculator acts as a Stack.
+    enter a number and put it into a stack, another number into a stack, 
+    equal pops both numbers out and adds them together.
+
+    RPN Calculator
+
+    2 Enter 3 * 1 +  //put the first number on the stack, enter.
+
+QUEUE
+
+    support tickets go into a QUEUE
+    or my loans from prior career path.

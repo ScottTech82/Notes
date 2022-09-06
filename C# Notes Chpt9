@@ -1,0 +1,120 @@
+Managing File Systems and Drives
+
+    Wont work much with files on hard drive as you cant have multiple people working at same time
+    and its on the local drive instead of cloud.
+
+    INFO means getting the characteristics or information about it.
+    DriveInfo is information about the drive.
+
+    Check to make sure you can read the drives first, you may have google drive or one drive synced and
+    its not available, so would fail.
+
+    In BOOK - the WriteLine("{0}) is index number. OLD way they used to have to write it.
+            WriteLine("First value {0}, second value {1}", 100, 200); -means 100 goes into 0, 200 goes into 1.
+            the -30 and -10 are left justified, meaning pushed over a ton.  18 and 18 are right justified.
+
+
+    So page 372, the 0, 1, 2, 3, 4 corresponds to the words used after it. 
+    Now we use interpolated strings instead.
+
+    DriveInfo is a static class built in
+    GetDrives() is a static method built in.
+
+    drive.TotalSize:N0 means its a big number and formatting it
+
+DIRECTORY
+
+    We can put usng statements of usng static System.IO.Directory. Or just usng System.IO;
+    But you would have to do System.IO.Directory.CreateDirectory(); 
+    Add the usng statements and its just CreatDirectory();
+
+
+Files
+
+    Create the file, string it out first then writing
+    If you start writing it will overwrite what is there.  Check for it first.
+
+    string fullFilename = @"c:\Users\JoshS\Desktop\FilesTutorial.log";
+
+    if exists read all lines to array lines.
+            List<string> log = new();
+
+            if (File.Exists(fullFilename)) {
+                string[] lines = File.ReadAllLines(fullFilename); //if exists read all lines to the array lines.
+                log.AddRange(lines); }
+
+
+    before writing you want to write the current Date & Time.
+    {DateTime.Now} or for Universal Time {DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")}
+
+    You can use it as a Class and use it in your projects to write out to files.
+
+
+reading data from C repos and display all the folders.
+create a function where you pass in a folder name and it will get the subfolders
+call that function for each of the folders.
+
+
+JSON
+
+    <see json tutorial and page 398>
+
+    company a works with company b and wants to import it into their system.
+
+    json was created to solve issues between data imports 
+    describing the same data with a much smaller file.  
+
+{"students": {"student": {"id": 123, "name": "Noah Phence", "sat": 1200}}}
+====================
+xml file -too much overhead
+<students>
+    <student>
+        <id>123</id>
+        <name>Noah Phence</name>
+        <sat>1200</sat>
+    </student>
+    <student>
+        ... and so on
+==========================
+    "StudentID", "StudentName", "SAT"
+    123, "Noah Phence", 1200. --first line of the real data, all strings in double quotes.
+    456, "Mary Jo", ,,,,,,838445 --if null it would show weird like this and couldnt match up.
+
+
+about:blank
+ctrl shift i or options, developer tools.
+we added in bootcamp .name, .nbrOfStudents, .active, .firstName[] 
+
+
+using System.Text.Json;
+and our clas user created.
+
+instead of calling a constructor we initialized the data with curly braces
+                User noah = new User 
+                    {
+                        Id = 1,
+                        Username = "nphenc",
+                        Password = "password",
+                        Firstname = "Noah",
+                        Lastname = "Phence",
+                        Phone = "411",
+                        Email = "nphence@gmail.com",
+                        IsReviewer = true,
+                        IsAdmin = false
+                    };
+
+
+JsonSerializer.Serialize(noah, options);
+
+
+C# works with SQL to send and retrieve data in SQL language 
+Angular is used on the web to get from Users, to C# under JSON. 
+    C# will take it send to SQL update database, then send via JSON
+    back to Angular to let the user know it worked just fine.
+
+
+
+
+
+
+

@@ -271,5 +271,26 @@ We do not have to create an instance of the MaxMathLibrary since we are calling 
                         {
                             Assert.Equal(3.1415927m, MaxMathLibrary.PI, 7);}}
 
+Testing code
+    Think like a user and put in stuff to make it break
+    like what happens when an letter is placed instead of integer?
+
+TDD -test driven development
+    if it doesnt do what its supposed to do, the test will throw an exception.
+    Build a test, run the test it should fail.
+    Then build the code that should handle the test.
+        like saying what do we need to fix the error.
+        throw the exception first, then fail when it doesnt, code the exception
+        so it will throw the exception.
+
+Create a new method to handle what happens when divide by zero 
+Trapping an Exception with a separate Function or Method.
+The test should fail since it does not throw an exception.
+                        [Theory]
+                        [InlineData(0, 0, 0)]
+                        public void TestDivideByZero(int a, int b, int expected)
+                        {
+                            Action divideByZero = () => mathlib.Divide(a, b);
+                            Assert.Throws<DivideByZeroException>(divideByZero);}
 
 
