@@ -159,7 +159,7 @@ CONTINUE -is used to skip a portion and start the loop back over again.
 
 FOR EACH statement
 
-        if you have a collection of date to process, for each is the best to use.
+        if you have a collection of data to process, for each is the best to use.
         You CANNOT modify any items in the collection, read only.
         start with your array
         int [] blahblah = {100, 25}; //int [] = an array

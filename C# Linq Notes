@@ -1,0 +1,567 @@
+
+
+Method syntax is chaining methods together.
+
+using an array of integers
+
+var average = ints.Average();
+Console.WriteLine(average);
+
+var oddInts = ints.Where(x => x % 2 == 0);
+
+OR you can chain them all together
+    //find all the odd numbers average.
+var average = ints.Where(x => x % 2 != 0).Average();
+
+
+LINQ
+
+    set of technologies that provides SQL-like query capabilities to collection objects
+        -Method syntax (like the above)
+        -Query syntax
+
+
+    Query syntax looks like this...
+                var oddInts = from i in ints
+                            where i % 2 == 1
+                            select i;
+                            //select i selects all of them and is at the end in C#.
+
+If you have to do a JOIN in sql, Greg would do 100% of the JOINs in C# query syntax.
+    the ON clause has to start from the original or first of join, not second.
+
+        var intsFinal = from i in ints
+                  join j in ints2
+                    on i equals j
+                  select j;
+                foreach(int n in intsFinal)
+                {
+                    Console.Write($"{n}, ");
+                }
+
+
+
+
+LINQ with EF correctly
+ <linqwithEFcore solution>
+    Extension methods are a better way to do things.
+    -create extension method class
+    -class must be public and static.
+    -will need using statement, so change namespace (extensionmethodstutorial)
+        class is static so all the methods must be static methods.
+        console is static, so write line and read line are all static.
+    -string class is sealed, so cannot be inherited.  We are going to extend it though.
+    -declare a method we have to have 1 parameter.
+
+Linq expressions
+    -First or Last will get the first or last item in the collection.
+        if its empty then throws an exception, use First or Default then it will say null.
+    -Where -same as SQL.
+    -SingleOrDefault, returns the single data if none would be default.
+        for password if you do singleordefault on password and it doesnt find it, returns default null.
+    -SELECT does similar to SQL select where you want only certain columns, not all.
+        example only want the ID column rather than all 50 columns return.
+    -OrderBy sort items like in SQL
+    -ThenBy does a second sorting.  OrderBy OH state, Thenby City.
+    -GroupBy, JOIN - same in SQL. Never did GroupJoin.
+    -Skip, SkipWhile I have these rows in the result set, but I dont want this many, skip first 10, then put in.
+            skipwhile adds a while statement, skip first 10 rows while something.
+    -Take, TakeWhile - similar to skip and skipwhile.
+    -Aggregate, Avg, Count, etc all the same as SQL but can ONLY do with Methods.  Not queries. 
+            you could write a query with Join and add a Method to the end of it.
+            put query in parens, do this first, then put .SUM or whatever.
+    -All, Any, Contains -checking if any have a characteristic, or all have it, or contains a characteristic.
+            example, list of customers. Do we have any customers in ND? Any = ND.
+    -Distinct removes duplicate items
+    -Except, Intersect, Union - Venn Diagram where you have 2 sets and want 1 set with instersection ones.
+    
+    Not IEnumberable, but for IQueryable
+    -Chunk, Append, Concat, 
+    -Lists Dictonary, etc. are all under IQueryable.
+
+Chain the Methods together then write the query that does the expressions listed above.
+
+Deferred Execution
+
+    When you declare a Query syntax and its executed, its defining a query but does not run it yet.
+    It only executes the query when you use the variable you store the query in.  
+    So when it has to read that data, then it goes back and reads it.
+    It will refresh the data, that is why Jim fell out by changed to Jimmy.
+        it reran the query and refreshed the data.  
+        Defers execution of the query.
+
+
+Method syntax
+
+var filteredTeamsInOhio = teams.Where(t => t.State == "Ohio");
+
+
+REMEMBER THIS FOR CAPSTONE!!!!!
+
+    Tools - NuGet - then middle one NuGet package solution.
+    Browse - Microsoft.EntityFrameworkCore
+                    .Tools is one we need.
+                    .sqlserver is the second we need.
+    
+    OR Better way = Open PackageManager Console (view - other - packagemanager console)
+        you can type in a command that will install the packages for you.
+          install-package Microsoft.EntityFrameworkCore.Tools
+          then up arrow and put .SqlServer.
+
+    scaffold-dbcontext
+    Connection: "server=localhost\sqlexpress01;database=prs;trusted_connection=true;"
+    Provider: Microsoft.EntityFrameworkCore.SqlServer
+
+
+    Now we can write LINQ statements against the Database.
+
+    Create a new instance of the prsContext.  
+        var db = new prsContext();
+        var users = db.Users.ToList();
+        foreach(var user in users)
+        {
+            $"{user.FirstName} {user.LastName}".CWL();
+        }
+
+    This prints out a list of Users from the Database.  Much simpler than all of that code
+    written in the SLQ to Csharp code that we wrote.
+
+    The method syntax can be changed or adapted to find what you want, like the below
+    that searched for users with FirstName that Starts With ""
+            var users = db.Users.Where(u => u.FirstName.StartsWith("System")).ToList();
+
+NorthwindwithLINQ -solution in visual studio.
+
+    SLQ Server Object Explorer
+    add new server - local and pick one, connect.
+    Then you can expand it and see all the tables/columns.
+
+    create a class for the table you want to access ie. Employees table, employee class.
+        add prop for each column name and pay attention to NULL or not.
+        image we did byte[]? may or may not work.
+
+    CONTEXT Class
+    create a class with Context that you use to talk to the DB.
+    Inherite DB Context.   public class NorthwindContext : dbcontext
+
+    2 Constructors in context class 
+        default constructor that doesnt do anything. 
+            
+            first...
+        public NorthwindContext() { }  // only need default constructor for Console Apps. Not web apps.
+            second one is 
+        public NorthwindContext(DbContextOptions<NorthwindContext> options) : base(options) { }
+        
+        -usng a derived constructor from the parent clss use base and the parameter type.
+
+    usng prtected overide voids
+                    //only need if doing a non-web app, if doing web app do not need this.
+                protected override void OnConfiguring(DbContextOptionsBuilder builder)
+                    {
+                        string connectionString = @"server=localhost\sqlexpress01;" +
+                                                "database=Northwind;" +
+                                                "trusted_connection=true;";
+                        if(!builder.IsConfigured)
+                        {
+                            builder.UseSqlServer(connectionString);
+                        }
+                    }
+
+                        //will need in our captstone project.
+                        //check LinqNorthwind projects.
+                    protected override void OnModelCreating(ModelBuilder builder)
+      
+    In Program we created an instance of the context. 
+        NorthwindContext _context = new();
+        var employees = from empl in _context.Employees
+                select empl;  //saying we want all columns by putting the alias
+
+        foreach(Employee e in employees)
+        {
+            Console.WriteLine($"{e.FirstName} {e.LastName}");
+        }
+
+Add your Sets to the CONTEXT.
+NorthwindContext    
+    put the classes as DbSets.
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Product> Products { get; set; }
+
+In your clss after properties of the tables put at the bottom
+ public override string ToString() { return different columns.;}
+
+
+LINQ Talking to Database
+
+    Entity Framework
+    -adds linq extension methods to add database to read by PK.
+    -Insert, update, DELETE
+
+    All 5 controllers built before the web
+
+    create context file with default constructor and 
+
+controllers
+
+    instead of adding context for controllers, 
+        we add the context to the controllers.
+
+    readonly instead of Constant.
+        constanct variables cannot be changed.
+        readonly allows it to be initialized with date or constructor       
+            then becomes static and cannot be changed.
+        
+    private readonly LinqAppContext _context = null!;
+
+
+
+    public CustomersController(LinqAppContext context)
+    {
+      _context = context;
+    }
+
+constructor is used to initialize properties.
+    created for specialized methods.
+
+IEnumberable = interface for generic collections
+        doing IEnumberable in library or classes, allows the user to determine the
+        type of collection.
+
+------to use Print() instead of Console.WriteLine all the time.
+void Print(object obj)
+{
+    if(obj is null)
+    {
+        obj = "(NULL)";
+    }
+    Console.WriteLine(obj);
+    System.Diagnostics.Debug.WriteLine(obj.ToString());
+}
+
+
+PRIMARY KEY ONLY - can use .Find(varaible) with return statement below.
+        public Employee? GetByPK(int employeeId) //employee is nullable
+        {
+            //instead of the below code piece, you can use .FIND only for PKs though.
+            //Employee? empl = _context.Employees.SingleOrDefault(e => e.EmployeeId == employeeId);
+            return _context.Employees.Find(employeeId);
+        }
+
+Adding the Insert, Update, & DELETE
+      -we want to just return if it worked or not.  True or false
+    public bool Update()
+      -reading the entire instance then changing and updating.
+    public bool Update(int employeeId, Employee employee) { }
+      -if they are reading employeeId 11 and start changing employeeId 1, 
+        this will keep them from mistakenly updating the wrong recrd.
+    NORMALLY you want to make sure any values are not INVALID.
+        -we are not doing that here, but we would want to in the FUTURE.
+    
+            //changed from bool to void since there is no false return, just an exception.
+        public void Update(int employeeId, Employee employee)
+        {
+                    //makes sure the correct employeeId read is being updated. or throw exception.
+            if(employeeId != employee.EmployeeId)
+            {
+                throw new ArgumentException("Employee Id does not match employee instance!");
+            }
+                    //telling the DbContext a row was modified/updated.
+            _context.Entry(employee).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+             _context.SaveChanges(); //always finish by saving changes.
+             return; //did not need return true; since there is no false return.
+        }
+in PROGRAM;
+           //reading employee id 1 first and then updating that employees column specified.
+Employee? empl1 = emplCtrl.GetByPK(1);
+
+empl1.TitleOfCourtesy = "Mrs.";
+
+emplCtrl.Update(empl1.EmployeeId, empl1);
+
+Print(empl1);
+
+
+
+        public Employee Insert(Employee employee)
+        {
+          if(employee.EmployeeId != 0) 
+          {
+             throw new ArgumentException("Inserting a new employee requires the employeeId be set to zero!");
+          }
+                //adding the new insert employee to cache and saving changes.
+            _context.Employees.Add(employee);
+            _context.SaveChanges();
+            return employee;
+        }
+
+        public void Delete(int employeeId)
+        {
+           //Make a call to the GetByPk
+           Employee? empl = GetByPK(employeeId);
+            if(empl is null)
+            {
+                throw new Exception("Employee Not Found");
+            }
+                    //remove removes it from the cache, save changes removes from database.
+            _context.Remove(empl);
+            _context.SaveChanges();
+        }
+
+    Get a list of all Employees by Lastname with certain characteristic
+        start with IEnumberable since you are getting a collection even if its 0 or 1, or 100.
+    
+    You can do this with any Methods in your controller.
+            public IEnumerable<Employee> GetByLastNamePartial(string subString)
+        {
+            //can use query syntax or method syntax
+            IEnumerable<Employee> employees = from e in _context.Employees
+                                              where e.LastName.Contains(subString)
+                                              orderby e.LastName
+                                              select e;
+            return employees;
+        }
+
+
+        Table relationships are like college majors that could be assigned to many students
+            but the reverse is 1 to 1, one student to one major.
+
+        Order and Product in Northwind can be many to many.  Any order might have multiple Products
+            a product could have multiple Orders.  
+            So you need 2 foregin keys to be many to many.
+
+        Only one PK per Table.  Order Detail has 2 PKs but they are PKs for other tables.
+            those two columns together make up the Primary Key.
+
+        If we delete an order, then the order detail must be deleted.
+            otherwise you have orderdetail not pointing to an order and its corrupt.
+            Before detail check for order detail records for the order.  You could setup 
+            the delete in order to also delete the order detail that matches.
+
+
+Doing things Asynchronously instead of Synchronously
+            <Task Asyn Project>
+          (mostly used on web applications)  
+
+    everything up to this point has been synchronous programming.
+    only 1 statement is being executed at one time.  The method will executed
+    evertying inside of it first, then move down the line.
+
+    When you have tasks to be done that are not dependant on one another
+    you can have multiple be done at the same time.
+    CPU has multiple cores that can each do their own things. 4 cores can do 4 different things.
+
+    ASync will always use the Task Class
+
+    everything we have been doing runs on 1 thread.  We have other threads we can make use of.
+
+    Task
+    dont use parens for your method in the new task.  The parens executes the method.
+    we are passing a reference in of the method, not executing it.
+
+    Task t1 = new(WriteMultipleLines);
+    t1.Start(); //to start the task to write multiple lines.
+
+    You can start it early on, but say you dont want it to finish yet or before a certain point
+    t1.Wait();
+
+    Users are only willing to wait like 2 to 3 seconds, so you do things Asynchronously that way
+    they dont have to wait for certain responses and can do other things while waiting for response to come back
+    Might have delays with data from sql database.
+
+    Changing LINQEFNorthwind solution
+
+    You can adjust a method to run async by putting async then Task <>
+
+        public async Task<IEnumerable<Customer>> GetAllCustomers()
+        {
+            return await _context.Customers.OrderBy(c => c.CompanyName).ToListAsync();
+        }
+            IN PROGRAM.CS
+            //put await on there to show it as async.  customers var now shows IEnumberable, not task.
+            var customers = await custCtrl.GetAllCustomers();
+            foreach(Customer c in customers)
+            {
+                Print(c.CompanyName);
+            }
+
+=======================================================
+We want ALL calls to be Asynchronously since the Sql Database is not on our machines.
+CAPSTONE - all Methods have to be Async.
+
+    Turn a method from Sync to Async.
+        -If you want a single statement in a method to be async, then in general will have to AWAIT.
+            await before statement.  ie. return await _context.blahblahblah
+        -If you have one or more async you have to tag the method async and Task<> of type something.
+                ie. public async Task<IEnumberable<Customer>>.
+        -Calling the method must have await in order to call it correctly.
+            ie. var customers = await custCtrl.GetAll().  
+            await says I am going to pause here, wait for task to run then strips the task off and puts it into list.
+
+
+if you create your own methods, you figure out if they should be Asynchronously
+If they hit the database they should always be Asynchronously.       
+
+
+============================
+
+Creating a Database in C#
+
+    Code First
+    creating classes and tell EntityFramework to create the tables.
+    make changes in classes and tell entity framework to change database.
+
+    Database First
+    is using the db scaffold to pull the database tables into classes.
+
+    Install packages.. Tools & SqlServer
+    create Context
+    create first customer class with properties
+
+    Do Migration.  (package manager console)
+        add-migration init {if red error make sure default constructor is there at top, in first position}
+
+        Adds a class that inherites migration.
+        with Up method and Down method. To create table and drop table.
+        Up method is moving forward, applying or adding things to the database.
+        Down is reversing things done with the Up.
+
+    Add the Database (package manager console)    
+        update-database
+
+            roll back the database with the below
+        update-database 0 (it says reverting migration.)
+
+        remove-migration to remove the last migration
+            migration class is removed.
+
+            because we did add migration then update database, we couldnt remove migration until
+            we rolled back the database.  Then removed migration.
+
+        with it removed we can deal with some of the issues.
+
+Setting Attributes, so SQL is correct
+
+    Primary Key is assumed if you put Id or class Id, like customerid.  if you want to do something employees
+        you have to specify the primary key.
+    
+    [Key]  attribute to say this column is primary key
+        there is a class called Attribute and Key is part of it.
+                but you cannot tag 2 columns as Key for primary key.
+    
+    [StringLength(100)] to give it a length of 100 instead of the Max that auto fills.
+                        public class Customer {
+                            [Key]
+                            public int Id { get; set; }
+                            [StringLength(100)]
+                            public string Name { get; set; }
+
+        //this says I want to put a Unique Index in the Code column
+                                        //the name is just saying its not like any other index.
+            [Index("Code", IsUnique = true, Name = "UIDX_Code")]
+            //Index is applied to the entire table, so its outside of class customer.
+            public class Customer
+            {
+                [Key]
+                public int Id { get; set; }
+                [StringLength(100)]
+                public string Name { get; set; }
+                [StringLength(4)]
+                public string Code { get; set; }
+                [Column(TypeName = "decimal(11,2)")]
+                public decimal Sales { get; set; }
+                [StringLength(255)]
+                public string? Notes { get; set; }
+
+
+    If any changes are needed, its better to change the class and re-do the migration.
+    if good, update-database.
+
+    Making a new class of Order.
+        putting property of CustomerId is assumed to be a foreign key to the Customer table
+        as long as you have public virtual Customer Customer {get; set;}.
+        
+        public int CustomerId { get; set; } //FK to Customer
+        public virtual Customer Customer { get; set; }
+
+add migration is like commit in git, putting some comments afterwards.
+    add-migration Added-order-class
+
+ALWAYS REVIEW THE MIGRATION BEFORE COMMITTING TO THE DATABASE.
+    easier to remove migration fix and come back.
+
+On MIGRATION it says 
+
+                            table.ForeignKey(
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+
+        CHANGE to  OnDelete: ReferentialAction.Restrict);
+
+    cascading the delete is not good.  We want to restrict the delete.
+        saying if orders are pointing to it, restrict the delete, you have to delete the others first.
+        if no orders are pointing to it, then go ahead and delete.
+    
+if all looks good - update-database.   it will commit the updates.
+
+    you can always roll back the database if you want to 
+        update-database init  [will roll it back to init]
+        update-database 0   [will roll back to before init migration]
+
+    or update-database 'put the name here to roll back to'
+
+
+Inserting into the SQL Database we created
+    using Azure Data studio
+
+        INSERT Customers (Name, Code, Sales) VALUES 
+    ('MAX', 'MAX', 10000), 
+    ('BestBuy', 'BBUY', 100000), 
+    ('Target', 'TARG', 1000000);
+GO
+INSERT Products (Name, Price) VALUES 
+    ('Bootcamp', 25000), 
+    ('Pencils', 1.25),
+    ('Laptop', 1500);
+GO
+DECLARE @MaxCustId Int, @BestBuyCustId int, @TargetCustId int;
+
+SELECT @MaxCustId = Id FROM Customers Where Code = 'MAX';
+SELECT @BestBuyCustId = Id FROM Customers Where Code = 'BBUY';
+SELECT @TargetCustId = Id FROM Customers Where Code = 'TARG';
+
+INSERT Orders (Description, Total, Status, Date, CustomerId) VALUES
+    ('Max Order', 0, 'NEW', GETDATE(), @MaxCustId),
+    ('BestBuy Order', 0, 'NEW', GETDATE(), @BestBuyCustId),
+    ('Target Order', 0, 'NEW', GETDATE(), @TargetCustId);
+
+DECLARE @MaxOrderId int, @BestBuyOrderId int, @TargetOrderId int;
+
+SELECT @MaxOrderId = Id From Orders Where Description = 'Max Order';
+SELECT @BestBuyOrderId = Id From Orders Where Description = 'BestBuy Order';
+SELECT @TargetOrderId = Id From Orders Where Description = 'Target Order';
+
+INSERT OrdersLines (OrderId, ProductId, Quantity) VALUES
+    (@MaxOrderId, (SELECT Id from Products Where Name = 'Bootcamp'), 1), 
+    (@MaxOrderId, (SELECT Id from Products Where Name = 'Pencils'), 100), 
+    (@MaxOrderId, (SELECT Id from Products Where Name = 'Laptop'), 10);
+GO
+
+
+
+C# Method syntax for get orders by customer id vs Query Syntax
+      //Method syntax for async
+            //return await _context.Orders.Where(o => o.CustomerId == customerId).ToListAsync();
+
+                //Query syntax for async 
+            var fred = from o in _context.Orders
+                       where o.CustomerId == customerId
+                       select o;
+            
+            return await fred.ToListAsync();
+
+
+
+

@@ -254,3 +254,122 @@ Might want to retrieve all users by username
 Build Vendors Class & Vendors Controller class
 
 Instead of Char to ToString in C#.
+
+
+
+
+
+****PRIOR DAY We Did USERS & VENDORS CONTROLLER differently.
+****Today we did PRODUCT much more efficiently.
+
+
+
+Continuing in the Product DB with Foreign Keys
+
+Using readonly to initialize it declared or in a constructor
+    but cannot change it.
+
+STATIC is not part of the instance created, its part of the Class.
+    in Product Models folder created the Sql statement to Select All
+    and in the controller added Products.SqlSelectAll to call it in.
+
+Controller has all the code and is easier to make more mistakes
+putting in the product makes it less error prone.
+
+We can have the instance Method call the Static Method, but not reverse.
+    example from class
+
+        public int Id {get; set;}
+        void TestMethod(int Id) {
+            //in order to differentiate parameter name from property name use This keyword.
+            this.Id = Id;
+        }
+
+
+public void LoadFromReader(SqlDataReader reader) {
+    LoadFromReader(this, reader);
+}
+
+Keep Sql Statements STATIC, because you dont want to create an instance of the product
+to get the sql statements.
+
+Since we are calling the Parameters multiple times, we need to update
+
+You can call extra parameters and not use them, so the UPDATE uses the ID
+    Insert does not use the ID, but its ok to leave it and call the same Method.
+
+
+FOREIGN KEY 
+    
+    Added a Virtual instance of the Foreign Key 
+        public virtual Vendor Vendor {get; set;}
+
+    Then productcontroller 
+    -private VendorsController vendCtrl = null;
+        initialized inside constructor after products controller is created.
+        vendCtrl = new(connection)
+    -GetALL method added a foreach loop after reading all products put into a Collection, 
+        close reader, read the vendor by primary key return vendor and stuff into the product collection
+        foreach(Product p in products) {
+            p.Vendor = vendCtrl.GetVendorByPk(p.VendorID);
+        } return products;
+
+    still added as VendorID and @VendorID.
+    but need to do a JOIN in Sql Statement to print out the VendorName.
+    ADD in the class a prop of public virtual string VendorName {get; set;} =string.Empty
+
+    ADD a line to our LOADFROMREADER 
+        product.VendorName = converttostring(reader["vendorname"]);
+
+
+
+Modify products get by pk to return vendor instance for the product that you read.
+
+USER Controller
+
+    Add a method to provide the login and check if the user is present in the database
+    Similar to getby primary key method
+
+                    public User? Login(string username, string password)
+                        {
+                            string sql = "SELECT * From Users Where Username = @Username AND Password = @Password;";
+                            SqlCommand cmd = new(sql, connection.sqlConnection);
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            if (!reader.HasRows)
+                            {
+                                reader.Close();
+                                return null;
+                            }
+                            reader.Read();
+                            User user = new();
+                            user.ID = Convert.ToInt32(reader["ID"]);
+                            user.Username = Convert.ToString(reader["Username"])!;
+                            user.Password = Convert.ToString(reader["Password"])!;
+                            user.FirstName = Convert.ToString(reader["FirstName"])!;
+                            user.LastName = Convert.ToString(reader["LastName"])!;
+                            if (reader["Phone"] == System.DBNull.Value)
+                            {
+                                user.Phone = null;
+                            }
+                            else
+                            {
+                                user.Phone = Convert.ToString(reader["Phone"]);
+
+                            }
+                            //used Ternary statement instead of if else
+                            user.Email = (reader["Email"] == System.DBNull.Value) 
+                                ? null 
+                                : Convert.ToString(reader["Email"]);
+
+                            user.IsReviewer = Convert.ToBoolean(reader["IsReviewer"]);
+                            user.IsAdmin = Convert.ToBoolean(reader["IsAdmin"]);
+                            reader.Close();
+                            return user;
+                        }
+
+
+
+
+
+
+

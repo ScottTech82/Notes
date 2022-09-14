@@ -40,4 +40,75 @@ Chapter 9 files pg 369 - skip writing to XML Streams
     but read Serializing JSON.
 
     
+9/07;
+
+Add the Requests table class and controller.
+
+Chapter 11 in book.  Tech we are going to use in Capstone.
+466 to 499
+exercise 11.2
+
+
+show me the select statement that shows the total orders that are higher than the average of orders.
+SELECT TotalInvoices
+FROM Invoices
+Where TotalInvoice > 
+    (select TotalInvoice
+    From Invoices
+    Where AVG(totalinvoices));
+
+
+USE KEYWORD this.Id = Id to tell the ID in this class. Since the parameter name is identical to property name.
+Foreign Key to User so reference User.
+
+on 9/15 start Capstone
+
+
+LAMBDA
+ string names = array of names.
+var sortedNames = names.Orderby(n => n) //this means just sort the items in the list and it will be alphabetical.
+
+9/08;
+Go through the book and do anything for the Northwind DB in Chapter 11. pg 502
+
+
+------------------
+
+9/12/22
+
+prior grad visit
+    -uses Postman a lot
+    -uses port forwarding to test things before pushing live.
+    -website on onehost
+            -had two projects, poker and three part poker?
+            -main page about me, projects.
+
+    -bootcamp was way more difficult
+        -more coding
+        -in job you do research, check out what you need gather information, flow chart.
+        -coding is the least part of his day
+        -on team of people with 4 to 5 other engineers.  Mentor and project manager.
+        -his mentor is self taught developer from military. first couple weeks just watching.
+        -hardest part is picking up each company syntax.
+    
+    -check out Code coverage, how testing works and why we do testing.
+
+    -offered intern spot
+    -others offered jr developer spots
+    -there are apprentice programs 
+        -but pay wayyy waaaayyy less like 60% less.
+
+9/12/22
+
+Practice creating classes with a constructor and passing values in.
+    constructors are for giving properties value when a new instance is created.
+
+
+Do the order, orderdetail and Product.
+
+9/13/22
+add a new branch to you repository, if soemthing goes sideways you still have the original.
+
+
+
 
