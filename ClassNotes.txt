@@ -109,6 +109,13 @@ Do the order, orderdetail and Product.
 9/13/22
 add a new branch to you repository, if soemthing goes sideways you still have the original.
 
+9/14/22
+tonight go through WebAPITutorial and browse through to look at different parts that maybe 
+you dont understand.
+
+9/16/22
+Set up WebAPITutorial and used Postman today. Can check video if needed.
 
 
+in capstone you cannot use any one elses code and cannot turn to collegues. 
 

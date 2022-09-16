@@ -1,0 +1,250 @@
+
+In reading module 1, 2, & 3 can be read but are MVC which is a little different.  
+You write the entire back end in C#.
+
+MVC = Models, Views, Controllers.  we have done Models & Controllers
+    Order or Customer clss and Controller with methods.
+    console.writeline is the view portion.
+
+WebAPI has models and controllers, but views are done differently.
+    WebAPI passes the view (json) to another application. Does not display itself.
+    ie. Angular.  Angular then handles the view portion or displaying to user.
+
+    request is caller to server
+    server receives the request and gets the file page, sends it back to the caller
+    called the response.
+
+    MVC will make a request from browser to the server, get the homepage send back to browser/user.
+        as soon as you click a button, drop down list, etc. its another request back out to internet/server.
+        problem is you lose control where it gets routed and speed, could go up through canada and slow down.
+        Will get slow making the requests and only runs a browser.  
+        Most applications are built for laptop or bigger and MVC does not handle that well.
+
+    WebAPI has the same Models (classes mapped to database) and Controllers -clsses with methds 
+        are the same.  But Views are different.
+    
+Remember some of these differences!!!
+        ASP.NET core Web API
+            Authentication = None
+            Only have checkd Use Controller
+
+Uncheck -->  Configure HTTPS leave checkd if in production. 
+              -just messing around for bootcamp uncheck the box.
+            Enable Docker - create app for one environment and run in another. ie. build on Mac, run on Windows. 
+                                        -docker allows linux version of sql server run in the docker on a MAC, so you can get sql server.
+            Use Controllers -leave checked.
+            Enable OpenAPI Support -Uncheck.
+
+
+appsettings.jscon = connection string will go in here, so it doesnt go into the Code.
+
+program.cs -dont delete or change any of the methods showing that make the application run.
+
+weatherforecast.cs is the class with the properties that contains the data.
+controller has the methods and some information.
+
+Removed Browser to auto open
+    right click the webapiTutorial -> properties -> Debug ->WebAPITutorial scroll to bottom.
+            App URL you can change the local host numbers. Not the first 1, but the other 4.
+            http://localhost:5555
+
+set the connection string 
+    appsettings.json and after 
+                        "AllowedHosts": "*",
+                        "ConnectionStrings": {
+                        "Dev": "server=localhost\\sqlexpress01;database=SalesDbApi;trusted_connection=true;"
+   
+      -You can have as many as you want with different KEY. ie. above key is "Dev":
+
+Models Folder
+    
+    AppDbContext class and add only the one constructor
+                public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+                
+                protected override void OnModelCreating(ModelBuilder modelBuilder) { }
+       
+                only ones needed, different from C#.
+
+    start putting in Models classes -we did Customer and added properties/column names.
+
+
+***IMPORTANT CONFIGURING***
+<check WebAPITutorial project>
+
+        critical we get this right to configure it correctly.
+
+                    //***configuring sql server after AddControllers but before builder.Build***
+                builder.Services.AddDbContext<AppDbContext>(x =>
+                {
+                    x.UseSqlServer(builder.Configuration.GetConnectionString("Dev"));
+                });
+                builder.Services.AddCors(); //cross origin resource services, cors.
+
+            This currently limits who can access.  Saying nothing outside the domain is allowed to access the server.
+            but going to configure to allow anyone which you do not want to do.
+            Adding cor support and will configure.
+
+            after var app = builder.Build();
+                      //***added the below - not what you want to actually do in production.
+                app.UseCors(x =>
+                {
+                    x.AllowAnyOrigin()  //chaining together
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            before app.UseAuthorization
+
+            Headers could be keys or tokens.  You need to login and get a token, then pass that token to access the server
+                this is like EveOnline app api that allowed certain access with a token.
+            we are currently allowing everything, would normally want to restrict.
+
+                after app.MapControllers();
+                        //optional -statements to auto update database.
+                        //web hosting might restrict access to update sql database from home.
+                        //creating a scope to use in the next line. Applying migration that has not been applied already.
+                        using var scope = app.Services
+                                            .GetRequiredService<IServiceScopeFactory>()
+                                            .CreateScope();
+                        scope.ServiceProvider
+                                    .GetService<AppDbContext>()!
+                                    .Database.Migrate();
+
+                before app.Run();
+
+
+Now do migration and update database.
+
+Create Controller with a better way!!!
+
+    right click controllers folder new -controller. select the class & db DbContextOptions
+    it auto creates.
+
+    [HttpGet]  allows the below to happen.
+You can go to browser type localhost:5555/api/customers
+    and it will get all customers.
+
+
+CONNECTION keys 
+        put one key in the program.cs GetConnectionString, ie. "Dev"
+            until one migration and update database.
+    then you can change it, like moving it to the cloud with a different connection string.
+    
+set it do auto change the connection key depending on if you are in debug or release mode.
+using the hash key to change the connection key if configuration is set to Debug.
+
+#if DEBUG   
+    ConnectionKey = "Dev";
+#endif
+
+RELEASE instead of Debug in visual studio.
+    Ready to deploy something you run it in RELEASE mode.
+    if you set to release and try to debug it will give an error.
+
+                 builder.Services.AddDbContext<AppDbContext>(x =>
+                {
+                    string ConnectionKey = "Prod";
+            #if DEBUG
+                ConnectionKey = "Dev";
+            #endif
+                    x.UseSqlServer(builder.Configuration.GetConnectionString("Dev"));
+                });
+                    builder.Services.AddCors();
+
+CAPTSTONE will be pushed up to the Cloud for a year with Free Hosting.
+        so we will need to change the key to production.
+
+In Controller;
+
+# HTTP methods
+    -GET  =reading from the database or Retrieving.
+    -POST  =Method that does Add or INSERT.
+    -PUT  =Method that does UPDATE
+    -DELETE 
+
+HTTP is only for updates done outside of application.
+    [HttpGet] above the Get Method means you can access from outside application.
+    if you are doing private Methods, not needed.
+
+
+    two things point to which method you want, the HTTP you are using (ie, Get, Put, etc.) and URL.
+
+    Dont start with a slash in the URL, it will skp the api/Customers or whatever controller.
+
+    ActionResult 
+        previously did IEnumerable<Customer>> now we cannot return Customer over the web.
+        you could get an instance of customer, but the id set to 0 or negative and doesnt point correctly.
+        convention only works if everyone who uses it knows it.  Which never happens.
+
+    Action Result is a base class with derived classes underneath.
+        ie. Not Found 
+
+    400 errors are bad or not good. 
+    500 is an issue with sql
+    200 is generally good, like it worked.
+
+    IActionResult
+        If you are not going to return any data, you can use IActionResult instead of ActionResult.
+        like in the update or delete method.
+        we can return messages, but we are not returing DATA.
+
+        If you want data returned you use ActionResult<table> the instance of the table data you are returning.
+
+
+If you have {"Id"} as the URL path you need it in the parameter list of the method.
+        ie. [HttpGet("Id")]  GetCustomer(int Id)  <----must be in here as well and exactly the same.
+        you can have as many parameters as you want, they just have to be in the URL and match exactly.
+
+POST & PUT  
+    you have to pass an instance of your data into it.  ie PostCustomer(Customer customer); 
+    instance goes into the cache and is updated then save changes.
+
+
+
+TOOL to test Controllers
+POSTMAN
+
+    POST or Insert - copy an existing customer
+    change to Post then Body, raw and json
+    paste the customer and change id to 0.
+
+    Duplicate tabs and put your methods on each one.  Get, GetbyID, Post, etc.
+
+
+
+
+
+Only READ Operations -adding Virtual instance and including other table data
+
+Caused Cyclical redundency - added [JsonIgnore] -only system one.
+Get All Orders for a Customer
+
+    update the Get customer by PK with Include and instead of FindAsync, SingleorDefault async.
+
+            var customer = await _context.Customers
+                                            .Include(x => x.Orders)
+                                            .SingleOrDefaultAsync(x => x.Id == id);
+--got error for cyclical redundency.  We have Orders as Virtual in Customers and Customers as virtual in Orders.
+    cant do both.  We can get the customer when we read the order, or we can get all orders for the customer.
+    he would give up the one giving all orders for a Customer.
+    
+
+    Added in Order  
+        public virtual IEnumerable<OrderLine>? OrderLines { get; set; }
+
+    Added in OrdersController
+                (Display an order by Id, include the orderline, the product, and customer)
+            var order = await _context.Orders
+                                    .Include(x => x.OrderLines)!
+                                    .ThenInclude(x => x.Product)
+                                    .Include(x => x.Customer)
+                                    .SingleOrDefaultAsync(x => x.Id == id);
+    Orders Get ALL  
+                [HttpGet]
+                public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+                {
+                    return await _context.Orders
+                                            .Include(x => x.Customer)
+                                            .ToListAsync();
+
+
+
