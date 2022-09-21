@@ -553,7 +553,7 @@ Inserting into the SQL Database we created
 
 C# Method syntax for get orders by customer id vs Query Syntax
       //Method syntax for async
-            //return await _context.Orders.Where(o => o.CustomerId == customerId).ToListAsync();
+        return await _context.Orders.Where(o => o.CustomerId == customerId).ToListAsync();
 
                 //Query syntax for async 
             var fred = from o in _context.Orders

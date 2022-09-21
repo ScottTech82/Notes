@@ -119,3 +119,72 @@ Set up WebAPITutorial and used Postman today. Can check video if needed.
 
 in capstone you cannot use any one elses code and cannot turn to collegues. 
 
+9/19/22
+
+Total to be added up in Expense table-with Recalculate expense total at end of tables.
+
+Expense Lines added to Expense.
+
+    Methods Private do not put HTTP Get or anything.
+
+    Expenses paid add to the expenses paid and subtract from Expenses Due.
+
+    read an expense by PK, you want all lineitems and item coming back.
+    ExpenseLine same as OrderLine.
+
+
+Capstone
+
+    back end methods have access to them like we did with Expenses.
+
+    Users 
+        username is unique
+    
+    Vendor 
+        code is unique
+    
+   
+   Requests
+        Get Reviews by userid not owned by this user.  They cannot review their own requests.
+
+
+create a folder called PRS inside your repos folder.  Visual studio project inside of PRS
+
+
+Captstone Notes
+
+// = Done & re-Tested
+
+//Add the user to the request, take out the vendor.
+//Add user to get all requests.
+
+//requests controller
+//reviews for user -
+  //  read the users and check if the user id is correct.
+  // change find async on userid to the users table.
+
+  //  if fred is null dont return not found, bad request or argument exception.
+
+  //  take out the fred.status != Reviews
+
+//if statement
+  //  put return await putrequest instead of variable.
+  //  use the if statement to just set the status and then return
+  //  or ternaryn adn return
+
+//requestline controller
+
+ //recalc total = change the error throw exception saying requestid does not exist.
+
+
+ //update product to confirm recal works.
+ //delete to confirm recalc works.
+
+    If I change the product price it does not update the Total unless I update the requestline
+    since the Method is not listed under ProductsController update method. 
+    I dont think its possible to put it there since its private method to request line.
+
+
+
+
+

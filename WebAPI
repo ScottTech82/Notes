@@ -56,6 +56,8 @@ set the connection string
    
       -You can have as many as you want with different KEY. ie. above key is "Dev":
 
+Install Packages
+
 Models Folder
     
     AppDbContext class and add only the one constructor
@@ -66,6 +68,12 @@ Models Folder
                 only ones needed, different from C#.
 
     start putting in Models classes -we did Customer and added properties/column names.
+
+UNIQUE Property in Model Class
+            //we did customer code as unique property.
+        [Index("Code", IsUnique = true, Name = "UIDX_Code")]
+            public class Customer
+            {
 
 
 ***IMPORTANT CONFIGURING***
@@ -116,7 +124,7 @@ Now do migration and update database.
 
 Create Controller with a better way!!!
 
-    right click controllers folder new -controller. select the class & db DbContextOptions
+    right click controllers folder new -controller. select the class & AppDbContext Options
     it auto creates.
 
     [HttpGet]  allows the below to happen.
@@ -142,11 +150,11 @@ RELEASE instead of Debug in visual studio.
 
                  builder.Services.AddDbContext<AppDbContext>(x =>
                 {
-                    string ConnectionKey = "Prod";
-            #if DEBUG
-                ConnectionKey = "Dev";
+                    string ConnectionKey = "Dev";
+            #if RELEASE
+                ConnectionKey = "Prod";
             #endif
-                    x.UseSqlServer(builder.Configuration.GetConnectionString("Dev"));
+                    x.UseSqlServer(builder.Configuration.GetConnectionString(ConnectionKey));
                 });
                     builder.Services.AddCors();
 
@@ -245,6 +253,95 @@ Get All Orders for a Customer
                     return await _context.Orders
                                             .Include(x => x.Customer)
                                             .ToListAsync();
+
+
+
+NOT sure if these are 100% correct.  
+        My Own Methods worked on in ExpenseWebAPI project/solution.
+    
+       //added at the top, readonly Employee class with _empCtrl.
+        private readonly AppDbContext _context;
+        private readonly Employee? _empCtrl;
+
+     // GET: /api/expenses/approved
+        [HttpGet("approved")]
+        public async Task<ActionResult<IEnumerable<Expense>>> GetApprovedExpenses(Expense expense)
+        {
+            var expApproved = await _context.Expenses.FindAsync(expense.Status);
+
+            if (expApproved.Status == "APPROVED")
+            {
+                return await _context.Expenses.ToListAsync();
+            }
+
+            return NotFound();
+
+        }
+
+        // GET: /api/expenses/review
+        [HttpGet("review")]
+        public async Task<ActionResult<IEnumerable<Expense>>> GetExpensesInReview(Expense expense)
+        {
+            var expReview = await _context.Expenses.FindAsync(expense.Status);
+
+            if (expReview.Status == "REVIEW")
+            {
+                return await _context.Expenses.ToListAsync();
+            }
+
+            return NotFound();
+
+        }
+
+        // PUT: /api/expenses/review/{id}
+        [HttpPut("review/{id}")]
+        public async Task ReviewExpense(int id, Expense expense)
+        {
+            if(expense.Total <= 75)
+            {
+                expense.Status = "APPROVED";
+                _empCtrl.ExpensesDue += expense.Total;
+               await _context.SaveChangesAsync();
+            }
+            expense.Status = "REVIEW";
+            await _context.SaveChangesAsync();
+        }
+
+        // PUT: /api/expenses/approve/{id}
+        [HttpPut("approve/{id}")]
+        public async Task ApproveExpense(int id, Expense expense)
+        {
+            expense.Status = "APPROVED";
+            _empCtrl.ExpensesDue += expense.Total;
+            await _context.SaveChangesAsync();
+        }
+
+        // PUT: /api/expenses/reject/{id}
+        [HttpPut("reject/{id}")]
+        public async Task RejectExpense(int id, Expense expense)
+        {
+            expense.Status = "REJECTED";
+            await _context.SaveChangesAsync();
+        }
+
+ExpenseLine Controller added Method
+
+    private async Task<IActionResult> RecalculateExpenseTotal(int expenseId)
+        {
+            var expenseX = await _context.Expenses.FindAsync(expenseId);
+            if(expenseX == null)
+            {
+                return NotFound();
+            }
+
+            expenseX.Total = (from el in _context.Expenselines
+                       join i in _context.Items on el.ItemId equals i.Id
+                       where el.ExpenseId == expenseId
+                       select new { LineTotal = el.Quantity * i.Price }).Sum(e => e.LineTotal);
+
+            return await _expCtrl.PutExpense(expenseId, expenseX);
+        }
+
 
 
 
