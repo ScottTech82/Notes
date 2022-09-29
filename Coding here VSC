@@ -1,0 +1,112 @@
+
+Using the left side explorer, open and close folders.
+
+    Source you can create a git folder but not upload it.
+        he will show us how to do this though
+        and Syncing with GitHub projects we are working on.
+
+    Debug is same as F5 in VSB.  
+    Extensions are addons as in VSB, but need more extensions.
+
+    Database Projects - we dont have it yet, need extension.
+    SQL Server -doing a direct connection like SQL Server Object Explorer in VSB.
+
+
+COMMAND PALETTE
+    ctrl + shift + p
+    Live server.
+
+    Didnt show up went to Extensions instead
+    C# for VSC with OmniSharp.
+    Could do C# Snippets if we want.
+
+Does Not Auto Save!
+    Get into the habit of saving before running.
+    Settings -Autosave is available
+    BUT ANGULAR does not work well with AutoSave.
+
+Settings
+    search Decorator and check JS/TS experimental decorators.
+
+Highlight Block comment shift+alt+A in the Edit window at top.
+
+Selection window
+    copy line up or down.  Shift+Alt+up or down arrow.
+    multiple cursors too
+
+ Using Git Bash in VSC
+    mkdir vsc-console-tutorial
+
+    EVERYTHING WITH DOTNET first
+    dotnet --version showing 6.0.401
+    dotnet new --list  {shows a list of new templates/projects}
+
+    dotnet new console -n VscConsoleTutorial
+                    //the -n changes the name to what we put afterwards.
+    
+
+Single click just opens until you click something else.
+Double click sets it as an open tab.
+
+
+INITIALIZE REPO
+    add a file .gitignore
+        put bin/ obj/ for git to ignore those folders.
+        we dont want to put them up to github.
+        Save File.
+    go back to source and less files showing
+        enter comment in (initial commit) and commit & push.
+    might have to connect to github
+    esc out of the repos showing to not add to existing.
+    
+    Publish Branch
+    
+
+
+start with 0, add number on the die and keep rolling.
+as soon as you get a 1 game is over and is your score.
+    in order to score pts you need 2 - 6.
+
+
+Tuple
+    creating a class on the fly. You dont give it a name as such.
+
+    example of Tuple, returning 2 variables.
+    public (int score, int rolls) Play() {
+         int score = 0;
+         int rolls = 0;
+         int roll;   //still have to declare roll
+         while ((roll = RollDie()) != 1) {
+              score += roll;
+              rolls++;
+          }
+         return (score, rolls);
+         }
+
+Scale up the score and see how fast it will run on our machines.
+less console write lines and run in RELEASE mode
+Ctrl + F5
+
+
+dotnet run -c Release
+    run your current project in the folder you are in, as release instead of Debug
+
+dotnet build -c Release
+    this will create your current version for other people to run it.
+
+    You could find the exe folder in git bash and do ./ pigdice.exe to run it, but its not the best.
+
+
+In order to run it by passing into a number
+we set a variable as array args with parse to int.
+Add Configuration
+    set args to 250 in launch.json 
+    BUT this only sets 250 when run inside Visual Studio
+
+Set -- to games and number after goes into games.
+OR --score is the number of games to get the score.
+
+
+
+
+

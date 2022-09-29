@@ -184,7 +184,78 @@ Captstone Notes
     since the Method is not listed under ProductsController update method. 
     I dont think its possible to put it there since its private method to request line.
 
+Done with Capstone and Po/Poline
 
+    Work on SQL and early C#.
+
+============================================================
+
+9/26
+
+Pick a number between 1 and 10.
+    random numb generator.
+
+    user to enter a guess and tell them if the guess was 
+    too high or too low.
+    Keep track of the guesses, cant have infinite number.
+        Do like 3 or 4 more guesses.
+
+    so do too high or too low and say wrong this number of guesses 
+    remaining. 
+
+    It has to run outside visual studio. 
+    ask if they want to run again and if yes, run again.
+
+    --if you want a challenge you can do 1-10, but if they 
+    put 25 the range increases to 1-25.
+
+
+
+Use active directory in the cloud to store user names or passwords.
+Captstone using Get for Login is bad since user name & password is in the URL and in the local cache.
+    should be a POST function instead.
+
+========================================================
+
+9/28
+On our own we can do Containers in the LAB
+
+We can use the learn on demand lab;
+Do SQL, Functions, IoT, Key Vault, Virtual Network
+
+    Azure tutorials - 
+https://learn.microsoft.com/en-us/training/azure/
+    can learn about SQL in Azure called CosmosDB
+    you can go to sandbox and try the exercises in there.
+
+
+        Could go to ignite.microsoft.com and search archive sessions.
+        for developers is dotnet conf.
+
+Markdown All in One extension 
+    for Visual Studio Code.
+    has a preview feature.
+
+You can use a Azure Trial pass to publish your Angular, SQL Database, etc. 
+And with free resources have it uploaded to show people.
+Mike will share in Teams File section.
+
+Learn more about PowerShells
+    we will use it a lot in teh future.
+
+.Net has a speech library and can talk.
+    you can mess with it in PowerShell.
+    Add-Type -AssemblyName System.speech
+    $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer
+    $speak.Speak("Would you like to play a game?")
+    $speak.GetInstalledVoices()
+
+
+============
+9/29
+
+Think about working on a personal project
+maybe some minimal API's
 
 
 

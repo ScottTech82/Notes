@@ -1,0 +1,567 @@
+Hosting on AZURE
+
+
+  AZ-900 EXAM
+    Can take the exam to be Microsoft Azure certified.
+    IT people know this doesnt mean a whole lot.  But HR people like the looks of another certification.
+    You can take it but dont have to.
+
+
+    There is a SQL on Azure that is different from SQL on machines
+
+Every service here is the same in AWS and Google.
+    Azure does have a unique service Quantum Computing.. can experiment if we want not a bid deal.
+
+
+Cloud is anything outside your reach.
+Private cloud is dynamic and configurable outside your reach.
+    You dont have to buy a new server, unpack it.
+
+Microsoft Data Center built in Boydton, VA.  US East.  
+    its a small city and the datacenter is bigger than the town.  Million or more servers.
+    expanding to US East 2, since they ran out of capacity. And now US EAST 3.
+    Millions of servers inside each building.
+     --search azure data center and you see the rows and rows.
+
+
+IoT - internet of things
+    like thermostats connected
+    ring doorbell
+    anything that sends data and rarely receives it.
+
+AI is not really AI
+    its really pattern recognition and machine learning.
+    Machine learning will detect patterns the person will not.
+    More marketing and hollywood than real intelligence.
+        example of widgets - 50 good ones and 50 pictures of bad ones. If you show the machine a picture
+        of another widget it will tell you if its good or bad by the picture.
+
+Shared Responsibility
+Been writing applications for one computer or server
+in reality we need redundancy multiple servers, and multiple users.
+We can then rent cloud computing that will have the servers, redundancy, etc for us.
+
+SaaS or PaaS or IaaS    --Graph on Module 1.
+        ==as a service.
+    Accounts and identities
+    Identity and directory infrastructure
+        user names and passwords, instead of being your fault it would be Microsofts or whomevers fault
+            and they spend millions if not billions to ensure they are safe.
+    
+    IaaS -infrastructure as a server is basically a Virtual machine. renting the Infrastructure.
+            go out to Azure and rent a VM set it up the way you want and Test app, then shut it off boom done.
+
+    PaaS -Platform as a Service they take on more responsibility.
+                    renting an environment
+                    You manage Data & Access and Applications.
+                    Cloud provider managers everything else.
+
+    SaaS -Software as a Service, pay per user -renting the software.
+                                sign up with personal accounts.
+                                simply access it through web or API
+                                Cloud provider managers most everything.
+                                
+                    Microsoft teams, SQL server, etc is actually your data, no co-copy clauses.
+
+    Go out to wikipedia as a Service.  There are many Examples. 
+
+DEFINE CLOUD MODELS (in book)
+Public Cloud
+    Microsoft Azure.  Azure Portal.
+
+Went through and created a virtual machine
+    create a virtual machine on portal.  Sub Visual Studio. 
+        Resource group --AZ900BC for bootcamp.
+        Name - bigdevmachine
+        Region -you can put it anywhere (datacenter)
+        Security -standard
+        Image -defaults to Linux Servers since its free.  Windows costs more.
+                got to the store search for images.  
+                Visual Studio -selected 2022.  If you dont find what you want select the OS and install it.
+        Size -size of the machine.
+                as long as you remember to turn it off when done it doesnt cost the full monthly amount.
+                it would be the $280.32/m but then divide for hourly cost and multiply by the hours and days you work on it.
+
+
+Azure Speed Test -website.
+    how long does it take data to get to the data center?
+
+Hybrid Cloud has chart comparing all 3.  Public, Private, and Hybrid.
+
+Multi-Cloud 
+    why limit to Azure, you can use Azure and AWS.
+
+Azure Arc 
+
+
+Scalability
+
+Vertical Scaling is a bigger box or bigger computer.  Scale it up or down in size.
+Horizontal Scaling is more servers for redundancy.
+
+    Anything in cache, shopping carts in one server move to another server? 
+    ie. amazon cart in a server and that data center goes down, does it move over to the other data center/server??
+
+
+
+Creating a Virtual machine somewhere
+    powershell  new-azvm
+        it asks for name of machine and credentials user & password.
+    then starts building the VM using defaults and takes a while.
+
+    You can script it further to select other items by writing a longer command line.
+
+    if you go to the web and fill in the info, it calls the Azure Web Services
+    if you go through powershell it calls the Azure web services.
+    You could write C# code to build a VM, its the same type of Web API.
+
+    new-azvm -Name vm2 -ResourceGroupName MyDemo -Location EastUs -VirtualNetworkName vm1network
+            then asked him for credentials again and started building.
+
+    You can go back to Azure portal and manage each maching righ there.
+
+Get-Command *-az* | measure
+Get-Command *-azvm* | measure
+
+
+Azure Portal - App Services
+Create Web App - platform
+    sub visual studio enterprise sub
+    resource AZ900BC
+    Name is the website name - some are taken.
+    publish code
+    runtime stack .Net6 LTS
+    OS -windows or linux.
+    location -East US.
+
+Deployment has GitHub
+    you can actually deploy your code from Github to Azure test site.
+    Network config - might build a custom network of other database & services.
+    Monitoring -nothing righ tnow
+    Tags - organization.  name development and value saleswebsite
+            helps organize costs, what was spent in development on Azure or production.
+
+Then showed costs.. wants free.
+    Went back to App Services and changed the SKU and SIZE
+        clicked Dev/Test and FREE.
+        Free version does not support the ability to scale out.
+
+built MVC -model view controller web page in visual studio 
+Can right click solution and select Publish or project publish.
+
+Document to show publish a web api
+
+Login should be a Post and not a Get function.
+
+Mostly will use Platform as a Service.
+
+Azure has so many features just Search for them
+    Can do Database there.
+    searched database and chose SQL Databases
+    (not called Sql Server, thats what we downloaded)
+    Create another database.  Select all of the typical stuff from prior.
+    DB name, select server
+    Authentication - use Azure active directory.. maybe but would use   
+        SQL Auth for our databases we created.
+    Workload environ - development
+
+    Compute + Storage;
+    Configure service and compute tier
+    DTU's basic. 4.90/month.
+
+    redundancy
+        locally -is 3 copies in the same section of servers. If a fire happens you could lose all 3.
+        zone -is same building ish but has different cooling / zone of servers.
+        geo -will put 3 copies in east and 3 copies in West.
+
+    Additional settings
+        use existing data - none is let C# scaffold or create the database.
+
+This was ALL software as a service.  Did not do much else.
+
+Then write connectionstring going to be longer - mikesmodelairplanes.database.windows.net/ 
+    instead of local host.
+    left hand side has section for Connection Strings.
+        then can pick.. ADO.Net, JDBC, ODBC, PHP, Go.
+        copied ADO.Net, pasted into notepad or VSC
+            can delete default options like security.
+            and can paste the remaining string in VSB -Sql object explorer
+            connect to new database
+            past in the server name.. tcp:mikesmodelairplanes.database.windows.net
+            enter in username then password.
+
+            Didnt connect.
+            Back to Azure Overview --> set server firewall at top
+                add ipv4 address.
+
+            Then Database Name shows up for the connection for Sql object explorer.
+
+Software as a Service is Azure hosting, Azure database, etc.
+        Teams and office 365 are all Software as a Service.
+        Even a Databse on Azure.
+
+
+Azure.microsoft.com/en-us/products/
+
+    can choose AI + machine learning with Computer Vision.  
+            show it pictures of cute kittens and ugly dogs.. then say we dont want ugly dogs.
+            the machine will scan pictures and allow cute kittens and block ugly dogs.
+
+    Text to Speech to add.. 
+    tons of stuff.. analytics 
+    containers -kubernetes will manage servers,etc.
+    SQL Database.
+    Active Directory is on there - the first 50 accounts are free.
+
+check out azure quantum computing tutorials
+
+After lunch create a Azure free account.
+    once it expires we can create an Azure trial account.
+    a credit to use for 30 days.
+        search the Azure Free list.
+
+    after 12 months it will cost money and you could put a limit even $0.
+    search Azure Trial for more info.
+
+
+Azure Physical Infrastructure
+    always want to create redundancy
+    using Region Pairs like US East 1 and US West 1.
+
+    Sovereign Regions
+        not only US Gov or China regions that are restricted
+        but could be local laws, Germany requires german employees data be contains in Germany only.
+        So you need that region.
+
+Azure Management Infrastructure
+
+    Management 
+    resources
+    subscription resources
+    management groups and 
+    then subscriptions.
+
+COMPUTE and Networking Services
+
+    VM -> he uses Oracle VM VirtualBox.  A great local VM.
+    in DataCenter either Microsoft Virtual V or VM Ware.
+        control over OS.  You can have a server hosting Windows or Linux.
+    
+        You could build a VM to test windows 7.  Not going to buy a laptop or pc with it.
+            or Linux.
+    
+    VM Scale sets
+        doesnt quickly scale up or down since it has to copy the hard drive.
+    VM availability sets
+        update domain - groups by VM's rebooted at the same time to apply an update.
+                availability set will change so they are not all in same update on tuesday at 2pm.
+                there is a 30 minute timer before the next domain starts update.
+        fault domain - group by common power source or network switch.
+            availability set will split your VMs across up to 3 fault domains.
+            helps protect against power or network failure
+
+    VM is basically a disk drive and config file. Basically upload disk image and config file or  
+        config in portal.
+    
+AZURE CLI
+    runs everywhere, Windows, macOS, Linux.
+    The issue/con is that it only works with Azure.
+
+PowerShell
+    Windows at first only. Added MacOS, Linux.
+    -Mike uses PowerShell as he has to integrate data from multiple points or sources.
+
+Azure Kubernetes Video
+    Talks about containers and kubernetes.
+    how kubernetes works
+    https://www.youtube.com/watch?v=daVUONZqn88
+
+CONTAINERS
+    containers are a virtualization environment.
+    if you want to host VM's you need a big computer & windows server
+    containers are more effecient as the client and host are both running linux, 
+    you dont need it on each VM.  Just one install.
+
+ --  Visual Studio knows how to publish to containers!
+        publish to Docker Container Registry.
+
+    instead think about can I publish this into a container and linux container.
+
+ServerLess Computing (aka FUNCTIONS)
+    sits between platform and Software as a Service on the chart.
+    in Azure this is a feature called FUNCTIONS.
+
+    Get rid of the Applications tier and replace it with Functions tier.
+    Functions = Methods.
+        might want to deploy a function to a URL.  Like a Web Service.
+
+    new web API project -many files.  lots of coding, Controllers, Routing, Confirm, etc.
+    instead have one with a Function.  a Function and a config. That's it.
+    
+    AZURE Portal and Function App - Create Function
+        Basics
+        runtime stack - .Net, but many options showing.
+        all the usual.. region, OS, etc.
+        OS - use windows, built in editor for the function.
+        Plan Type - Consumption(serverless) -the first million calls are free.
+        Hosting
+        Storage Account -create new. To store functions.
+        No networking or monitoring.  
+        Create.
+        This is an administrative box holding the functions.
+            which have to be the same flavor - like Windows OS, etc.
+
+    Left side - Functions.
+    You could create the Function in VSB or in the environment.
+        created an HTTP trigger
+        scroll to bottom - 
+            give name.. HTTPTrigger1
+            set to Anonymous, so we could run it too.
+
+        click on Code + Test
+            shows a built in editor with some limited intellisense.
+
+        Functions can take parameters, pass in data or injecting.
+            HttpRequest req, ILogger log -injecting http request.
+
+        Save
+        Get function URL
+
+    Did not create the WebAPI project, just created and deployed a Function.
+    microservices -> did not create controllers, etc.  Only functions.
+        we could paste our WebAPI functions in here and run them.
+        Advantage is you spelled something wrong, easy to fix and have deployed
+            instead of rebuilding the API and redeploying.
+        Con is if you have 50 functions
+
+Web Apps or Application Hosting Options
+
+    App services can host most common app like Web apps, API apps, WebJobs, Mobiel apps.
+    build in load balancing.
+    
+    Mobile apps
+        build an app in the phone to call a function, function stored in Azure.
+        the app calls the weather, which is stored in SQL database in Azure.
+
+
+Azure Virtual Networking
+
+    Azure load balancer connects from web to the front end, 
+    the front end can access business tier only.
+    business tier can access SQL server
+    SQL server is not accessable via front end or the web.
+
+    May create a gateway, so azure can communicate on Prem, but no other access.
+
+
+    Azure IP pricing search shows $0.004/hour.
+            we are running out of IP address numbers, so adding costs to reduce usage.
+
+VPN Gateways
+
+    connect datacenters to virtual networks Site to Site connection.
+    connect individual devices to virtual networks through point to Site connection.
+    connect virtual networks to other virtual networks through a network to network connection.
+
+    data transferred in encrypted private tunnel as it crosses the internet.
+    You can deploy only one VPN gateway in each virtual network.
+    VPN can be hardware or software.
+    Site to Site is datacenters connecting
+    Point to Site is individual device to networks
+
+    ExpressRoute failover
+        There are unused fiber through out the US. You can rent that fiber space and dedicate it.
+        They only use about 2% of the fiber that is buried, it costs nothing to add a ton of fiber
+        at time of digging.  So a ton was added.
+
+    
+Created a Storage account
+
+    Data protection - soft delete means undo and will keep a copy for 7 days.
+
+    Storage Containers are folders.  Add a container, you add a folder and can make it accessable.
+    You will probably create a page/button that says upload image, it will actually upload to 
+    the azure storage container.
+
+    Access Tier of HOT is high performance drive like SSD.
+        change the tier of 
+        Cool will change from HP SSD to DiskDrive and cost less money.
+        Archive will move it to a Tape Cartridge and even cheaper.
+            will take 7 to 8 hours to take it off the Tape and back to Disk Drive.
+            sometimes longer even 15 hours, so the next day.
+
+
+REVIEW from prior day
+
+IaaS  VM's
+PaaS  Web Apps
+SaaS  SQL Database, AI ML
+
+AZURE Storage Services in book, Azure Files
+
+Files
+    BLOBs   URLs, & API
+    Files   as network shares, & API
+    Queues  FIFO (first in first out data storage), & API
+    Tables  No-SQL, & API     tables store a Key & some JSON data, alternate to existing databases.
+
+Azure Files -support SMB or Server Message Block     
+
+    Storage containers are folders but they do not support sub folders
+
+File Shares allow you to add directory and sub directories.
+    you can use the Connect once some are uploaded.
+    in Windows you can create a script in PowerShell
+
+Azure allows you to have a local corporate storage that syncs with the azure cloud
+    the azure cloud will sync with other branches, so if a branch uploads a new contract
+    it will sync into the main corporate headquarters file system drive.
+
+Queue Storage  (first in first out) <one of the cheapest services out there>
+    allows things like time clocks for employees to be processed throughout the day.
+    company could have thousands or hundreds of thousands from 8am to 9am,
+    then nothing until 4 to 5pm.  Putting them into a queue allows the server
+    to process them throughout the day instead of buy a large server. 
+    Or can have the cloud server process them and rent the server
+    taking it offline when not in use and saving a ton more money.
+
+Table
+
+
+Opened AZURE storage explorer
+        So you can connect to azure storage and browse through the storage content.
+
+side note -storage emulator lets you test code against azure in the emulator if you are offline.
+then you can change connection string and send it up to azure portal.
+
+Migrating to Azure
+    Sync Active Directory -user names, passwords, etc.
+    Sync File Shares there instead of move, since get speed of local still.
+
+    Move VMs  (lift & shift)
+        stop VM existing locally
+        copy diskdrive
+        config -move diskdrive to cloud
+        create new VM -with image of diskdrive.
+            -might have other things to do like connections to the VM.
+
+Storage is CHEAP -> go to Azure storage pricing and pick some options.
+    scroll down there are charges for Read & Write operations.
+
+AZ Copy allows you to run scripts that can upload or do something at a specific time.
+    like end of the day 3pm script run.
+
+Best way to store user credentials is somewhere else
+    using Facebook, Twitter, or GOOGLE
+    login via Google they will send a Token which has my name, email, ID.
+        take that ID and log it into the SQL Database. Say I havent seen 
+        this ID before, sign up and fill out a form. lol.
+
+Azure AD can be used -first 500,000 users are free!
+       SSO
+       multifactor(MFA) -receive text on phone for login, or thumbprint or face recog.
+
+Zero Trust
+    dont grant access to just anyone. and its not auto granted. 
+    it has to be granted/approved and assigned.
+
+Azure Vault
+    You can store the connection string in the vault and the code calls the vault 
+    to retrieve the connection string. 
+
+Microsoft Defender for Cloud
+Then Network Rules
+Azure Firewall =$10,000/m  costs a Billion dollars a year to support
+        has a team of people and AI/Machine learning to prevent attacks.
+
+SQL Injection hacks
+    search for photo and they put in pet name [ fido.  ]
+    string sql = "select * from pets where name = '" + petname + "'"
+
+    they could put in [ fido'; drop table pets --  ]
+    string sql = "select * from pets where name = 'fido'; drop table pets --'
+      it could drop the table.
+    
+    Hackers have no life and will first check select * from users, and see 
+    if there is an error, if not they know the table exists and can drop it.
+    Or try insert statements.
+
+
+AZ3166 IOT Developer Kit
+    like Adreno or Raspberry Pi
+    you can mess around with it, buy sensors that connect to it.
+    in Azure write functions that send you text or email about things, 
+    like temp or whatever you want.
+
+
+
+Creating Tags
+    Purpose is organize and filter for reporting
+    what resources are being used?
+
+Blueprint
+    allows standardize cloud subscription or environment deploymens. 
+
+    Each Component is an Artifact
+        like allowed locations for data. ie no vms or data in Germany, or where ever.
+
+    Policy
+        all VM's have to be in East US.
+        all VM's have to be these 3 standard sizes.
+        Storage accounts might be restricted from archiving data since it takes so long to get it back.
+
+    Initiative
+        a collection of policies.
+        which might be Monitoring.
+
+Azure Cosmos DB
+    Has PowerShell or Bash built in and you can use it as such.
+    created a vm using get-azvm.
+
+Visual Studio code works in a browser, 
+everything will probably move to Cloud & Browser based.
+
+PowerShell is object oriented
+    Invoke-RestMethod https://<websitename>.
+    $mydata
+    Learn PowerShell -its a powerful tool.
+
+Azure Arc
+    managing hybrid and multi-cloud environments.
+    The one ring to rule them all.
+    Manage VM's, Kubernetes clusters, and databases if they are running in Azure.
+
+ARM Template
+    VM -> Export Template (down in Automation)
+    It provides the Template code.
+    ARM Template is predefined VM.
+
+Monitoring and Health
+
+    Application Insights
+        Either install an SDK in your application, do a search they have SDKs for everything.
+        or use the Application Insight agent.
+    
+    Insight Agents
+        use it to monitor a broad array of information.
+            -Request rates, response times, failure rates
+            -dependency rates, slow performance
+            -page views and load performance reported by users browsers
+            -AJAX calls from web pages, including rates, response times, failure rates.
+            -User and session counts
+            -Performance counters from Windows or Linux server machines such as CUP, Memory, Network usage.
+
+        just cant do it inside of SQL database.
+        But webservice calls SQL and can have Ai (app insights)
+
+
+AZ900 GitHub   --they ahve the instructions on there.
+    Or this entire content is in https://learn.microsoft.com/en-us/certifications/exams/az-900
+    scroll down to the bottom.
+
+AWS also has free trials and free services.
+   
+
+Mike Smith also does training and bootcamps.
+    out of town the next 2 weeks and in training mostly.
+    but will be working and online.

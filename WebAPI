@@ -36,7 +36,7 @@ Uncheck -->  Configure HTTPS leave checkd if in production.
             Enable OpenAPI Support -Uncheck.
 
 
-appsettings.jscon = connection string will go in here, so it doesnt go into the Code.
+appsettings.json = connection string will go in here, so it doesnt go into the Code.
 
 program.cs -dont delete or change any of the methods showing that make the application run.
 
@@ -343,5 +343,106 @@ ExpenseLine Controller added Method
         }
 
 
+
+============
+Create repository but not put anything in it.
+    up to the teams.
+
+in general, suggestion.. get together as team or have 1.
+    create the visual studio project to get started.
+    create project/solution
+    put in the packages. install-
+    setup the ConnectionStrings
+    push to repository.
+    -other members will clone the repository to have it on their machines.
+
+    Then we can do different things;
+    -someone has to create the Model folder
+    -one gets rid of the weather stuff
+    -someone can work on the program.cs
+    -etc.
+
+    When you make changes, always do your work in a branch.
+    DONT use the main branch.
+        -push your branch up to the repository when its done.
+        -each of us will take a look at the repo to be merged.
+        -do a pull request and what you did in your branch, review things as a team.
+        -all review the changes and all agree on the merge.
+
+    Once done everyone will have to repull the main branch since it will have been updated.
+
+    -other two team members will then have to merge the main branch into their dev branch.
+
+
+    Once basics are done.. nuget.. program.cs.. connectionstrings.. got rid of weather.
+    Then start adding Models and adding Controllers.
+
+    Test your branch.  Push it up.. do pull request.  Get together to do the main merge.
+    all say ok fine and merge to main, then pull it down and merge to our dev.
+
+    PK's need to be done first before you can do FK tables.
+
+
+
+
+
+
+
+
+
+MICROSERVICES    (minimal API's)
+        have one website call another
+
+    capstone is not a microservice.
+
+    Tends to be an API -except much more focused and fewer of them, small implementation.
+    A couple of math functions to write API's for that we may use in many different applications.
+
+    maybe write an API just for user management
+        write it once and the other applications will share that API.
+
+
+    use minimal API's -uncheck the Controllers.
+    when creating -everything is unchecked. HTTPS might be checked in real world scenario.
+
+    May need CORS if we are going to deploy it.
+
+
+    ALWAYS create statements after the app variable is declared.
+
+
+    above app.Run(); we are putting app.MapGet (could do put, post, etc.)
+    app.MapGet("/cubed/{nbr:decimal}", () => {});
+
+    then need to pass in our decimal type nbr variable to the random method created.
+
+            app.MapGet("/cubed/{nbr:decimal}", (decimal nbr) =>
+                {
+                    return nbr * nbr * nbr;
+                });
+
+            web browser localhost:5555/cubed/3 
+                it will calculate whatever number passed in.
+
+Delagate 
+    a way to declare a variable that is of type METHOD.
+    declaring a delage is declaring a type of Method.
+
+    since we dont have a controller with method and cant call it from the controller
+    we are doing a delagte with () => {}
+
+RESULTS
+    if you want to return badrequest or some error you have to do 
+        Results.BadRequest("can enter a comment");
+    but then have to do the true portion at the end.
+        Results.Ok(your calculation performed);
+
+
+
+In Process
+    when in production you could have an
+    application pool, which is a pool of memory allocated solely to your application.
+
+    you would have to run out of process.
 
 
