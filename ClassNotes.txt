@@ -257,5 +257,36 @@ Learn more about PowerShells
 Think about working on a personal project
 maybe some minimal API's
 
+Read Java book chapter 1.
+    skip chapter 2
+if possible look at Java book chapter 7 classes
+    chapter 6 test & debug would be good after 7.
+    Chapter 10 inheritance, interfaces. Whatever you can read.
+    Take a shot at banking.. create the account and then savings from account.
 
 
+10/3 -Spring Boot Capstone project
+        Tool Hibernate like EntityFramework and Linq.
+        but no Lambda syntax.
+
+    PK's, Unique values, FK's to deal with.
+
+    Oracle owns MySql which combines with Java.
+
+    Work on the SalesDb re-creating it.
+        making notes and app properties cannot have mistakes.
+
+10/04
+
+    Six methods we had to hard code in C#.  But dont do login.
+        in order, set status from New to Review.
+            if total is 200 or less = Approved.  >200 = Review.
+            set unconditionally to Approved
+            set unconditionally to Rejected
+
+Non-trivial ones - dont worry too much.
+
+            Retreive all orders in Review status, except for particular customer.
+                will have to put something in repository to get this to work.
+            
+            Recalculate the line items.  

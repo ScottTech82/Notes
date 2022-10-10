@@ -1,0 +1,441 @@
+
+MySQL is used with java as owned by Oracle.
+    
+***created database in MySQL. create database salesdb;
+            cannot create in Spring/Eclipse.
+        then to Eclipse.
+
+     New Spring Starter Project.
+        dont touch service URL
+        Name lowercase = sales
+        leave use default location or select the folder to use.
+        
+        Group is high level = com.bootcamp or whatever you want.
+        Artifact is same as the name.
+        Version whatever you really want. Not going to have multiple versions this time.
+        Description = Java-spring-boot
+        Package = com.bootcamp.capstone.tutorial.sales
+            packge name adds on to the group name. com.bootcamp, then we do com.bootcamp.capstone, etc.
+            group & root packge name is backwards. sales.maxtrain.com, we would put com.maxtrain.sales
+        Next
+
+        New Spring starter dependencies
+            categories on left, what you select on the right.
+            MySQL Driver  --under SQL category
+            Spring Data JPA --under SQL category
+            Spring Web    --under Web category
+            clicked Make Default so should auto from now on.
+
+        Next
+        Finish.
+
+    sales [boot] showing with tons of files.
+
+    Set application properties.
+
+        src/main/resources -> application.properties.
+            (1 property per line, each has key = then data for the key)
+            spring.jpa.hibernate.ddl-auto=update
+            spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+            spring.jpa.show-sql=true
+            spring.jpa.properties.hibernate.check_nullability=true
+
+            spring.datasource.username=root
+            spring.datasource.password=Train@MAX
+            spring.datasource.url=jdbc:mysql://localhost:3306/salesdb
+
+            save & close.
+
+src/main/java
+
+    file already exists under packages.
+    ALL of our packages have to be in that packge and more.
+        click on the packge that exists and do add packge.
+            put .customer on the end. do not check the box and finish.
+            now it shows under the original packge.
+
+    ALL of our packages must be under that original SalesApplication.java.
+
+    Added another packge with .order at the end.
+    com.bootcamp.capstone.tutorial.sales.order
+
+    In each table we will have 3 files.
+        first is Model.
+
+    ADD new Class under .customer packge
+    Name = Customer. Finish.
+        private int id;
+        private String code;
+        private String name;
+        private double sales;
+        private boolean active;
+
+        right click -source ->Generate getters & setters for all.
+        changed the isActive to getActive.  Should be all the same, get & set.
+                
+                //create table
+        @Entity above the public class Customer.
+            hover and click the import javax.persistence.Entity;
+               
+        === just did      "import javax.persistence.*"
+                                            for all and delete the rest.
+
+        @Table(uniqueConstraints=@UniqueConstraint(name="UIDX_Code", columnNames={"code"}))
+            if you want you can put name="customers" to get them to be plural.
+
+    Primary Key add
+        @Id   //says this is the PK and below says want MySQL database to generate for us.
+        @GeneratedValue(strategy=GenerationType.IDENTITY)
+
+    Added Columns specifying the length and nullable =false.
+
+                @Column(length=30, nullable=false)
+                private String code;
+                
+                @Column(length=30, nullable=false)
+                private String name;
+                
+                @Column(columnDefinition="decimal(9,2) NOT NULL DEFAULT 0")
+	            private double sales;
+
+so far looks like this===
+                        import javax.persistence.*;
+
+                        @Entity
+                        @Table(uniqueConstraints=@UniqueConstraint(name="UIDX_Code", columnNames={"code"}))
+                        public class Customer {
+                            @Id
+                            @GeneratedValue(strategy=GenerationType.IDENTITY)
+                            private int id;
+                            
+                            @Column(length=30, nullable=false)
+                            private String code;
+                            
+                            @Column(length=30, nullable=false)
+                            private String name;
+                            
+                            @Column(columnDefinition="decimal(9,2) NOT NULL DEFAULT 0")
+                            private double sales;
+
+                            private boolean active;
+                            
+                            public Customer() {}
+
+        Right Click on sales[boot] -> run as -> spring boot.
+        Should generate.
+        Output will show at the bottom -> Started SalesApplication in blah blah seconds.
+
+REPOSITORY    
+    Customer -> add Interface
+        name = CustomerRepository
+
+        extends CrudRepository<Customer, Integer> 
+            -> will have to do the import.
+
+        this will be for ALL Models.
+ 
+            -CrudRepository is a generic interface and provides many callable methods to interact 
+            with the database.
+            -it must be defined with the model to access an dthe class-type of the primary key
+            extending
+            -repository can be extended with customer methods or query annotations.
+                            method ex. Customer findByCode(String code);
+                            query ex. @Query("select c from customer c
+                                            where c.name = ?1")
+                             List<Customer> getByName(String name);
+                             //select c means all customer c where customer.name =            
+        
+
+CONTROLLERS
+
+    Add class = CustomersController
+        --above the public class add these..
+                 --should be plural form of the model, like C#.
+        
+        import org.springframework.web.bind.annotation.*;
+
+        @CrossOrigin   //CORS (cross origin resource sharing)
+        @RestController  //rest meaning send & receive JSON to interact with controller.
+                        //automatically returns data in the ResponseBody.
+        @RequestMapping("/api/customers")  //just like localhost:8080/api/customers for postman.
+        public class CustomersController { }
+
+    ---> @Autowired  //instead of a constructor, this does it for you.
+                    // in C# was DBContext stored into _context.
+    ---> private CustomerRepository custRepo;
+    
+//like IActionResult or IEnumerable to return a collection of things.
+        public ResponseEntity<Iterable<Customer>> getCustomers() {..}
+
+
+
+        @GetMapping
+        public ResponseEntity<Iterable<Customer>> getCustomers() {
+		Iterable<Customer> customers = custRepo.findAll(); /*to find all and put in customers var.
+		        using the custRepo that is customer repository that inherits the crud repository. */
+			    //then return the new collection customers, status ok which is error result 200.
+		return new ResponseEntity<Iterable<Customer>>(customers, HttpStatus.OK);
+    
+    //COULD DO LIST instead of Iterable.
+        //@GetMapping
+        //public ResponseEntity<List<Customer>> GetAll() {
+        //  var customers = custRepo.findAll();
+        //    return new ResponseEntity<List<Customer>>(customers, HttpStatus.OK);
+        // }
+
+---->Resolve OPTIONAL with Java.Util not the others.
+
+        @GetMapping("{id}") /* /api/customers/id */
+        public ResponseEntity<Customer> getCustomerByPK(@PathVariable int id) {
+                             //need to use the PathVariable to read id
+                             //pathvariable says this piece of data is coming from URL
+            Optional<Customer> customer = custRepo.findById(id);
+            if(customer.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+                    //return type is Optional, so have to use customer.get to return it
+            return new ResponseEntity<Customer>(customer.get(), HttpStatus.OK);
+        }
+
+        @PostMapping
+        public ResponseEntity<Customer> postCustomer(@RequestBody Customer customer) {
+            //saying where the pass in data is coming from
+            //the @ReqestBody being passed into Customer customer.
+        if(custoemr.getId() != 0 || customer == null) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Customer newCustomer = custRepo.save(customer);
+        return new ResponseEntity<Customer>(newCustomer, HttpStatus.CREATED);
+        }
+
+
+        @SuppressWarnings("rawtypes") //or just leave the yellow squig warning.
+        @PutMapping("{id}")
+              //not going to return any data, so dont have to put a type in response entity.
+        public ResponseEntity putCustomer(@PathVariable int id, @RequestBody Customer customer) {
+            if(id != customer.getId()) { //if the id does not exist return bad request
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            Optional<Customer> cust = custRepo.findById(customer.getId());
+            if(cust.isEmpty()) { //if no customer found, return not found
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            custRepo.save(customer); //save update
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+
+    	@SuppressWarnings("rawtypes")
+        @DeleteMapping("{id}")
+        public ResponseEntity deleteCustomer(@PathVariable int id) {
+            Optional<Customer> customer = custRepo.findById(id);
+            if(customer.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            var x = customer.get(); //added variable to do .get outside of delete.
+            custRepo.delete(x); //was using custRepo.delete(customer.get()), better coding this way.
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }   
+
+
+Went Back to CustomerRepository class to add a get by Unique Code
+            Optional<Customer> findByCode(String code);
+            //read for one specific column for the specific code passed in.   
+
+    Then we can go back to CustomersController and add a Method to find by the unique code.
+        @GetMapping("code/{code}) /* /api/customers/code/{code} */
+        public ResponseEntity<Customer> getCustomerByCode(@PathVariable String code) {
+            Optional<Customer> customer = custRepo.findByCode(code);
+            if(customer.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<Customer>(customer.get(), HttpStatus.OK);
+        }
+
+FOREIGN Key  = @ManyToOne(option=false)
+
+        Added Order class, orders controller and order repository.
+        added properties in order class
+
+        public class Order {
+	
+            @Id
+            @GeneratedValue(strategy=GenerationType.IDENTITY)
+            private int id;
+            @Column(length=50, nullable=false)
+            private String description ="New Order";
+            @Column(columnDefinition="decimal(9,2) NOT NULL DEFAULT 0")
+            private double total;
+            @Column(length=50, nullable=false)
+            private String status;
+            
+            @JsonBackReference //if using JsonManagedReference in other table.
+            @ManyToOne(optional=false)
+            @JoinColumn(name="customerId", columnDefinition="int")
+            private Customer customer;  //Foreign Key to Customer
+                //in Java have to provide the entire instance of the FK
+            
+     Providing the entire instance is a big difference for the Front End.  Some adjustments have to 
+     be made.
+    
+     
+     
+    Add to Customer, in order to bring the list of orders back.
+            
+            @JsonManagedReference
+            @OneToMany(mappedBy="customer")
+            private List<Order> orders;
+
+            --have to add a few references. 
+                json, the List util java and Order.
+     
+        put @JsonBackReference
+            @ManyToOne(optional=false)
+            @JoinColumn(name="customerId", columnDefinition="int")
+            private Customer customer;
+
+
+        Handling Foreign Keys
+            -a model that has a foreign key, it will contain only an instance of the primary key model
+            -Setting the foreign key requires the primary key models primary key instance to be set.
+
+            //set customer in order
+            var order = new Order();
+            Order.customer.id = 1;
+
+Add two more tables Items and OrderLine
+
+mapping so far
+Customer <- Order <- OrderLine -> Item
+
+        order points to customer
+        orderline points to order and item.
+
+Item 
+    id (Pk) 
+    name [String 30]
+    price [double]
+
+Orderline 
+    id (pk) 
+    quantity [int] 
+    order (fk) dont want the order, so JsonBackReference
+    item (fk)
+
+Order 
+     orderlines [List<Orderline>] Managed, so JsonManagedReference
+            when we read an order we want all the order lines.
+    
+    current bug list;
+    --cannot add an Item without first having an orderline id to reference.
+    --
+
+
+Method for getting all orders in review status.
+            Interface Repository add
+    Iterable<Order> findByStatusAndCustomerIdNot(String status, int customerId);
+    **or List<Order> findBy.. and whatever you want.
+
+Then we can use it in the Controller.
+    @GetMapping("reviews/{customerId}")
+    public ResponseEntity<Iterable<Order>> getOrdersInReview(@PathVariable int customerId) {
+        var orders = orderRepo.findByStatusAndCustomerIdNot(REVIEW, customerId);
+        return new ResponseEntity<Iterable<Order>>(orders, HttpStatus.OK);
+
+
+    ***use Debug with breakpoint to check to see if its working while sending in Postman.
+    ***We put in application.properties spring.jpa.show-sql=true
+        so it shows the sql statements in the console.  You can copy and paste that into 
+        MySQL and just enter to different lines so it looks like a normal SQL statement.
+            then at the end for status and customer id delete ? and pass in what you want 
+            to review for.  You can run it and make sure it works!
+
+RECALCULATE TOTAL
+    
+            @SuppressWarnings("rawtypes")
+            private ResponseEntity recalcOrderTotal(int orderId) {
+                var ordOpt = ordRepo.findById(orderId); //add OrderRepository as autowired to find by order id.
+                if(ordOpt.isEmpty()) {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+                var order = ordOpt.get(); 
+                var orderTotal = 0; //declaring to use in the loop
+                Iterable<Orderline> orderlines = ordlnRepo.findByOrderId(order.getId()); //added to repository interface to find by orderId
+                for(var orderline : orderlines) {  //foreach loop in Java.
+                    
+                            //instead of these two below, we add the item id, name, price in 
+                            //Postman for the postOrderline method.
+                    //var item = itemRepo.findById(orderline.getItem().getId());
+                    //orderline.setItem(item.get());
+                    orderTotal += orderline.getItem().getPrice() * orderline.getQuantity();
+                }
+                order.setTotal(orderTotal);
+                ordRepo.save(order);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+
+
+
+IN EXPENSE DB
+
+        putPayExpense is not working correctly.
+            //need to find by Id first then update the record that was found.
+            
+        UpdateEmployeeExpensesDueAndPaid is not working correctly.
+
+IN capstone
+            recalcRequestTotal under deleteRequestline is passing in
+            x.getRequest().getId().  will this work after x is deleted?
+
+    BUGS!
+
+        x#1-Fixed! 
+            I passed into the recalc method x.getId(); where x = Request. 
+            Moved .getId() from recalc to after getRequest().
+            now I have x as the requestId to pass in.
+                var x = requestline.getRequest().getId();
+                this.recalcRequestTotal(x);
+        
+        Updated Put & Delete to only pass in x, which is the requestId.
+
+        #1 = if 2 requestlines are posted for 1 request, the second requestline
+        adds correctly, but then has the product info overwritten to the requestline
+        id #1 product info.  The total is still fine, but now both requestline 1 & 2 
+        are showing product bootcamp and 15,000.  Even though the second was books @ 150 each.
+            --so requestline 1 = bootcamp $15,000.
+                and requestline 2 = books $150 each x 2.
+                Request Total updates to $15,300 correctly.
+                but then requestline 2 product info changes from books to bootcamp.
+
+.
+
+Users -> Request -> ReqLine <- Product <- Vendor
+        
+
+
+/**
+ * A JDBC SELECT (JDBC query) example program.
+ */
+class Query1 {
+ 
+    public static void main (String[] args) {
+        try {
+            String url = "jdbc:mysql://localhost:3306/capstonejavaprs";
+            Connection conn = DriverManager.getConnection(url,"root","Train@MAX");
+            Statement stmt = conn.createStatement();
+            ResultSet rs;
+ 
+            rs = stmt.executeQuery("SELECT Lname FROM Customers WHERE Snum = 2001");
+            while ( rs.next() ) {
+                String lastName = rs.getString("Lname");
+                System.out.println(lastName);
+            }
+            conn.close();
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+    }
+}
+

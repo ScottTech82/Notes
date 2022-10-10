@@ -1,0 +1,399 @@
+
+Spring Tools is a customized version of Eclipse
+    written in JAVA.  Requires JDK be installed 
+    (we also used Java 17 runtime )
+
+    Windows -> Editors -> Text Editors -> Line numbers.
+    Windows -> Java -> Code Style -> Use is prefix for getters that return boolean.
+
+Workspace
+    location on disk you want your new projects to go.
+    You can have more than one.  But mostly just Java in repos folder and put it all there.
+    File switch workspaces if you wanted to.
+Projects
+    will be either Java Project (console app in C#) or Spring Starter (web api)
+
+Differences from C# to Java
+File > New > SourceType
+    Packages ->  are basically Namespaces or roughly.  Package is high level name
+    Class ->  same
+    Interface -> same
+    Record -> like a class but a little different. 
+    Folder -> similar
+No controllers, we have to write them.
+
+-When referencing a class, an import is required.
+    like a using statement in C# that points to a namespace.
+    in Java import points to one or more classes.
+        like if you have 100, you can import to 1.
+    you will get an error like C# with red squiggle line.
+    End it with an * and it means all the classes
+        java developers prefer you list every individual class.
+    
+Run Projects
+    When you run a project it runs where the main method is at.
+    Cant just open and hit F5.  Have to say where to run or put main.
+
+    -Normal Java project
+        right click on the project
+        Run as > Java Project
+            AND must have a main method.
+    
+    -Spring-boot project
+        right click on the project
+        Run as > Spring boot app.
+
+Debugging
+    Run in Debug mode ***not automatic***
+        Breakpoints are the same, 
+        step into f5
+        step over f6
+        step return f7
+
+    System.out.println messages show in the console.
+    Hover over variable and right click to inspect, same as C#
+    Debug perspective -can change value in variables tab (double -click adn type over)
+
+Created new java project
+Put in name -> use default location your workspace.
+Class files are compiled java files.
+    dont worry about much else.
+Next -> settings.
+
+Delete will prompt and say do you want to delete the files too?
+    you can just get rid of the package and leave the files.
+
+Close project it shows the folder as closed.
+
+Alot of things in Java start with lowercase.
+
+Right click SRC -> new Package.
+    package name geometricShapes.
+Added another Package
+    named goemetricShapesConsole.
+Added class under the console package
+    Program or can do Mainline.
+    Modifiers are access modifiers.
+        Abstract classes cannot be instantiated.  Cannot create an instance of it.
+    Superclass
+    Interfaces you want to add
+    Make sure the check Main -public static void Main
+    Then made 3 classes under the Shapes package, Quad, Rect, Sqr.
+
+Source files
+    -Java source files must have an extension of .java.
+    -When compiled a .class file is created with the same filename. (ie. hello-world.class)
+        you cant open a .class file, its jibberish.
+    -There is a restriction that a source file must be named the same as the class.
+    -A source file can contain only one public class.
+     
+
+*****Dont put class files in your repository.*****
+    Never want to put compiled files in there.  Its called source files not compiled files.
+
+
+Java Class Differences
+    -getters & setters ==Java uses methods getters & setters, not same as get; set; in C#.
+            Fields or data are all private.  Getters & setters are public that allow you to read and write the data.  
+    -extends, implements, & throws  =inheritance
+    -main(), super() & this () ==super talks to parent class, base in C#.
+    -String  =capital, string class.
+    -System.out.println()  = console.writeline or console.log.
+    -final
+    -BigDecimal  == decimal, but is terribly complex class to use not like decimal in C#.
+    -default override  == get to it later, method in parent marked virtual and derived override.
+                            polymorphism.
+    -import 
+
+
+Getters & Setters
+    -the data in classes is defined using a private field and public methods to get and set the value.
+    -some IDE's will generate the getter & setter methods from the fields.
+    -getter & setter code may contain code for editing or to derived returned data.
+       
+        ex. private String name; //backing field
+            public String getName() {return name;}
+            public void setName(String name) {this.name = name; }
+        //in C#
+            public string Name {get; set;}
+        
+We Did like this.. 
+        	private int side1;
+            private int side2;
+            private int side3;
+            private int side4;
+
+        //returning side1 must be same type = int.
+            public int getSide1() {
+                return side1;
+            }
+            public void setSide1(int length) {
+                this.side1 = length;
+            }
+right click -source -generate getters & setters
+    you can generate them automatically.
+adjust and put in Length instead of Side1 or 2 in there.
+
+Calc the perimeter
+public int Perimeter() {return getSide1() + getSide2(), etc.}
+***cant use just side1 + side2, etc. since the value might change and measurement. inches vs mm.
+    getter and setting is setting the value.
+
+    Getter & Setter is better to use to manipulate the data.
+
+=======================
+extends = Inheritance
+
+    -java class inherits another class, extends is used before the inherited class
+    -keyword extends must follow the name of the new class.
+            class Savings extends Account.
+
+implements
+
+    -java class implements one or more interfaces
+    -implements must follow extends if exists.
+        class Savings extends Account
+            implements Iprintable, Iwriteable {..}
+                --using the keyword and comma separating them.
+
+to pass in Defaults
+        you dont want to put super in twice. Using this(3,5) to set defaults.
+
+	public Rect(int s1, int s2) {
+		super(s1, s2, s1, s2);
+	}
+	
+	public Rect() {
+		this(3, 5);
+	}
+
+
+throws  
+
+    you have to either try catch the exception in the body.
+    if not they you use the throws Exception name after the method.
+    
+    int calcModulo(int a, int b) throws DivideByZeroException {return a-(a/b*b);}
+    or
+    public BigDecimal Withdraw(BigDecimal withdraw) throws Exception {
+
+main method
+
+        the main method is calld by the java runtime environment (JVM)
+        in java its main() instead of Main() in C#.
+
+super
+        in java for a derived class constructor to call a parent class super must 
+        be used first.  Like base in C#.
+        Parameters can be passed into super.
+            Savings(String name) {super(name);}
+
+this()
+        -when one class constructor calls another constructor of the same class.
+        this must be the first statement in the constructor body.
+        -parameters can be passed into this().
+        Savings(String name, float point) {..}
+        
+
+String  -make sure its capitalized.
+
+System.out.print{ln}{f} ().
+        .println() --is like writeline, prints whatever is passed in and goes to next line.
+        .printf() --outputs string with values embedding in string.
+            printf(string gnt, Object...vals) -seems to be used when printing variables.
+    No interpolated strings.. booo!
+
+        int i = 1;
+        String s = "Ok";
+        boolean b = true;
+        System.out.printf("i = %d, s = %s, b = %b", i, s, b);
+            -first must take a String. then any Object type, int, bool, whatever.
+            -you can also put in [other types like Width or format]
+formatting  -if you use %3d is right justified 3 spaces. or %-10s is left 10 spaces.
+        integer is %d 
+        string is %s
+        boolean is %b
+
+varargs
+
+        -in java varargs defines a parameter array with the size defined by the numbers
+        of items passed as separate parameters.
+        -this is like Params in C#
+        -must use three dots ... meaning this is an array.
+        //C# = 
+            int Add(int i, params int[] j) 
+                    ---params array means you can have 0 or more parameters.
+                    int sum = i;
+                    foreach (int n in j) {sum += n;}
+
+        //Java =
+            int Add(int i, int... j) {}
+
+            both examples called by Add(1, 2, 3, 4, 5)
+            putting however many integers into the array parameter.
+
+
+final   
+        in java final defines a variable that becomes a constant after it is 
+        assigned a value.  Like const in C#.
+
+BigDecimal
+
+        Never use, I used in my banking app and it was brutal. lol.
+        In case I forget, it is its own class.
+        had to use .Add(variable) .Subtract(variable)
+        .compareTo(variable) < -1))
+
+override
+
+        -In oop there are times when instantiated object from a derived class is 
+        stored in a base class variable.
+        -this occurs with collections of objects derived from the same base class.
+        -dont actually have to override them like in C#.
+        
+        class Parent{ void virtual method1 {println("parent:method1")}}
+        class Child extends Parent{ void override method1{println("child:method1")}}
+
+import
+
+        like a using namespace
+        -specific is java.util.List;
+        -all is java.util.*; 
+                all in that package.
+
+package
+
+        like a namespace, a group of related classes.
+        package names help avoid name conflicts like a namespace in C#.
+            package com.maxtrain.prs;
+            class User {..}
+            // com.maxtrain.prs.User
+
+boolean
+        same thing as C#.
+
+access modifiers
+
+        -There are fewer access modifiers in Java than C#.
+        -if no modifier is applied, the access is called (default)
+            which provides package access.
+        -Classes can be public or (default)
+        -Fields, methods, and constructors, they can be public, private, 
+        protected, or (default).
+
+        -protected is mostly private, but accessabile when inherited.
+
+comments
+
+        all the same // or /* */
+        -Document: /** */
+            opening with 2 astericks, it will show in the popup 
+            when hovering your mouse over a particular method.
+            /** can use @params which will display Parameters */
+
+for()
+
+        -for loop in java can do two different things.
+        -like a foreach, its...
+                for(int anInt : arrayOfInts) {..}
+                    //use the colon instead of in. 
+                    //this is like foreach anInt in arrayOfInts
+        -or like in Java iterating through..
+                for(int idx = 0; idx < 10; idx++)
+
+out parameter
+
+        -with the out parameter in C#, a parameter
+
+ref parameter -likely wont have to deal with these out or ref params.
+
+ArrayList<T>
+
+        -equivalent to C#.
+        -simple collection of items of type T.
+        -Methods: add(T) or remote(T).
+        ArrayList<int> ints = new ArrayList<int>();
+
+HashMap<T,T>
+
+        -roughly equivalent to a Dictionary.
+        -Key/value collection.
+        -Methods: put(T tk, T tv) or T get(T tk)
+        HashMap<String, String> stateCodes = new HashMap<String, String>();
+
+Some Differences
+        //C#
+        public ind Id {get; set;}
+        
+        private int _Quantity;
+        public int Quantity {get; set;}
+            get {return _Quantity;}
+            set {
+                if(value <= 0)
+                    throw new Exception();
+                _Quantity = value;
+            }
+ //this is a way to edit the Quantity field so it cannot be 0 or less.
+ //But in JAVA its more of a method. Instead of a variable.
+
+            //Java
+            int a = account.getQuantity();
+            account.setQuantity(1); //since you have getters and setters.
+            
+            // C#
+            int a = account.Quantity;
+            account.Quantity = 1;
+
+//C# has default constructor, so you can create an new instance.
+            Account a = new Account() {id = 0, description = "new account", balance = 0};
+
+@Autowired
+
+//JAVA
+
+            @Autowired
+            private AppDbContext _context;
+
+//c#
+            private readonly AppDbContext _context;
+            public CustomersController(AppDbContext context) {
+                _context = context;
+            }
+
+Add API Instances
+
+            -HTTP Method: Get, Post, Put, Delete
+            -URL route
+            HTTP Method declared using one of these annotations:
+                @GetMapping, @PostMapping, @PutMapping, @DeleteMapping.
+            -Every HTTP Method must be Unique, cannot have same route and parameter.
+
+ResponseEntity<T>
+
+            -A generic class that allows returning data in the response along with the 
+            http status code.
+            -Every response should return an http status code even if no data is returned.
+
+route
+            -Dont start with a / in teh Get Post Put mapping. it will override the 
+                /api/customers
+
+JAVA Postman
+
+            will have to put in the entire instance for foreign keys.
+            saved the post & put methods in Postman Java SalesDb.
+
+
+The equal to == points to the memory location.
+            so String s1 = "ABC", is the same as String s2 = "ABC"
+            but different memory location than 
+            String s3 = new String("ABC")
+
+            so use s1.equals(s3). s1 == s3 will be FALSE since different memory location.
+
+
+            only add expenses due to employee only if approved
+            might need .equal
+
+            paid increase the amount paid and decrease the amount due.
+            
