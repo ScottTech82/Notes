@@ -414,6 +414,26 @@ Users -> Request -> ReqLine <- Product <- Vendor
         
 
 
+Greg showed us Query
+ -methods in the repository that dont form
+ -do a join is most likely query.
+
+ Repository method call to get username and password via query syntax
+            under UsersRepository
+ @Query("Select u From users u Where u.username = ?1 and u.password = ?2")
+ Optional<User> findByUsernameAndPassword(String username, String password);
+
+ the ?# points to the method parameter.  username is 1st and password is 2nd
+            username = ?1, password = ?2.
+            ? = variable to go there and not a specific number.
+                (sql server we did @fred to make it variable, here is ?)
+    
+    From clause points to the Entity name (or table name) not the class.
+    
+
+
+ONLINE EXAMPLE not using Repository or @Query
+
 /**
  * A JDBC SELECT (JDBC query) example program.
  */
@@ -438,4 +458,5 @@ class Query1 {
         }
     }
 }
+
 

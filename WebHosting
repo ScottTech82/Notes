@@ -1,0 +1,97 @@
+
+Using windows IIS
+    ***(most of this is documented on the winhost website articles)***
+
+    start -> control panel -> programs -> turn windows features on or off
+     -> Internet Information Services -> web Management Tools
+     check IIS Management Console
+
+    Download WinSCP https://winscp.net/download/WinSCP-5.21.5-Setup.exe
+        installed the explorer one not the commander.  Commander allows you to see side by side though and drag n drop
+        but we dont need it for this, just explorer.
+
+    windows -> type iis to load up the IIS manager.
+    log in to winhost and download the publishing info, which is xml file.
+
+    Next create the database
+        click Manage
+        -db password defaults to FTP login.
+        -has server, connection string, etc.
+
+    paste the connection string in Visual Studio C# project, under the Prod key, release mode.
+     -update the password.
+        -typically not a good idea and there are other ways to do it
+        -but in a shared hosting environment we dont have access to specific things.
+
+
+    If we have more than one project.  We need web.config.
+        update the arguments=".\prs-server-net6-c37.dll" to ours.
+        then update, hostingModel="outofprocess" />
+        -if you only have one project, in process is fine.  But if you have multiple
+        you need out of process or they will conflict.
+
+        may have to put on the .getconnectionstring, options => options.EnableRetryOnFailure());
+
+Put in RELEASE and package manager update-database.
+Then open up Azure connection to the winhost database, with SQL login
+    winhost user name and password.
+
+in Postman we would do;
+use Secondary URL / subfolder name/ api / users
+    -create a subfolder to upload to on winhost.
+
+
+Right click on the application and select Publish.
+    -import, then find the file we downloaded, open and finish.
+    -at the top select the Web Deply.pubxml
+    -more actions -> Edit.
+    -dont change the Connection
+
+----Need the folder to publish to, loaded up WinSCP.
+        -new site
+        -change file protocol to FTP.
+        -need Host.  This is the secondary FTP on winhost.com.
+        -username is ftp username
+        -password is the same.
+        -saved and saved password.
+        -then login.
+    -click on site name and create a new folder(directory).
+-----minimize -back to visual studio.
+
+    -site name change to the folder. /capstoneprs.
+    -enter password 
+    -delete destination URL
+    -next, no real settings to do.. maybe delete destination files if old ones are there.
+--then shows ready to publish.
+        -framework dependent, means it depends on .net 6 to run on the server, the server must have it.
+        -you could change deployment to Self-Contained if they dont provide .net 6.  It makes the deployment bigger, but is an option.
+        -IIS application is what goes before 
+
+IIS - new site connection
+    -enter in secondary url info.
+    -(on winhost, you can scroll down and 3rd link gives additional info).
+In IIS -> right click on folder -> deploy -> convert to application.
+
+Republish.
+
+wait forever....
+
+add some info to the database and use the secondary url in postman.
+
+
+--publishing it again to the website, change the connection string to point to the new database.
+--change the old one to xProd or something.
+
+--Config Manager
+    active solution new entered DebugProd, copy settings from debug. click build and close.
+    You can change the connection string to include DebugProd.
+        for having a test database in the cloud.
+
+
+Greg put #if DEBUG
+            ConnectionKey = "Dev";
+        #endif
+
+    -could we do #if, #elseif, then #endif for all 3??
+
+--putting the Prod one on top and debug under the if statement, allows you to debug production with the new configuration manager.

@@ -1,0 +1,35 @@
+CSS
+
+    Cascading Style Sheets
+        -doesnt deal with the data content
+        -define how the elements display
+    Some common styles
+        -text: font, size, bold, italic, underline
+        -paragraph: margin, border, padding, justification (left, right, center, justify)
+    Styles can be defined:
+        -as a sstyle attribute on an HTML element
+        -within the <style> tag in the <head> section
+        -in a linked external file
+            <link href="css/cv.css" rel="stylesheet">
+            make a file in another folder in this case its css folder, cv.css file.
+    When style conflicts, the most specific style applies.
+        -hard to find what style sheet is causing problems.
+
+Syntax
+    -defining styles requires referencing the style itself followed by a colon,
+        then value, typically in quotes.
+    -stylename: "value";
+
+        color: red;
+        font-family: Arial, sans-serif;
+        border: 1px solid silver;
+
+Magnitudes (sizes)
+    -when specifying a size, requies the magnitude of the number.
+    -examples: 
+        Points (pt): for text (1/72in)
+        Pixels (px): a single dot on a screen
+        Relative measure (em): relative to the default font size.
+            .5 em will take a 50pt down to 25pt font. Depending on default
+            This way all font will be relatively the same.
+

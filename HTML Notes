@@ -1,0 +1,369 @@
+
+HTML CSS and JavaScript
+    Javascript allowed websites to be animated and no longer be static bland pages.
+
+Basic Example
+    <!doctype html>
+    <html lang="en">
+        <head>
+            <title>Sample HTML page</title>
+        </head>
+        <body>
+            <p> Some text </p>
+        </body>
+    </html>
+
+CSS Example
+    same as above but adding <p> style="color:blue;"> Text </p>
+    -inline CSS
+
+Javascript example
+    same as above with CSS but adding..
+        <script lang="javascript">
+        document.getElementById("para").style.color = "red"
+        <\script>
+    overriding the CSS styling above.
+
+
+Web transaction = Request & Response.  browser to server, server to browser.
+
+index.html is typically what you get when you put something like amazon.com
+    sub pages are index/whatever.html
+    I had that when building webpages previously and used CSS to style each page the same.
+
+Response - no data about the request remains on teh server.
+
+HTML
+    -Core tech for the web
+    -markup language based on hierarchy of XML tags
+    -used to organize data on a web page
+    -all tags have a default style that can be modified by CSS
+    -individual HTML statements are called Elements.
+        -another name for the tags.
+
+Tags
+    -name surrounded by angle brackets <>
+    -most but not all have closing tags ie <p> </p>
+    -Opening tags may contain attributes (eg <div id="abc">)
+        quote the data, but never quote the KEY. id is the Key, in above example.
+    -Attributes themselves are not quoted.
+    -multiple attributes are separated by a single space.
+
+Comments
+    <!-- and -->
+
+<!doctype html>
+    -this is a preamble (directive) that provides information to the browser about the version
+        of html used.
+    -makes sure browsers render the document based on specification standards.
+    -should always be the first line in every HTML document.
+    -Designates using HTML5 (current version)
+
+    Might have to use different version of HTML instead of 5.
+    There are users that have an older version of Windows and use older IE instead of Edge.
+
+<html lang="en">
+    -root of the HTML document
+    -all other tages besides 'doctype' must exist within HTML tags.
+    -May contain only one <head></head> followed by one <body></body>
+<head>
+    -contains metadata about the document.
+    -nothing the user sees contained on the page
+    -must contain the <title> tag.
+    -points to or include information about: author, description, css, javascript.
+<body>
+    -everything the users will see.
+        -contains all the visible elements of the HTML document.
+    -there can be only one body tag.
+
+Inline vs Block Elements
+    -Each HTML statement is either an inline or block element
+    -INLINE element
+        flows right after the previous element.
+    -Block element
+        always displays on a separate line
+        solely occupies the entire line.
+        space above and below
+
+    Inline Element Example
+    <body>
+        <span>George</span>
+        <span>Washington</span>
+    </body>
+
+Span Tags are inline elements.
+    that allow you to style different words in same line.
+    even though they are on separate line in code they render in same line.
+
+Inline with span and Block with p.
+    <body>
+        <span>George</span>
+        <span>Washington</span>
+        <p>George</p>
+        <p>Washington</p>
+    </body>
+
+ctrl backtick or tilde to open terminal.
+    created a new folder in bash and new file index.html to display
+    block vs inline elements.
+
+Live Server / Go Live added to visual studio
+    must be on the html file then click go live.
+    local host web page updates as changes are saved.
+
+
+Inline Elements
+    -a [anchor tag that allows you to jump around to different pages or same page]
+    -br [break line]
+    -button [used a lot to render a button on the page]
+    -img [image or picture on a page] typically have subfolder of images uploaded.
+    -input [control does not have a closing tag, multiple attributes to describe the input       tag and can render many controls, line text boxes, radio button, check boxes, etc. very     versatile tag]
+   
+    -label [follow a prompt to input something.  like label first name then input is the text box that will say we want you to put the first name in this box]
+    
+    -script [not a visible element, but is a tag that allows you to link in your javascript and use it in a webpage]
+   
+    -select[used to create a drop down list of options for the user to pick, coupled with the options tag, which we will get to in the block elements]
+    
+    -span[we used on george washington name]
+    -textarea[text box that has multiple lines on it, like a description with multiple lines for the user to enter, more than about 40 to 50 characters in something.]
+   
+    -abbr, acronym, b, bdo, big, etc for all else listed [not widely used as much]
+
+Block Elements (space above and below)
+    -address[new to html 5, more like contact info, like resume with city, state, zip. Also will Italicize all data inside of it]
+    -div [all this tag does is group things together, can be used as a control or styling to style everything the same inside of the tag, like HR for time at employer, but salary would be hidden to everyone else]
+    -form[used for form control, and buttons like login for username & password, instead of click on the button to login, you can use form to allow enter pressed which will click the button]
+    -h1 to h6[header but used for fonts now, h1 is large and bold, they get smaller as they go down to h6, a way to organize data prior to CSS styling.]
+    -hr [horizontal rule - makes a line across the page]
+    -li (with ol & ul) [line is a supporting tag that goes with ol (Ordered List) or ul (Unordered List) ordered will go in order with numbers, ul will have a bullet point or dash or star, its never numbers. 
+    Inside of the ol or ul tags you will have li or list tags for each item. 3 bullet points will have three li tags for each one.]
+
+    -nav[allows the user to navigate from one page to the next page. Typically renders itself at the top of the page, but can be restyled to be put anywhere.]
+    -p [paragraph, we talked about already]
+    -pre [is like pre formatting, it gets rendered like source code.  If you want to put code on a document or in a page you want to put pre on it so it shows correctly]
+    -table [used to put things in rows or table format, like sql subsets]
+    -others not listed, tfoot, tr, thead will cover later.
+
+Attributes
+    -modifiers to the html
+    -add more information or identification to an html tag.
+    -Values for attributes should be enclosed in quotes.
+    -common attributes: 
+        id, style, class (can go on any tag in the body) 
+        value (information you want to preload into the text box).
+            -cant go on everything, but important ones you can put it on.
+    -like for input, do you want text box, radio button, etc? use attribute after input 
+        to identify what type of input.
+
+    id Attribute
+        -is a way to put a primary key on each of your HTML tags.
+        -must be unique among all other identifiers on this html document.
+        -very useful to programmatically access a particular tag.
+            <div id="top"> --you may have a page with hundreds of divs, but can reference
+                        a particular div if you know its id value. This case is "top".
+    
+    style Attribute
+        -provides ability to attach CSS styles to a tag.
+            <p style="color:red;">
+        -not really recommended anymore, I use to use the CSS reference instead.
+            so that makes sense its not recommended anymore.  
+
+    class Attribute
+        -provides the ability to assign a CSS class style to a tag
+        -class style must be defined in an included stylesheet.
+        -multiple class styles are separated by a space and are applied in order of appearance.
+            <table class="table tbl-small">  
+                    (going to use bootstrap to do this and style a table for example.)
+    
+    value Attribute
+        -provides ability to get and set the contents of a form tag.
+            <input value="ABC"> -this input tag is single line text box. Defaulted to ABC.
+                            -user would type over and with javascript we can read the value.
+
+
+ Most Common HTML Elements
+    same as typed above..
+    index.html has all the examples in repos folder.
+    
+    <a> Tag
+        -Anchor that links to somewhere on same page or another page.
+        <a href="http://maxtrain.com" target="_blank">Max Technical Training</a>
+
+        -using target="_blank" opens it into a new tab. Instead of taking them 
+        away from your site.  You want it to always open a new tab.
+
+                <body>
+                    <a href="me.html" target="_blank">Me</a><br>
+                    <a href="http://maxtrain.com" target="_blank">Max Technical Training</a>
+                    <div> 
+                        <span>George</span>
+                        <span>Washington</span>
+                        <p>George</p>
+                        <p>Washington</p>
+                    </div>
+                </body>
+
+    <button> Tag
+        -Button
+        -Renders a button 
+        -Typically used with oneClick event.
+
+                <div>
+                    <button onclick="javascript:alert('I got clicked!')">Click Me!</button>
+                </div>
+                ---displays a popup since its the javascript alert method. simple example.
+
+
+    <input> Tag
+        -w3schools.com and References HTML tags, shows input and all of its options to use.
+        -used mostly to render an input box.
+        -no closing tag needed.
+        -Styling can make the text boxes wider or longer, etc.
+
+    
+    <select>, <option> Tag
+        -select from options
+        -renders a list or dropdown list with a defined set of options
+        -Options are defined using the <option> tag within the <select>.
+            Options use the value attribute.
+        <select>
+            <option>red</option>
+            <option value="blue">blue</option>
+        </select>
+    ***if you dont put value= it will bring back what was selected. If you put 
+        value="something" it will return something when they select that option.
+        
+    ****example= pick products, display vendor, but value you need will be vendorId 
+                because that is what you need in the products to display the vendor.
+                <option value="vendorId">Vendor</option>
+
+    <span> Tag
+        -span groups collection of data and elements
+        -provides the ability to apply a style to a group of data and/or elements
+    
+    <div> Tag
+        -group elements
+        -similar to span, but div is a block element.
+
+    <h1>..<h6> Tag
+        -headings tag 1 to 6
+        -renders text in larger and bolder style, down to smaller h6.
+
+    <p> Tag
+        -paragraph, renders contents inline with a blank line above & below.
+
+    <table>, <thead>, <tr>, <td>, <th>, <tbody>, <tfoot> Tags
+        -tables render in rows and columns, like sql data.
+        -tr is table row
+        -td is the table data within the table row
+        -th is column name.
+            show up in bold and will be centered over the rows
+    
+    These allow you to style everything inside of them, not having to style each line.
+        -thead goes after the table and put the th inside of it
+        -tbody goes around the data.
+        -tfoot -doesnt really use it.
+
+If you want a border around your table but have no data, use this non breaking space.
+
+&nbsp; -non breaking space, displays as a space but treated as a character.
+        We put it in our Html/Css/js and Angular assessments on the table.
+
+
+
+
+! and enter puts a Template HTML.      
+
+Class Project -put resume as webpage
+
+    personal info - can string it across the top
+    Technologies -create a table with amount of rows.
+    work exp - company name | title | location | time
+    2 or 3 contributions you brought to your company.  
+    in bullet points.
+    education
+        bullet point the school, any degree, year.
+
+Greg did for his code;
+        <div>
+            <h3>Personal Info</h3>
+            <span class="personal">Firstname</span>
+            <span class="personal">Lastname</span><br>
+            <span class="personal">street address</span><br>
+            <span class="personal">city</span>
+            <span class="personal">state</span><br>
+                etc, etc, all the way down.
+        </div>
+        Technologies and Table is the same, I have listed.
+        Work Experience
+        <div>
+            <span class="company">Max Tech Training</span> |
+            <span class="role">Title</span> |
+            <span class="location"> City, State</span> |
+            <span class="duration"> date range</span>
+        same as I did for the ul and li as for the info.
+        same as I did for the Education section. h3 and ul/li for each line.
+
+Less common HTML tags
+
+    <img> Tag
+        -image, renders an image uploaded.
+        -will probably be in a subfolder
+            <img src="images/logo.png" height="200" width="200">
+                                    (height & width are done in pixels)
+
+        -only change 1, height or width, so it maintains aspect ratio.
+        -if image is 2000 x 1000 and you put 500 x 500 it squishes it and looks weird.
+            -if you just put height to 500, it will auto scale it to correct aspect ratio.
+    
+    <form> Tag
+        -Not really used anymore
+        -collection of user input tags
+        -Attribute method = get or post
+        -Attribute action = url
+        -May contain a button with type submit
+            <form method="get" action="addpage.html">
+                <input type="text">
+                <button>Click me</button>
+            </form>
+
+Events
+
+    User clicks a button to do something is Event Driven.
+    One button to update the data, another to delete.  User selects and application does both.
+        Both are event driven.
+    
+    -ways to respond to user interations with the html page
+    -to respond to an event, the event must be added to the tag along with the code to execute
+    -common events:
+        OnClick -something in the application gets clicked. Can be image, button, anything.
+        OnLoad -something that occurs when webpage starts up.
+            always start with on and lower case.
+
+    OnClick
+        -Typical to attach a javaScript funtion to this event.
+            <button onclick="runFunc()">Go</button>
+                this is button, but onclick can basically be on any HTML.
+        
+    OnFocus 
+        -fired when a cursor enters a form tag
+            <input onFocus="onEnter()" type="text">
+    
+    OnBlur 
+        -fired when the cursor leaves a form tag
+            <input OnBlur="onLeaving()" type="text">
+        -create an OnBlur event to make sure the quantity is greater than 0.
+            if its 0 and they tab away, OnBlur will fire saying its 0 or negative, cant proceed.
+
+    onLoad
+        -fired when the html tag has been completely loaded.
+        -used mostly on the <body> tag
+        -it is typical to attach a JavaScript function to this even.
+            <body onLoad="loaded()"> ... </body>
+        Webpage loads line by line from top !doctype on down.
+        Keep in the body section since you need to be sure everything loads.
+
+
+
+
