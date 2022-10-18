@@ -290,3 +290,20 @@ Non-trivial ones - dont worry too much.
                 will have to put something in repository to get this to work.
             
             Recalculate the line items.  
+
+
+
+
+10/18
+
+restyle the cv.  Dont use more than 3 colors in business.
+contrast the background and foreground
+accent color.
+
+**add power message in there
+**add an image.
+    **do a side by side div for personal info and image.
+
+
+Captsone will have reviewer page with Approve button or Decline button in bootstrap is Success and Danger buttons.
+

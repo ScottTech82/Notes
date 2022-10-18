@@ -33,3 +33,203 @@ Magnitudes (sizes)
             .5 em will take a 50pt down to 25pt font. Depending on default
             This way all font will be relatively the same.
 
+====================end of day============
+
+10/18 -started talking about other topics
+
+Single HTML statement
+    Could use <span id="lastname" class="peraonal">Scott </span><br>
+    Then in <head> tags, put <style> #lastname {color: red; font-weight: bold;}
+
+    class is how you put the style on a bunch of statements, but id can be used for that particular one in the class.
+    like a primary key for the HTML statement. Best way for one statement.
+        -Id is unique per page.
+
+    You can also add a new variable, like putting;
+        .bold {font-weight: bold; }
+    then <span class="personal bold">Josh</span>. 
+        -applies multiple to the name.
+
+Multiple stylesheets will load with the last one loaded being used.
+    -1st company standard
+    -2nd division
+    -3rd is your sheet that all change paragraphs.  This one will win, loaded last.
+
+---------------------- back to CSS Notes
+
+Colors
+    -Name: red, blue, green, chartreuse,...
+    -RGB: rgb(0-255, 0-255, 0-255)
+    -RGBA: rgba (0-255, 0-255, 0-255, 0.0-1.0)
+        Opacity is 0.0 (transparent)
+    -By Hex (most common)
+        #FF0000 (red), #00FF00 (green), #0000FF (blue)
+
+Fonts
+    -there are many facets to fonts:
+        -font-family: Arial, Helvetica, Tahoma (be sure to test if the fonts are not available what it looks like)
+        -font-size: 12pt, 16pt, 24pt
+        -font-weight: bold, bolder, 400, 600
+        -font-style: italic
+        -font-variant: small-caps
+
+    Font-Family
+        -Declares the font to use: Arial, times new roman, courier new
+        -can specify multiple fonts in cas a specified font is missing on users system
+        -usually the last font is sans-serif
+
+    Font-Size
+        -the size of the text font usually in points(pt)
+        -Normal pt size is 12pt (1pt = 1/72in)
+        -May use px (24px) but not used often
+                font-size: 12pt;
+    
+    Relative font size
+        -It is better to specify font size in relative terms vs absolute
+        -em or rem is relative to base font size (ex 1.5em = 1.5 times the base font size)
+        -A percent is also used (125%)
+            font-size: 1.2em;
+
+    Font-Weight
+        -bold or normal
+        -there are other options you can look up but mostly just bold or normal
+
+    Font-Style
+        -Italic
+        -again other options
+    
+    Abbrev font declaration
+        -multiple styles can be defined on a single line
+            font: italic small-caps bold
+            12pt/14.4pt Tahoma, Arial, sans-serif.
+            (default then / line height -typically 20% higher = 14.4pt.)
+            (saying want Tahoma, if not there then Arial, if not there some sans-serif font)
+        basicially,
+            font: normal normal normal  unless you want bold font: normal normal bold
+            12pt/14.4pt Tahoma, Arial, sans-serif.
+
+        example:  body {
+                        font: normal normal normal 16pt/19.8pt Tahoma, Arial, sans-serif }
+    
+    sets the default for the entire body section.
+
+    Font Properties
+        -serif: fonts with flares
+            -Times New Roman
+            -Georgia
+            -Merriweather
+        -sans-serif: fonts without flares
+            -Arial
+            -Impact
+            -Oswald
+    
+        -variable point fonts
+            -Arial
+            -Times New Roman
+            -Georgia
+        -Monospace (used for Source Code)
+            -Courier New
+            -Roboto Mono
+            -Source code pro
+
+    Margin, Border, Padding
+        -Relates to geometry around the contents of an HTML element
+        -The contents of HTMl element has a dimension
+        -Padding the distance from contents to the border
+        -Margin is the distance from the border to the closest HTLM element.
+
+Open your webpage and hit f12, look at style and the square boxes
+margin 
+    border
+        padding
+You can click on the - sign and adjust them to different pixels.
+updated page margin to 50px on each side.
+
+--you can adjust everything here, add borders with colors and just see what it looks like 
+without changing your code!!
+
+
+    Margin & Padding
+        -can define all four sides of the box
+            --Top, Right, Bottom, Left
+        -Examples:
+            margin: 1px = all four sides
+            padding: 1px 2px = top/bottom & right/left
+            margin: 1px 2px 3px 4px =top, right, bottom, left (always in that order)
+
+Style Selectors
+    -selectors are identifiers that indicate which HTML element a style applies.
+    -Three global selectors:
+        tagname (p, div, span, etc)
+        id attribute (id="..") (then have to use #name) #abc {color: red;}
+        class attribute (class="..") use .name in css.  
+
+Multiple Selectors
+    -muliple can be defined for the same style
+    -selectors must be separated by a comma
+    -the following example applies the same style to all div tags, 
+        the HTML with id="abc", and all HTML with class="xyz":
+            div, #abc, .xyz {color: blue;}
+
+    -put a comma between the selectors
+
+    further example below shows you can do one thing with multiple selectors and then add to the one selector.
+    .left, .right { width: 49%;} =both classes left & right will have this width.
+    .right {text-align: right;} =on top of the width, right class will now align right.
+
+    Can also have multiple classes, like if you set .red{color: red;} .bold{font-weight: bold;}
+        you can say I want my paragraph to have both of those stylings.
+            <p class="red bold">text here that is red & bold</p>
+
+Child Selectors
+    -selectors can apply to child HTML elements
+    -selectors must be separated by a space
+    -This example applies the style to all p tags that are within a div tag with an id="top":
+            
+            div#top p {border: 1px solid red;} 
+                        //div tag with id of "top" and inside that div the paragraphs follow this.
+                        //so all paragraphs in this div with id top have a red border now.
+
+Defining Styles
+    -Not recommended to put Style tag style="".
+    -within the <style> tags inside of the <head> tags, but still not best.
+    -within external file linked in to an HTML page with the <link> tag
+            <link href="main.css" rel="stylesheet">
+
+
+Side by Side <div>
+    -for things like Pros & Cons that would show side by side.
+    -block elements dont typically go side by side, but can do it with styling.
+
+div {display: inline-block;} 
+        
+        -added border to tell the difference between them
+        -width changed to 49% to be perfectly side by side.  If we do 50% then it overflows the 1px and goes back 
+            to being top and bottom.
+                
+                div {
+                    width: 49%;
+                    display: inline-block;
+                    border: 1px solid silver;
+                    }
+       
+        -added a bunch of text on left and they were mismatched.
+        -added vertical-align: top;
+
+                    div {
+                        min-height: 300px;
+                        vertical-align: top;
+                        width: 49%;
+                        display: inline-block;
+                        border: 1px solid silver;
+                    }
+
+    //Html
+        <div class="sbs"> ... </div>
+        <div class="sbs"> ... </div>
+    //CSS
+        div.sbs {...}
+
+BOOTSTRAP
+
+    
