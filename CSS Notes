@@ -232,4 +232,20 @@ div {display: inline-block;}
 
 BOOTSTRAP
 
+    getbootstrap.com
+        top right check the version #.
+        -if you modify someone elses code that used a different version, could be an issue.
+        -if they used bootstrap.
+
+    search buttons and it shows the typical buttons with colors. colors tied to the name.
+            <button type="button" class="btn btn-primary">text</button>
     
+        Disabled state buttons for if someone is not a reviewer, it would be a little greyed out.
+
+    searched table to review the table options in bootstrap.
+
+
+1. You can download style sheets to your computer and use it that way, but its harder to upgrade.
+2. you can put a link in to their website and use the internet. 
+
+

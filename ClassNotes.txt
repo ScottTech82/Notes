@@ -307,3 +307,28 @@ accent color.
 
 Captsone will have reviewer page with Approve button or Decline button in bootstrap is Success and Danger buttons.
 
+
+check user-detail.. need an input in the <td id="uid"><input id="inpid" type="number"></td>
+in the getJSON http, after it put , user);
+attempt to add a user in.
+
+
+
+
+
+
+10/24
+
+SCRUM 
+    -open scrum notes at the bottom is to take the practice tests.
+    -open scrum pdf's in downloads folder.
+
+
+
+
+10/26
+--last part of half of class    
+    make changes to user or vendor, change things over to JQuery.
+    instead of JavaScript.
+
+

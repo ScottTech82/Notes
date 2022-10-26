@@ -1,0 +1,492 @@
+
+Agile is a mindset
+
+-Scrum.org. Certification.
+    free voucher as part of the bootcamp.
+
+MVP = Minimal Viable Product.
+
+
+breakout in teams where you will define a product and go through product dev.
+
+Focus on Scrum as the framework, there are others.. scrumbum, some other weird words.
+
+Agile Defined
+    -Software development methodologies based on an iterative approach.
+    -Reqs and solutions evolve through collab between self-organizing cross-functional
+    teams
+    -leadership philosophy that encourages teamwork, self organization and
+    accountability.
+    -a set of engineering best practices intended to allow for rapid delivery of high 
+    quality software and a business approach that aligns development with customer
+    needs and company goals.
+
+    -plan, do, check, adapt.
+
+    
+In waterfall - you would design the system, build the system, test the system
+        and then customer touch points.
+        -sometimes the customer would not want it at the end, or didnt fit needs anymore.
+        
+    Agile -listens to what the customer wants.
+        -wants to have
+        -should have
+        -or would like to have.
+
+AgileManifesto.org
+    -Individuals and interactions over processes and tools
+    -Working software over comprehensive documentation.
+    -Customer collaboration over contract negotiation.
+    -Responding to change over following a plan.
+
+    -while there is value in the items on the right, we value the items on the left more.
+
+Scrum Master Principles
+    12 Principles behind the Agile Manifesto.
+
+scrum.org
+scrumalliance.org
+    book essential scrum -Visual AGILExicon
+
+
+Scrum is not a process, technique, or definitive method
+Framework within which you can employ various processes and techniques.
+
+How to use scrum?
+    -research and identify viable markets
+    -develop products and enhancements
+    -release products and enhancements as frequently as many times per day.
+    -sustain and renew products.
+
+2020 guide -Scrum Team Characteristics
+    10 or less on the team.  Scrum Team, Scrum Master, dev team.
+    -cross functional
+    
+Theory
+    -Empirical Process
+        -knowledge comes from experience and making decisions based on what is known
+        -Three pillars of Empiricism
+            -Transparency
+            -Inspection
+            -Adaptation.
+
+        TIA - Thanks in Advance.. 
+
+        Transparency
+            -significant aspects of the process must be visiible to those resp
+            -Aspects should be defined by a common standard so observers share
+            a common understanding of what is being seen.
+                -common language referring to the process
+                -definition of Done.
+            (each 2 week sprint must meet the quality, or strive for a level of quality)
+
+        Inspection
+            -Scrum users must frequently inspect scrum artifacts and progress toward
+            a spring goal to detect undesirable variances.
+            -Inspection should not be too frequnet that it gets in the way of work
+            -Most beneficial when diligently performed by skilled inspectors at the 
+            point of work.
+
+        Adaptation
+            -if the inspector determines that one or more aspects of a process deviate
+            outside acceptable limits and that the resulting product will be 
+            unacceptable, the process or the material being processed must be adjusted.
+            -Adjust as soon as possible.
+
+    4 events for Insp and Adaptation
+        Spring planning, daily scrum, sprint review, sprint retro.
+
+
+
+Scrum Values -FORCE
+    -Focus
+    -Openness
+    -Respect
+    -Commitment
+    -(Extreme) Courage
+
+    Build Trust
+    Pillars(Transparency, Inspection, Adaptation) come to life and build trust for
+            everyone.
+        Form, Storm then Norm, Adjourn.
+
+
+Framework - Total in business world
+        (more than what is in the cert/test or academic world)
+    Roles - Product owner, Scrum Master, Dev Team.
+    Activities - Sprint, Sprint planning, Daily Scrum, Sprint Exec., Sprint review,
+                Sprint Retro, Product backlog grooming.
+    Artifacts - Product Backlog, Spring backlog, Potentially Shippable product.
+    Rules - Described throughout the book.
+
+
+
+Academic ie. on the Cert/test
+    
+    Only those 3 roles!! (PO, Scrum Master, Dev Team)
+    
+    On test only 4 Activities!!
+        
+        Sprint Planning = PO & Dev Team.
+        Daily Scrum = Only Dev Team required to be there (15minutes)    
+                    And only Dev Team is allowed to Speak.
+                    what worked on yesterday, now today and any impediments.
+        Sprint Review = End of 2 week sprint - PO, Scrum Master & Dev Team.
+                    Invite anyone and anyone can speak, investors, executives, etc.
+                    Get feedback, did we build the right thing and build this right?
+        Sprint Retrospective = right after review.  Entire Team, PO, Master, Dev Team.
+                    How the review went, anyone talks.  If any conflict the Scrum Master addresses immediately.
+
+    3 Artifacts
+
+        Product backlog - meaning other things might come up and be a priority.
+                    analogy was cleaning basement on top of list, kept being pushed
+                    down the list.  Until its really priority.
+                    -can be added to by anyone at any point in time.
+                    -using Jira, azure dev ops, or rally.
+        Sprint backlog - shouldnt be held up by other departments, focused on in the 
+                    sprint. UI, middle tier, backend database, and quality check.
+                    -after sprint planning, getting the plan done.
+                    -if you didnt get to something, wipe it clean and it goes back
+                    into the product backlog.
+        Potentially shippable product increment - taking what was in the sprint backlog
+                    -created something to release to the customer.
+                    -ie 50 templates to work on, get the 1 template out as shippable
+                        then work on the other 49 templates, you have a potentially
+                        shippable product increment.
+                    
+
+
+
+Scrum Team
+    -Product Owner, Scrum Master, Dev Team.
+    -Cross Functional and Self-Organizing.
+            Cross functional-hired for C#, but what else can I learn or help with?
+                    maybe help the tester or testing.
+            Do we as a team have the correct skill set to get it done?
+    -Team chooses how to best accomplish work
+    -Cross Functional teams ahve all competencies needed to accomplish the work.
+    -Designed to optimize creativity, flexibility, 
+    -10 or less (including Scrum master and Product Owner)
+   
+
+
+Product Owner
+    -sole person responsible for managing the product backlog
+    
+    Product backlog management includes:
+    -Clearly expressing Product Backlog Items;
+    -Ordering the items in the Product Backlog to best achieve goals/missions;
+    -Optimizing the value of the work the Development Team Performs;
+    -Ensuring the Product Backlog is visible, transparent, and clear to all and shows
+        what the Scrum Team will work on next;
+    -Ensuring the Development Team understands the items in the Product Backlog
+        to the level needed.
+    -Question: Is it 1 person or a committee?
+
+    Simplicity
+    Maximizing the value of the Dev Team.
+
+    Ok to accept changes to the product, but needs to update the requirements
+        and update the timeline.
+
+    Protecting the Dev Team.  No one can force teh Dev Team to work from a different
+    set of requirements.
+
+    1 person but may represent the desires of teh committee in the product backlog.
+
+Dev Team Size
+
+    -2020 Scrum Guide: 10 or less (Including Scrum master & Product Owner)
+    -Small enough to remain nimble, large enough to complete work within a sprint.
+
+Scrum Master
+
+    -Promote & support scrum theory, practices, rules and values.
+    -servant leader to scrum team -2017 guide term.
+        removed but meant they are the coach 
+    -remove impediments from dev team.
+
+
+  identify requirements
+  write a user story..
+  as a <who> I want <what> so that <why-value>
+
+Spike -> research activity 
+    some things that are 2 to 3 sprints out
+    put a spike in current sprint, so you can be ready
+    in 2 or 3 sprints to implement paypal.
+
+
+Scrum Events
+    -sprint planning time-boxed, 8 hours or less for a 1 month sprint
+    -daily scrum 15 minutes or less
+    -dev work
+    -sprint review 4 hrs or less
+    -sprint retro 3hrs or less
+
+
+Scrum Master will use a burn down chart
+    inspect progress toward sprint goal and trends toward sprint backlog.
+    
+
+
+
+=======*Next day 10/24*=======
+
+
+Spring Planning
+
+    -Time-boxed 8 hours for a 1 month sprint
+    -PO & Dev Team (per Academic or test/cert)
+    -created by entire scrum team
+    -answers 2 questions:
+        What can be delivered in the increment resulting from the upcoming sprint?
+            -input: Product backlog, latest product increment, projected capacity of 
+            Development Team and past performance of the Development Team.
+            -Output: Sprint Goal - objective to be met for the Sprint.
+
+        How will the work needed to deliver the increment be achieved?
+            -Negotiation between Product Owner and Development Team for "Done" product
+            increment.
+            -Sprint Backlog is created which includes Product Backlog items for this Spring
+            plus the plan for delivering them.
+
+Daily Scrum
+
+    -Time 15 minutes
+    -Only Dev Team (and only dev team speaks)
+    -Same time, same place each day to reduce complexity
+    -inspects progress toward the sprint goal and trends toward sprint backlog
+    -structure of meeting is set by the dev team
+    -generic questions:
+        -what did I do yesterday that helped meet the sprint goal
+        -what will I do today to help meet sprint goal
+        -Do I see any impediment that prevents me or the dev team from meeting goal
+
+Sprint Review
+
+    -Time 4 hours or less
+    -Everyone can attend (even outside stakeholders)
+    -Informal meeting - not a status meeting.
+    -Presentation of the increment to elicit feedback and foster collaboration.
+    -Not just a demo
+    -Scrum Team shows the increment
+    -The full Scrum Team participates
+
+ITTO
+    <see the slide on page 27>
+    input, tools, something, output
+ -> input ->sprint goal, sprint backlog, potentially shippable product.
+ -> sprint review -> inspect, adapt
+
+Sprint Retro
+
+    -Time 3 hours for 1 month sprint
+    -Full Scrum Team participates.
+    -Opportunity to inspect itself and create a plan for improvement for the next sprint
+    -Purpose
+        -inpsect how the last Sprint went with regards to people, relationships, process 
+        and tools.
+        -Identify and order major items that went well and potential for improvement
+        -Create a plan for implementing improvements to the way Scrum Team does the work.
+
+    Ask the following questions:
+        -Is our definition of "Done" increasing in scope?
+        -Is our qualify improving?
+        -Are we continually learning from each other?
+        -Are we hiding or ignoring anything?
+
+
+ Scrum Artifacts
+
+    -Represent work or value to provide transparency and opportunities for inspection
+    and adaptation.
+    -Maximize transparency of key information
+    -Include:
+        product backlog
+        sprint backlog
+        Increment
+
+Product Backlog
+
+    -Product Owner is responsible for prioritizing
+    -Product Vision is derived from the Project Charter
+    -Process
+        Understand stakeholder needs
+        Brainstorm user stories
+        Clarify and focus with acceptance criteria
+    -Roles
+        Product Owner is primary contributor
+        Scrum Master facilitates
+        Team Participates
+
+Sprint Backlog
+
+    -Product Owner and Dev Team collaborate to finalize what will be delivered
+    in the Sprint based on the following;
+        -Sprint Goal
+        -Initial Plan for this Sprint
+        -Team's velocity
+        -Consists of the selected Product Backlog items and a plan to deliver them
+        -Selected Product Backlog items are often decomplosed
+        -Dev Team members sign up for work, they are not assigned it.
+
+Artifact Transparency
+
+    -if transparency is complete -decisions have a sound basis
+    -if transparency in an artifact is incomplete, decisions can be flawed and value
+    may diminish and risk may increase.
+
+    --meaning if people are taking on too much work and working overtime, then 
+    Scrum master needs to see this and talk about adding more resources or talk about delays.
+
+Definition of "Done"
+
+    -What does it mean for work to be complete?
+        Quality is done, but PO might not see it as releasable.
+    -Guides Dev Team in knowing how many Product Backlog items it can select
+    during a Sprint Planning.
+    -If multiple teams working on a product release, the Dev Teams on all Scrum Teams
+    must mutually define the definition of "Done".
+
+    DoD -https://www.scrum.org/resources/blog/done-understanding-definition-done
+    Scroll down for the chart showing
+        Initial DoD, Matrue DoD, Stringent DoD
+    
+    -You might think you have a done product, but it doesnt meet definition of done.
+        -Every increment is potentially releasable/shippable, but is not "Done"
+
+
+    --The team agrees on, and displays prominently somewhere in the team room, a list
+    of criteria which must be met before a product increment "often a user story" is 
+    considered "done".  
+
+
+
+Planning and Estimating
+
+    -Planning happens at many phases
+    -Planning is an activity, not a formal document
+    -Adapt and Inspect at key points to adjust your plan.
+
+    Planning
+    <slide on page 32>
+    Strategy - Portfolio - Product - Release - Sprint - Daily
+
+    Estimating
+    (only the Dev Team Estimates) 
+    exception: PO & Scrum Master can only if asked to by the Dev Team.
+
+    -Deriving an Estimate
+        Expert Opinion
+        Analogy  --best guess, mow 1 acre.. .25 acre takes 15 mins, so probably an hour.
+        Disaggregation
+    -Group estimates bring multiple perspectives
+    -Ways to estimate
+        Story Points
+        Planning Poker
+            Determine your estimate scale cards (1,2,3,5,8,13)
+
+Effort measured in T-Shirt sizes.. small, medium, large, xlarge.
+    Time might not be the same, but the effort increment could be.
+
+INVEST (test)
+    I = Independent -can the story stand on its own?
+    N = Negotiable -can the story be negotiated? 
+                (walk to airport, negotiate - lets take an Uber)
+    V = Valuable - can you explain the value?
+    E = Estimable - Might need to do more research to estimate it.
+    S = Sizeable - can this one story be done this sprint?
+                    (every story must be achieved in one sprint)
+    T = Testable - can I test it if I build it?
+
+    ---One team was commiting to a story without an estimate.
+    You cannot commit to a story without having an estimate and completing in one sprint.
+
+
+As driver I want to be able to speak to the app for specific filters and select available spots.
+
+
+Story Points
+
+    -using points to stay on track with progress
+    -but not using points to equate to hours, just use hours?
+
+    -Fibonacci sequence
+        -Sum of two prior numbers
+        -1,2,3,5,8,13....
+        -Benefits;
+            Based on size, effort and not duration
+            Different for each team of estimators
+            Use units that help planning (10,20,30,50,80..)
+        
+Planning Poker
+
+    -Each developer has a deck of estimation cards
+    -Customer or Product Owner reads a story and it is discussed briefly
+    -Each dev individually decides how much effort is needed and selects
+    a card based on this effort.
+    -Cards are turned over at the same time so all can see them.
+    -Discuss the differences. Pay attention to the outliers.
+    -Re-estimate until all estimates converge.
+    -Decks consists of 1,2,3,5,8 etc.. Can use ? If you still have questions,
+        or can use an infinity card if estimate is too big.
+
+3 C's - 
+    Card = PO reads the card.
+    Conversation = talks with Dev team, dev team talks about to understand.
+    Confirmation = Confirm we understand it and break into tasks.
+
+    Product Owner typically does not vote unless asked by the dev team.
+    Scrum Master can but needs to put on their dev hat.
+
+
+Spike = Research task of 8 hours or less.
+
+Sprint 0 does not exist academically
+
+
+
+Product Backlog Summary
+ -Only the dev team can add or remove from the sprint backlog.
+ -product backlog contains all the work for the product.
+ -product backlog provides transparency
+ -product backlog is a living artifact
+ -product backlog holds the information for forecasting, planning and reporting.
+
+
+
+kapple@kelseyappleconsulting.com
+
+CERTIFICATION / EXAM
+    Take the open assessment until you get 100% at least 3 times
+        www.scrum.org/open-assessments
+
+    Study the scrum guide - www.scrum.org/resources/scrum-guide
+
+pay attention to words.. they put Project, but there is no project in SCRUM
+its most likely Product!
+
+-Why are the other answers WRONG? To choose the right answer.
+-If you can get the 100% 3 times and know why they are right and why others are wrong.
+
+-take the product owner open test and Dev open test
+    just to see what they consider what each of those positions should do.
+
+
+Professional Scrum Master Level I
+    -if you want product owner, pay for it yourself after scrum master I.
+    -pay attention to answer box, wording is same just a little different on main test.
+
+    -Real Test is 80 questions in 60 minutes
+        --no time to google anything.
+        --suggestions:
+                --create index card with each ceremony, with time box, who needs to be 
+                there, input, output.
+                 --ie sprint planning, 8 hours.
+
+--if dont pass, setup 30 min appointment with Kelsey. Free of Charge.
+--85% is passing grade
+
+-check out burn down and burn up charts.  

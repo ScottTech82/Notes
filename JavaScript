@@ -1,0 +1,675 @@
+JavaScript
+
+    -programming language of the browser
+    -similar to C# and Java
+    -interpreted not compiled!
+    -dynamically typed
+
+Syntax
+    -case sensitive
+    -statements should end with a semicolon
+    -exists within <script> tags
+        --should include the lang="javascript" attribute within html page.
+    -comments:
+        --to end of line //
+        --everything between /*  */
+
+Types
+    -5 basic types:
+        number, string, boolean, array, Object
+    -Other types
+        null, undefined
+    -can use typeof n to get the type of a variable.
+
+Dynamically typed
+    -All variables are declared using let or var
+    -types of variable is based on the data it contains
+        let n = 1; // variable n is a number type.
+        let n = "1"; // string type and so on in obvious fashion.
+        let n = [1, 2, 3] // type of array
+        let n = { id: 1}; // type of object
+    
+    -Dynamically typed, the type of variable can change depending on what you assign as the value.
+
+String
+    -can be either single, double, or backtick.
+        let r = `Spelled ${p}`;  //interpolation.
+        let p = 'Spelled "abc"' //using both.
+
+    -similar Functions  
+        toString()
+        .length
+        .indexOf();
+        .substr() -returns the second one 
+                abcdef.substr(1,2) = b,c.
+        .toUpperCase()/toLowerCase();
+
+Array
+    -collection of Javascript data items of any type.
+    [1,2,3]
+        let arr = [1,2,3,4,5];
+        let arr2 = [0, "a", true, [2,4,6]]; //can have multiple types in the array.
+
+    join(ch): creates a string from the array items with each item separated by ch.
+        let s = [1,2,3].join("|"); //"1|2|3
+    
+    push(x), pop()
+        pushes x on the end of the array
+        pops the last item off the array and returns it.
+
+Object
+    -collection of key/value pairs
+        let obj = {id:0, name: "Lisa"};
+    
+
+
+undefined
+    -variable type when declared but before a value is assigned.
+        let n; //n is undefined and initialized with nothing.
+        let arr = []; //undefined or empty array
+
+typeof n
+    -used to return the type of a variable 
+    -if used in array.. Array.IsArray([1,2,3]); seems weird since you put in the array, so then its an array. lol.
+
+Functions
+
+    -block of code defined by a name
+    -may accept parameters and or return a value
+    -executed by name with parens.
+        function fn(x) {...} //original
+        let fn = function(x) {...} //newer  declaring a variable as a function, or assigning it to a variable.
+        const fn = (x) => {...} //newest way
+            constant so fn cannot be re-assigned
+
+Truthy and Falsy
+
+    -JavaScript has a loose definition of true and false
+    -false values: false (boolean), 0, -0(negative zero)..hmm seems same as 0 lol 
+    ""(empty string), null, undefined, NaN (not a number)
+    -true values: all other values.
+
+        if null (would equal false)
+
+    -everything evaluates either a True or False.  There are no errors!
+        in C# it wouldnt compile and would give an error.
+
+Boolean 
+
+    -same as in C#.
+    - == is equality check.
+
+Statement block 
+    -same.
+    -if that does not have curly braces will execute the next statement.
+        a block of statements needs curly just like C#
+
+
+Equality (===)
+    -Triple equal: two objects are equal if they have the same value and are of the same type
+    -Many JavaScript developers think == should NEVER be used.
+        1 === 1 //true
+        1 === 2 //false
+        1 === "1" //False
+
+foreach
+
+    -for(let i of numArray) {console.log(i)}
+    - use OF and its always a collection, or array in JavaScript.
+    -if you use in, then the index is loaded.
+        for(let i in numArray) will tell you the index of the collection, not the collection.
+
+switch statement    
+    -same as c# and java.
+
+ternary operator
+    let x = (y < z) ? 1 : 0;
+
+
+Programming the DOM
+    -document object model
+    -all using the high level object document
+    -can do anything that can be doen from the text editor
+
+    document.getElementById()
+        -gets a reference to a particular html tag by specifying the value of the id attribute.
+        -returns only a single item
+            document.getElementById("inp");
+                document is the html page, get html statement by Id.
+    
+    document.getElementsByTagName()
+        -gets a collection of ALL tags with the tag name.
+            let ps=document.getElementsByTagName("p");
+            ps[0].innerText="first paragraph";
+        -have to index your variable 
+
+    document.write or writeLn
+        -writes text to the body of the document.
+        -bypasses all HTML controls.  Not much use.
+    
+    console
+        Operations using the browser console   
+            clear()
+            error() -writes error message in RED.
+            info
+            log 
+            warn -writes in yellow
+            debug
+
+    Elements
+        getAttribute() -gets an attribute value of a tag
+        click() -programmatically 'clicks' the tag, causing OnClick event.
+        innerHTML  -full HTML contained within tag.   labelCtrl.innerHTML = `<i>${value}</i>`;
+        innterText -returns only text.                labelCtrl.innerText = value;
+        parentElement -the parent of a tag.
+        Style -  get/set CSS                          labelCtrl.style.color = "blue";
+
+
+
+the key to using these and copy-in-javascript html is that 
+    you have to get access programmatically.  Which means using 
+    document.getElementById("idname");
+
+If its not an Input control, you are going to use InnerText or InnerHTML.
+    switched the label control value to interpolated string and put innerHTML
+
+innterHTML
+-if you want to read things in the input or display it differently, use innerHTML.
+-if you just want the text then use innerText.
+
+            labelCtrl.innerHTML = `<i>${value}</i>`;
+            labelCtrl.style["color"] = "blue";
+
+
+Events
+    -onClick = called when a tag is clicked
+    -onLoad = called when the tag is completely loaded.
+    -onChange = called when <input> or <select> value is changed
+    -onSubmit = called when the form is submitted.
+    -onFocus/onBlur = called when the cursor is located on or off.
+
+
+This doesnt work with let inputCtrl = document.getElementById
+since the bottom code is not loaded yet, that is a null value.
+
+                        <script lang="javascript">
+                            let inputCtrl = document.getElementById("inp");
+                            inputCtrl.value = "BOOTCAMP";
+                            
+                            let copy = () => {
+                                let inputCtrl = document.getElementById("inp");
+                                let value = inputCtrl.value; /*value is an attribute of input box */
+                                let labelCtrl = document.getElementById("lbl");
+                                labelCtrl.innerHTML = `<i>${value}</i>`;
+                                labelCtrl.style.color = "blue";
+                            }
+                            </script>
+                        </head>
+                        <body>
+                            <input id="inp">
+                            <button onclick="copy()">Copy it!</button>
+                            <lable id="lbl"></lable>
+                        </body>
+                        </html>
+
+
+So we added <body onload = "loaded()"> at the bottom.  Then put the 2 lines of code into a function called 
+loaded = () => { let inputCtrl = document.getElementById("inp"); inputCtrl.value = "BOOTCAMP";}
+
+
+Window
+    -highest level object
+    -includes document, console, and others
+    -Height and Width of the window.
+
+Classess
+
+    -changes from C#/Java:
+        properties and methods are public by default and cannot be private
+        properties declared without let or var.
+        only a single constructor.
+        must always use THIS to referent a class properties or methods.
+
+    Declaring properties
+        -public by default they can be declared in the constructor.
+            class Car {
+                constuctor() {
+                    this.mfg = "Ford";
+                    this.type = "Truck";
+                    this.model = "F150";
+                }
+            }
+
+    Getters/Setters
+        -classes can have getters/Setters
+            class Car { 
+                mfg;}
+                getMfg() {return this.mfg;}
+                setMfg(mfg) {this.mfg = mfg;}
+
+    Creating an instance
+        -creating instance with classname
+            let aCar = new Car();
+            let bCar = new Car(Ford);
+
+    Declaring methods   
+        -public by default
+            class Car { print() { let msg = `${this.mfg......}}}
+
+    JavaScript files
+
+        -instead of embedding JavaScript in the HTML page, put in a separate file.
+        -Goes in the <head> tag
+        -Uses the same <script> tage with: src: the file containing the javascript
+        -close with </script>
+            <script src="main.js"></script>
+
+SEE COPY-IN-JAVASCRIPT with Friends.HTML  <for the below>
+
+   Array in JavaScript for Friends class.
+   Make a table for each item in the array.
+   Put an ID on the table and reference in teh JavaScript, get element by id.
+   for each loop to create the tr.
+    
+    using += as appending to the HTML
+
+        for(let friend of friends) {
+            let tr = "";
+            tr += "<tr>";
+            tr += `<td>${friend.name}</td>`;
+            tr += `<td>${friend.phone}</td>`;
+            tr += `<td>${friend.email}</td>`;
+            tr += "</tr>";
+            tbody.innerHTML += tr;  //dont want to overwrite, but append.
+        }
+
+FULL JS showing the below;
+
+        class Friend {
+
+                constructor(name, phone, email) {
+                    this.name = name;
+                    this.phone = phone;
+                    this.email = email;
+                }
+                toString() {
+                    return `${this.name}|${this.phone}|${this.email}`;
+                }
+            }
+
+            let friends = [
+                new Friend("Denise", "513-322-8888", "denise@maxtrain.com"),
+                new Friend("Patricia", "513-322-8888", "patricia@maxtrain.com"),
+                new Friend("Kim", "513-322-8888", "kim@maxtrain.com")
+
+            ];
+
+            const loaded = () => {
+
+                let tbody = document.getElementById("tbody");
+                
+                for(let friend of friends) {
+                    let tr = "";
+                    tr += "<tr>";
+                    tr += `<td>${friend.name}</td>`;
+                    tr += `<td>${friend.phone}</td>`;
+                    tr += `<td>${friend.email}</td>`;
+                    tr += "</tr>";
+                    tbody.innerHTML += tr;
+                }
+            }
+
+
+tbody.innerHTML = ""; //this clears out what was there and it will loop again to add it.
+
+
+
+AJAX
+
+    Asynchronous JavaScript and XML
+    -same as async & await or responseentity.
+
+We want the calls to our C# controllers to be asynchronously.
+    User -> C# controller on server who knows where.. 
+        C# -> database on server who knows where..
+        then back to browser application -> User.
+    This way it doesnt freeze up, the web app can do other things. C# can do other things while they wait.
+
+Put the below code in a blank HTML document in Visual Studio
+            <script>
+                let http = new XMLHttpRequest();
+                http.open("GET", "http://localhost:5555/api/users");
+                http.onload = () => {
+                    console.log(http.response);
+                }
+                http.responseType = "json";
+                http.send();
+            </script>
+
+Then ran C# Capstone in Debug to run local host and hit go live on the HTML and 
+in the f12 console we can see the array of users that is in the database.
+
+
+Call Back Functions
+    added a function to http.onload, saying when that call completes, call my function.
+    which showed the usernames.
+
+                        let http = new XMLHttpRequest();
+                        http.open("GET", "http://localhost:5555/api/users");
+                        http.onload = () => {
+                            getJson(http.response);
+                        }
+                        http.responseType = "json";
+                        http.send();
+
+                        const getJson = (res) => {
+                            for(let u of res) {
+                                console.log(u.username);
+                            }
+                        }
+
+
+jQuery
+
+    -library of javascript Functions
+        DOM, Event Handling, AJAX
+
+    include jQuery in page 
+        -downloading
+        -linking (preferred)
+
+    go to jQuery.com to downloads -> other CDN's and just use google CDN    
+        copy & paste this in <head> before your own <script>;
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    then jQuery API Documentation -> Shorthand Methods.
+    getJSON(). -> scroll to bottom and using similar to that one.  .getJSON with .done.
+
+    $. is jQuery.
+    .done() inside params is what gets executed.
+        added anonymous function. .done( () => {})
+
+    Returned all Users from Capstone
+                $.getJSON("http://localhost:5555/api/users")
+                    .done(
+                        (res) => {console.log(res);}
+                    );
+
+        put in http://localhost:5555/api/users/1" and it returned GET with Id 1.
+
+
+
+A function can be passed in, a(b); is passing function b into a, which executes console.log.
+const a = (func) => {
+    let fn = func;
+    fn();
+}
+const b = () => {
+    console.log("b()");
+}
+a(b); 
+
+
+Convert a string to a number
+    +document.getElementById("xpk").value
+
+
+
+One JS for all the methods
+
+    user.service.js
+        const url = "http://localhost:5555/api/users";
+
+        class UserService {
+
+            static list = () => {
+                return $.getJSON(`${url}`);
+            };
+            
+        }
+
+    Instead of adding the URL in all of the JS files.
+    Had to update our user-list.html to have the 
+    UserService.list()  //still had in user-list.js the .done and .fail.
+
+class UserService {
+
+    static list = () => {
+        return $.getJSON(`${url}`);
+    };
+
+    static get = (id) => {
+        return $.getJSON(`${url}/${id}`);
+    }
+
+
+
+Using AJAX
+
+    static create = (user) => {
+        return $.ajax({
+            method: "POST",
+            url: `${url}`,
+            data: JSON.stringify(user),
+            contentType: "application/json" 
+        });
+    }
+
+
+instead of username: document.getElementById("xusername").value,
+        username: $("#xusername").val(),
+
+    a simpler way to set or read the value or access data in an input control.
+    you could put value in the .val() parens to set the value.
+
+        const getUserData = () => {
+            var user = {
+                id: 0,
+                username: $("#xusername").val(),
+                password: $("#xpassword").val(),
+
+
+Testing it we used..
+    console.debug(user);
+    return user;
+
+
+Multiple key value pairs, you separate by & symbol.
+
+ALL the AJAX methods in User & Vendor service
+  <see HTML-CSS-Javascript>
+                const url = "http://localhost:5555/api/vendors";
+
+                class VendorService {
+
+                    static list = () => {
+                        return $.getJSON(`${url}`);
+                    };
+
+                    static get = (id) => {
+                    return $.getJSON(`${url}/${id}`);
+                    }
+
+                    static create = (vendor) => {
+                        return $.ajax({
+                            method: "POST",
+                            url: `${url}`,
+                            data: JSON.stringify(vendor),
+                            contentType: "application/JSON"
+                        });
+                    }
+
+                    static change = (vendor) => {
+                        return $.ajax({
+                            method: "PUT",
+                            url: `${url}/${vendor.id}`,
+                            data: JSON.stringify(vendor),
+                            contentType: "application/JSON"
+                        });
+                    }
+
+                    static remove = (id) => {
+                        return $.ajax({
+                            method: "DELETE",
+                            url: `${url}/${id}`
+                        });
+                    }
+
+                }
+
+
+
+Javascript is .value as a property spelled out.
+    document.getElementById().value = something..
+
+using JQuery its .val().  Empty is reading.  
+using .val("ABC")  is setting the value to string ABC.
+
+    --basically form control.
+
+In javascript if you want to read what is in the <td> tags, 
+    you use document.getElementById().innerText.  or if you want HTML .innerHTML
+        innerText is just the text.  innerHTML gets the styling bold or italic, etc.
+
+IN JQuery there are two options.  .text() method that returns the text in that set of tags
+    .html() method returns the text and HTML inside the tags we are calling it on.
+    to set them you put whatever you want in the parens.
+
+
+EXAMPLE;
+
+    we have this paragraph.
+<p id="p1">This is some text in a paragraph</p>
+
+===== JavaScript
+                  get value..        set value..
+document.getElementById("p1").innerText += "ABC";
+            //<p id="p1">This is some text in a paragraph ABC</p>
+document.getElementById("p1").innerHTML += "<b>ABC</b>";
+            //same thing but ABC is now bold.
+
+ //if you put document.get on the left, you are setting the value.
+ //if you put it on the right you are reading the value.
+
+ ===== JQuery
+    reading the text then appending it on the end. so its written twice.
+ $("#p1").text($("#p1).text() + " ABC");
+ $("#p1").html($("#p1).html() + " <i>ABC</i>");
+
+
+Small projects you could use JQuery instead of Angular.
+Angular is great for building entire systems    
+    but if you have an existing project, angular isnt the best at enhancing it.
+    probably use JQuery in that case.
+
+
+
+======= Functions
+
+function abc(n) {..} //first functions in JS were declared this way.
+let abc = function(n) {..} //evolved to this with variable holding the function.
+                            but this could be overwritten with let.
+const abc = () => {..} //now you cant change the value of the function. 
+
+some json data
+{
+    id: 0, 
+    name: 'Greg',
+    fn: function(n) {..}
+}
+
+
+
+
+API.JQUERY.com
+
+  //same we did with getJSON then URL (they have test.js) the comma and the 
+  //john with time 2pm is appending on end of the URL which is just example.
+  
+$.getJSON( "test.js", { name: "John", time: "2pm" } )
+  .done(function( json ) {
+    console.log( "JSON Data: " + json.users[ 3 ].name );
+  })
+  .fail(function( jqxhr, textStatus, error ) {
+    var err = textStatus + ", " + error;
+    console.log( "Request Failed: " + err );
+});
+
+//the .done(function( json )) is just an anonymous function.
+// could be function = (json) => {console.log("JSON Data: " + json.users[ 3 ].name ); })
+
+-always use .fail and just print to console in red, so you can read what went wrong.
+-404 is just cant find it, anything other is a real error.
+--could do this so 404 is not an alert or red error.
+            .fail((err) => {
+                if(err.status == 404) { console.log("Not found")}
+                else { console.error(err); }  })
+
+.always =was used for file systems, not databases.
+    --its going to call either .done or .fail and when that is complete
+        it will call .always and it will basically close the file.
+
+
+
+Examples:
+Save some data to the server and notify the user once it's complete.
+
+    //in the data: we did JSON.stringify(vendor),
+    //which turned our javascript into json data and we formatted vendor in JSON.
+
+$.ajax({
+  method: "POST",
+  url: "some.php",
+  data: { name: "John", location: "Boston" }
+})
+  .done(function( msg ) {
+    alert( "Data Saved: " + msg );
+  });
+
+
+  ===== .addClass()
+            //using bootstrap
+  <p id="p1" class="fst-italic"> ... </p>
+
+    //selector $("#p1"), get access via JQuery. Programatic access.
+    //same as document.getElementById("p1").
+  
+  $("#p1").addClass("fw-bold") //it adds on to the end of class=
+
+<p id="p1" class="fst-italic fw-bold"> ... </p>
+
+OR can do both at the end..
+     $("#p1").addClass("fw-bold").addClass("text-danger")
+
+<p id="p1" class="fst-italic fw-bold text-danger"> ... </p>
+
+JQuery allows you to chain the methods together once you get access with selector.
+
+
+==== onLoad
+
+JQuery--
+
+$().ready(
+    () => {
+
+    }
+);
+
+user-list.js we have the refresh button.
+on top we can put in the 
+$().ready( () => { 
+        $("#refresh").on("click", () => {
+            refresh();
+        }).addClass("btn").addClass("btn-primary");
+    });
+
+then on the button for refresh
+   <button id="refresh">Refresh</button> 
+
+--takes the code out of the HTML and all in the JS file.
+--JQuery leaves the HTML more vanilla and does more work in JavaScript.
+
+--Additional Note: Would put the refresh function inside of the .ready instead of 
+    calling the function.
