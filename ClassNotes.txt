@@ -331,4 +331,6 @@ SCRUM
     make changes to user or vendor, change things over to JQuery.
     instead of JavaScript.
 
+--fade in and fade out a message on screen instead of the alert message.
+
 

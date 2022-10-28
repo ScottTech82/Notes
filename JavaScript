@@ -673,3 +673,7 @@ then on the button for refresh
 
 --Additional Note: Would put the refresh function inside of the .ready instead of 
     calling the function.
+
+let td = $(`<td></td>`).css("color", "red").css("font-weight", "bold");
+---will turn the row/ date to red and bold. can use CSS styling with JQuery if you want.
+

@@ -1,0 +1,503 @@
+
+Typescript
+
+    Typescript is a superset of JavaScript.  Everything JS can do Typescript can do and more.
+    expands on JS.
+    More like C# and/or Java.
+
+    -Provides stronger type checking in development mode for:
+        properties (variables)
+        method params
+        method return values
+    -Is transpiled(compiled) into JavaScript
+    -Plug-ins available for many programmer editors"
+
+    Browsers dont know Typescript, so it includes software like a compiler.
+        turning Typescript statements into JavaScript.. they call it Transpiling.
+
+    Microsoft product to give advantages to javascript programmers that C# has.
+    Visual Code is Microsoft, so its already built in.
+
+        it is different than compiling because it never fails to produce
+        JavaScript code. 
+        -There could be errors in your typescript code, but will still get
+            javascript out and will be errors there still too.
+
+    Installing Typescript
+        easily installed by NPM which is included with NodeJS
+
+        NodeJS install the LTS version.
+   
+Install Typescript using NPM in BASH Shell:
+    >npm install typescript -g
+Create a folder on disk and CD into it
+    >npm init -y
+
+
+    Transpiling (compiling)
+        -tsc.exe is the Typescript transpiler
+        -turns a .ts into .js
+        -Multiple options:
+            -one file = tsc hi.ts -> hi.js
+            -all files in folder = tsc *.ts -> *.js
+        -tsconfig.json(in project root)
+            -compilerOptions
+                -outDir: "js"
+            -include: ["ts/**.*"]
+        -tsc -w    //transpile watch.
+
+Examples:
+
+Typescript                  JavaScript
+
+let a: number = 0;          var a = 0;  --changes to var instead of let.
+
+var b = 7;                  var b = 7;  --same, you can code in JS.
+
+//these two are different, in JS its auto type based on what data it contains.
+//in TypeScript a type is declared with p1: number, p2: number.
+
+function Add(p1:            fucntion Add(p1, p2) {return p1 + p2;}
+number, p2: number):
+number {return p1 + p2;}
+
+
+Typescriptlang.org (typescript.com redirects there)
+    -> Playground.  And you can mess around with it.
+        -> TS Config. Can change the version of JavaScript.
+            we switched to earliest version and it changed let a to var a.
+
+tsc --init
+
+    to get the tsconfig.json.
+    ->changed the target version to es2022
+
+    -> uncommented outDir: "./js"  //tell it where our js is going.
+    created js folder and ts folder.
+    -> after first curly brace put "include": ["./ts/**.*"]
+       tell it where our ts files go.
+
+       this below; 
+
+            /* Completeness */
+            // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
+            "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+        },
+        "include": ["./ts/**.*"]
+        }
+
+
+Created a new ts file hello-world.ts
+
+            class HelloWorld {
+
+                myName: string = "Josh";
+
+                display(): void {
+                    console.log(this.myName);
+                }
+            }
+
+in terminal or git bash shell
+    type tsc
+and it will create the js file.
+
+
+tsc -w 
+    is a watch and it will transpile as we go.
+ctrl c will stop the watch.
+
+
+
+Open a new bash shell terminal in visual code by hitting the plus sign.
+
+node ./js/hello-world.js  //--to run the js file.  It printed Josh.
+
+
+
+Create Property names of a class
+then constructor the same as before
+
+then created a method to add a row of friend with properties defined.
+
+create an array.. of the type Class Friend.
+        let friends: Friend[] = [
+            new Friend("Denise", "denise@maxtrain.com", "513-322-8888"),
+            new Friend("Noah", "noah@maxtrain.com", "513-322-8888"),
+            new Friend("Fred", "fred@maxtrain.com", "513-322-8888")
+        ]
+
+
+exporting
+    -for an object to be used by another object, it must be exported.
+    -Exported objects may be imported by other objects.
+    -requires the export keyword preceding the class object.
+    export class Customer {..}
+
+
+in Angular have to add export for all our classes for the Capstone.
+    export class Users, export class Vendors.
+
+importing
+    -to use an object defined in one file in another object, the object must be imported.
+    -Class names are comma separated within curly brackets.
+    -The file name is quoted and must be relative path from the file importing it.
+        it never includes the ".ts"
+        //import.. then class name and FROM keyword pointing to where that class file is.
+        //again dont include the .ts for the "./aClass.ts" remove that .ts.
+    import { classname } from "./aClass"
+
+        -could put multiple class names with {classname, classname, classname}..
+
+
+TypeScript allows generic classes with <>
+    like List<>.
+
+
+
+Install ANGULAR
+        npm -g @angular/cli
+        ng version  //to check the version number
+
+    create project 
+    ng new my-first-ng-app
+        //should be all lowercase and dashes to separate words.
+        //it will take a while downloading the files.
+
+    open folder in visual code
+
+    If you want add Bootstrap to src -> index.html for your app.
+    src -> styles.css is global styes that will be available for entire application
+    src ->app folder with 5 files.
+            ->app.module.ts
+
+            @sign things are decorators.
+            export class at the bottom.
+
+    spec.ts is for testing.  We got rid of it, no time for it in bootcamp.
+    app.component.html has a bunch of garbage and says to delete template to start.
+        we did ctrl a and backspace to get rid of it.
+
+        -you can only put HTML that is in the <body> tags.
+        -no head or script, etc.  only body stuff.
+
+    app.component.css is only for the app component html, no others!
+
+    In almost all cases you will only work with the app files or a subfolder.
+
+Run And Debug..
+    ng completion (if I want auto complete in the terminal) -I said N.
+
+BINDING  
+    in app.components.ts changed the title.
+    in app.component.html added the title using 2 sets of curly braces.
+        <h3>{{title}}</h3>
+
+    this is a property of the AppComponent class.
+        all we had to do was put the property and wrap in 2 curly braces
+
+     
+        called Binding --Binding the HTML to the data in the code.
+            bound the property title to the h3 tags.
+
+                previously we had to get programatic access to the data and then put it
+                in the tags that have the id.
+                but now we just bind it to the tags.
+
+
+
+Angular vs AngularJS
+    -Angular is all TypeScript and is v2.x. (version 14 now)
+    -AngularJS is all javascript and was version 1.x.
+    -Google decided to fundamentally change Angular from version 1 to version 2.
+        -AngularJs was good for small self contained web applications.
+        -not great for large applications with multiple pages. Unable to share components.
+
+    AngularJS is mainly in the HTML page.
+    Angular is mostly code / classes not in the HTML page.
+
+Framework
+    -Angular is an application framework written in Typescript for building responsive, 
+    web application and Single page Applications. It provides all the tools and libraries
+    needed. it has gained wide acceptance in the marketplace.
+    -A framework is a toolset for producing application that require folloing a set of guidleines
+    on how to use it.
+
+     --cant do console apps or desktop apps with Angular.  Its web application only.
+     --Framework has to be used by their rules, its not freewheeling. 
+            example. the plugs in a room for electricity is a framework, set at 110v.
+                cant plug in anything else, you are restricted.  Except an Oven or Dryer that has
+                different plugs and their own source.
+
+            learn how angular works to do things.
+            like how controllers and models work together in capstone webapi.
+
+    SPA -single page app. Angular is hard to beat as the best tool.
+
+    Component-based framework
+        -components are completely, self-contained units that control a portion of the web page.
+        -components are organized into a tree-like structure with a root component and all other
+            components branching form the root or from other components.
+        
+Structure of Angular App
+        <Parent -> Child>
+    Application - > Header, Menu, Financials, Footer.
+        Application - > Financials -> Receivables, General Ledger, Payables
+            Application - > Financials -> General Ledger -> Chart of Accounts, General Journal
+
+Component Composition
+    Import of other classes
+    A single decorator
+    And exported Class
+    --Every component has a single parent.
+    --app component is in the HTML <body> tags as <app-root></app-root>
+            app component decorator has selector: 'app-root',
+
+The application is a module
+    -An Angular application is defined as a module
+    -A module is a collection of other modules, components, pipes, services.
+    -Every object used in the application must be known to the app module.
+    -Modules are similar to:
+        an EXE or DLL in .NET
+        a JAR in Java
+
+
+DONT Manually refresh the browser in middle of the Angular app. 
+        it will restart it over again.
+
+    SPA (Single Page Application)
+    -Angular makes it easy to create a SPA
+    -SPA has the following characteristics:
+        --typically only a single HTML page with all the HTML tags common to every page
+        --HTML fragments (views) that get injected into the HTML page based on the browser URL(router)
+    -SPA tend to minimize network traffic to the server with much of the work done in JavaScript on the client.
+
+        --instead of going back and forth to the server for additional pages. it could start running
+        really slowly.  
+        --SPA takes everything at one time and brings down to the client. Holds in the Cache.
+                now the systems needs to be healthy.
+
+Architecture of SPA
+    --graphic on page 58 of the pdf powerpoint.
+        on top = header and menu under header.
+        left sidebar | content area | right sidebar
+        Footer at the bottom.
+
+        The content area in the middle changes depending on the page they are on.
+        
+        The other components are the same.  same header, same menu, same left & right sidebar 
+        component, same footer component.
+
+ 
+
+ CLI (Command Line Interface)
+    -used to create projects and objects within those projects
+    -can be git bash shell, windows cmd.exe, mac terminal
+    
+    -ng [command] [options] where command is required and options vary.
+        >ng new my-first-angular-project
+
+        -https://angular.io/
+    
+    -Node must be installed in order to install Angular/CLA
+        >npm install -g @angular/cli
+    
+    Help
+    >ng new --help
+
+    or --routing. Generate a routing module for the project.
+
+    Options are; 
+        -routing: causes a routing module be generated within the project.
+        -no test cases (--skip-tests): Does not generate the unit test files (*.spec.ts)
+
+    Creating new objects(generate)
+        >ng (g)enerate [blueprint] [name] [option]
+        >ng generate component [name]
+
+        Blueprints:  only need to type the letter in parens, then space.
+            (cl)ass
+            (c)omponent
+            (g)uard
+            (m)odule
+            (p)ipe
+            (s)ervice
+
+    Generate Component
+        >ng g c [name] [option]
+        
+        -most angular projects have many components and all must be defined to the app.module.
+        -creates a new subfolder with component name
+    
+    Generate Module
+        >ng generate module [name] [option]
+        -a module is a grouping of components, services, pipes, and other modules.
+
+    Generate Service
+        >ng generate service [name] [option]
+        -Generates a service and adds the decorator info to make it available throughout the app.
+            
+    --you could create a method in component b and want to use it in component a.
+    cant do it, unless they are parent -> child component.  Otherwise they dont talk to each other.
+
+    --But can do this as a Service.  One component can read or change a service in another component.
+    --Services are created to be used by multiple components.
+
+    -In capstone we are going to create a service that will make all the calls to the controllers.
+
+
+    Build and Run project(serve)
+        >ng serve [option]
+
+        -Does a build and starts the project
+        -(-o) opens the browser or tab and monitors the source files refreshing the browser after
+            any save.
+        -the default URL is http://localhost:4200
+
+    
+Structure of Angular files
+
+    Importing classes
+        import {UserListComponent} from './user-list/user-list-component.ts'
+
+    Decorators
+        -Decorators provide meta-data about the object
+        -always begin with @ sign
+        -defines the object type
+        -most take parameters, but unused params need not be specified.
+            --Decorators are not TypeScript so no ;
+        @Component(..)
+        export class {..}
+
+        -take a JSON object as a parameter
+        -NEVER add a semicolon at end of decorator!!!!!
+
+        @Component({
+            selector: "abc-comp", 
+            templateUrl: "./abc.component.html",
+            styleUrls: []
+        })
+        export class AbcComponent {... }
+    
+
+    Classes
+        -All objects in Angular are classes
+        -Classes must be exported using export.
+
+        export class AbcComponent implements OnInit {
+            counter; //property
+            print() { } //method
+            constructor() { } //constructor
+            ngOnInit() {}  //life-cycle method
+        }
+
+        -will have ngOnInit in all of our classes.
+        -Typescript differences from C# & Java
+            -all objects are public by default
+            -only one constructor allowed
+            -must use this. 
+
+Modules
+
+    -Module is like a project in C#.  It has to know about everything in your application.
+    -All UI objects must belong to a module
+    -All applications have a root module
+    -All modules marked with @NgModule decorator
+        --with data:
+            declarations: component class names
+            imports: module class name
+            exports: module/component class names
+            providers: service class names
+            bootstrap: startup component
+        
+        //all arrays of class names.  no quotes.
+            @NgModule({
+                declarations: [AppComponent],
+                imports: [BrowserModule],
+                providers: [],
+                bootstrap: [AppComponent]
+            })
+            export class AppModule { }
+
+
+
+Components  (Most important part)
+
+    -Objects that render and manage data on the page
+    -A typical component will contain:
+        imports
+        the @Component decorator
+        a class
+    -the html and css can be provided by:
+        -pointing to a single file containing html or an array of files containing css
+        -the html or css can be embedded in the file.
+
+
+    @Component
+        -an object is a component because it has @Component decorator
+        -Options are:
+            -selector: "app-comp",
+            -template(html):
+                templateUrl: "[html-file]"
+                template:"[html]"
+            -style (css)
+                styleUrls: ["css-file", "css-file", ...]
+                styles:["body {color:blue;}", "p{color:red;}",...]
+
+Selectors
+    -selector is an identifier for the component
+    -selector is embedded in another components html as an HTML tag.
+        <div>
+            <span>Start of component</span>
+            <app-comp></app-comp>
+        </div>
+
+    -the template/templateUrl is the only required decorator key
+    -components that are only used in SPA routes may exclude a selector.
+
+Template (html)
+    -in Angular, template means HTML
+    -template is typically used for only very small html
+
+Styles (css)
+    -styles in components are localized to only the component they are attached to.
+    -Can be specified by:
+        styleUrls: or styles: 
+
+OnInit is an interface.
+ returns ngOnInit(): void { }
+
+
+
+Data Binding
+    -In Angular, data is bound to html objects in either a one-way or two-way method.
+    -In one-way binding, the modified property data value is immediately updated on the user
+    interface, but changes to the user interface control does not cause a change in the property data.
+    -In Two-way binding, any changes to either the property or the control cause a change in the other.
+
+    If the data on your code changes -- change it on the user interface.
+    one-way binding, if you want it to change.. change it in your code.
+
+    if you have form control, like an input box or something the user interacts with..
+        its two-way binding.  Once they interact it will change the variable.
+
+    example:  
+        let name: string = "MAX"
+            One-Way Data Binding
+                <p>{{name}}</p>
+            
+            Two-Way Binding (req FormsModule)
+            <input [(ngModel)]="name" type="text>
+
+            In both cases above, "name" is a property of the component.
+
+********MUST ADD FormsModule to your AppModule. for Two-Way Binding**************
+
+
+
+Name, Address, phone, email
+
+
+
+
+
