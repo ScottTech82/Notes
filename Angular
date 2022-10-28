@@ -495,9 +495,535 @@ Data Binding
 
 
 
-Name, Address, phone, email
+Adding myCv-app website in Angular
+    generated new component 
+
+
+in the selector you can change selector name to just work.
+And in app.component.html paste in <work></work> where you want it to show up.
+
+
+===================
+
+Directives
+
+    *ngIf
+        -Angular directive that controls whether the HTML it is attached and all child tags are
+            displayed.
+        -The asterisk is required.
+        -Structural directive = manipulates the DOM
+            //display is variable, or property and boolean.
+            <p *ngIf='display == true'>This is displayed only if the display property is true</p>
+            <div *ngIf='custlist'>... </div>
+
+        --You can control whether or not something shows up, based on the data in the .ts file.
+
+-------This will be great for ADMIN access on Project-------
+-------Only certain people can see the EDIT button to edit data-------
+
+
+    *ngFor
+        -Angular directive that loops through a collection replicating the HTML tag and all
+            child tags for each item in the collection.
+        -REQUIRES importing FormsModule in AppModule.
+        -let is required.
+
+                        @NgModule({
+                            declarations: [
+                            AppComponent,
+                            WorkComponent,
+                            EducationComponent
+                        ],
+                        imports: [
+                            BrowserModule, FormsModule  <---------RIGHT HERE!!!
+                        ],
+
+
+        Updated education = [  ]
+       
+        to education: any[] = [ education data ]
+    
+    changing this over to use the ngFor
+
+                    <tr *ngFor="let e of educations">
+                        <td>{{e.school}}</td>
+                        <td>{{e.major}}</td>
+                        <td>{{e.year}}</td>
+                    </tr>
+
+    Now it will iterate through the data and display in the HTML.
+
+    Changed tech to be an array of arrays. or tech: string[][] =[ ]
+                        email: string = 'JoshScott82@gmail.com';
+                        tech: string[][] = [
+                            ["Git | GitHub", "C#", "CSS", "SQL", "Spring"], 
+                            ["NET Core", "Bootstrap", "Typescript", "Java", "EF Core"],
+                            ["HTML", "MySQL", "WebAPI", "JavaScript", "SQL Server"],
+                            ["JSON", "REST", "Maven", "Agile", "Visual Studio"],
+                            ["ASP.Net", ".Net", "Eclipse", "SQL Server Management Studio"],
+                            ["jQuery", "Scrum", "Angular", "Hibernate"]
+                        ];
+
+             <table class="table table-sm">
+                <tr *ngFor="let row of tech">
+                    <td *ngFor="let data of row">{{data}}</td>
+                </tr> 
+
+        It iterates through the tech array of arrays data and displays it.
+        Since I used let data of row, I can then use {{data}} to display that array within
+        the row array.
+
+    Array within an array.. let hearts, diamonds, clubs, & spades, then jack, queen, king.
+
+
+    *ngSwitch
+
+        -Angular directive that displays one of multiple sets of HTML tags containing
+            *ngSwitchCase based on a property value.
+
+            <div [ngSwitch]='abcValue'>
+                <p *ngSwitchCase="'a'">Display a</p>
+                <p *ngSwitchCase="'b'">Display b</p>
+                <p *ngSwitchCase="'c'">Display c</p>
+                <p *ngSwitchDefault>Display x</p>
+            </div>
+
+        -Rarely used. Mostly use ngFor and ngIf.
+        --maybe if you get something from outside and have to change code over, might be easier to use.
+
+
+
+    ng-container
+
+        -Allows ngIf and an ngFor in the same HTML. Wrap it in a ng-container.
+        -Angular HTML tag that does NOT render in the DOM
+        <tr>
+            <ng-container *ngIf="isActive">
+                <td>Active</td>
+            </ng-container>
+            <ng-container *ngIf="!isActive">
+                <td>Inactive</td>
+            </ng-container>
+        </tr>
+
+
+    ngClass
+
+        -Sets the HTML class attribute using data from component.
+        -styling.
+        <button [ngClass]="clsVals">
+            Click me!
+        </button>
+
+        Note: clsVals is a class property
+        ie. clsVals = "btn btn-primary"
+
+        --imaging having 50 buttons and having "btn btn-secondary" then 
+        someone says well lets to btn-danger instead.  You now have 50 buttons to change!!
+
+        OR you can use ngClass.  
+
+        tableClassStyle: string = "table table-striped table-sm";
+        tableDataClassStyle: string = "fw-bold";
+
+            in HTML
+        <table [ngClass]="tableClassStyle">
+            <td [ngClass]="tableDataClassStyle"></td>
+        </table>
+
+    
+    [hidden]
+
+        -Used to add or remove the hidden attribute
+        -if isHidden is truthy, the hidden attribute is added to the HTML which will hide it
+            from the page.
+        -if isHidden is falsy, the hidden attribute is NOT added to the HTML which will show it on 
+            the page.
+            <p [hidden]="isHidden">... </p>
+
+            --ngIf is probably better to use, but you can use this.
+            --isHidden is true, so its hidden.  isHidden is false so it shows.
+
+    [disabled]
+
+        -Used to add or remove the disabled attribute from HTML based on whether the expression 
+            is truthy.
+        -if disabled, the control connot be modified by users.
+        <button [disabled]="isDisabled"> Click me!</button>
+
+        ---May want to disable the button after its clicked. Until data comes back.---
+        ---Or cant click certain buttons until something is done first---
+            example: BCMS assessments, cant hit next or prev until you answer the question & submit.
+
+        
+    [src]
+
+        -Used to add or remove the value from the src attribute from HTML
+        <img [src]="imageUrl">
+
+
+    [class.x]
+
+        -used to add or remove a particular value from the class attribute within an HTML statements
+        <div [class.red]="isRed"> ...</div>
+
+            Here is the html statement:
+            <div class='red'>..</div>
+            If isRed is true, the class remains
+            else it is removed.
+
+    [style.x]
+
+        -used to add or remove the value of a particular style attribute from HTML
+        (only if using standard styles.. not css or bootstrap)
+        <p [style.color]='color'>..</p>
+            in the code:  This.color = "green"; //sets the <p> tag color to green.
+
+Events
+
+    -Defines a function to be executed when an event on HTML tags fire
+    -Parentheses are required on event and function
+    -Can pass data to the function.
+    <button (click)='log()'>...</button>
+
+            --same as JavaScript but without word On.  OnClick, OnLoad, etc.
+            --wrap click in parens and then the method in .ts file we want to execute.
+                log would have to be a method in the .ts file to execute it.
+
+
+
+============
+    Using Routing
+
+ng new simple-website --routing --skip-tests
+
+Home - About - Support
+
+now setup the routing to switch between these html components.
+
+const routes: Routes = [
+  { path: "", redirectTo: "/home", pathMatch: "full" },
+  { path: "home", component: HomeComponent },
+  { path: "about", component: AboutComponent },
+  { path: "support", component: SupportComponent }
+];
+
+Never have the first character a / inside of path:.
+    if we want http://localhost:4200/home, its just path: "home", 
+Might have to import Components.  Might auto do it for you.
+
+app.component.html
+    -delete everything BUT <router-outlet></router-outlet>
+
+
+
+
+Page Blanks out and then displays other pages.. like about and support.
+    because its reloading and we dont want it to reload. We are hand typing, so it reloads.
+    Adding in links.
+
+
+in Angular you do not want href to go to a different html page.
+<nav>
+    <a routerLink="/home">Home</a> | 
+    <a routerLink="/about">About</a> | 
+    <a routerLink="/support">Support</a>
+</nav>
+
+ ----Dont want to copy the menu to each component.
+ ----but also done want it in the app.component.html since that might be LOGIN page
+        --in capstone.
+
+    Added menu component and used the <nav> code in there only.
+    Then put the selector app-menu as a pair of html tags on each page.
+
+After Lunch
+Making Menu tag as data driven instead of Anchor tags.
+
+-Added menuitem component.
+-Added menu.class.ts file in the menu section
+-Went to menu.component.html
+
+<nav>
+    <ul>
+        <li *ngFor="let m of menus">
+            <a routerLink="{{m.route}}">{{m.display}}</a> || 
+        </li>
+    </ul>
+</nav>
+
+Did some Menu styling in menu.component.css
+
+                nav {
+                    background-color: rgb(44, 43, 43);
+                    color: silver;
+                }
+                ul {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                li {
+                    display: inline-block;
+                    margin: 0 10px;  //first is top/bottom, second is left/right.
+                }
+
+                a {
+                    text-decoration: none;
+                    color: silver;
+                    padding: 0 10px;  //so when you hover over it covers the entire area.
+                }
+                a:hover {
+                    background-color: black;
+                    color: white;
+                }
 
 
 
 
 
+
+        In the Simple-Website.. example.
+----Captsone = advanced feature that says you can only review a request if you 
+    are a reviewer.  If not, the menu for reviewer should not show up! ---
+
+        menuitem.ts, .html, .css  
+
+we want the menu component to push an instance of the Menu class into this variable.
+    @Input() menu!: Menu;
+            Import Input.
+            this says to allow the parent to input into this varaible.
+
+
+in menu.component.html
+
+<nav>
+    <ul>
+        <app-menuitem *ngFor="let m of menus" [menu]="m"></app-menuitem>
+    </ul>
+</nav>
+
+  //let m of menus, putting menus into m.  then [menu] = "m", which puts m into menu.
+  //taking it from parent into the child.
+
+  Flowing the menus through the html into the menuitem to display them on each page.
+
+
+
+
+
+new instance on a class is the only time a constructor is called.
+        lifecycle hook
+ngOnInit(): void { }  ---angular does it automatically.
+
+    pull the data from the database.. a collection of user instances.
+    then display/render the data on the webpage.
+    if we switch away.. and come back we want to re-render that data and
+    repull that data.
+    
+    we would normally use the constructor and create a new instance.
+    in Angular once its created, we use it and it stays in memory of Angular.
+    if we come back, it shows the same data from memory, not any changed or updated 
+    data.
+
+    We can then use ngOnInit to call the database for the current list of users.
+    ngOnInit will be called before the page is rendered to repull the data from database.
+
+    code will go into ngOnInit for database calls.
+
+
+
+
+SERVICES
+
+    -services can be shared across multiple components.
+    -MUST:
+        include the providedIn: 'root' in decorator or 
+        be imported and exposed in the providers decorator key of app module
+    -They are injected into components through the component's constructor param list
+    -Common uses:
+        Application options
+        Storing user login information
+        AJAX methods.
+
+     --example is a Trial version. When expires you can use services to turn off features.
+            Capstone!
+     --login to store the user instance into a service and pass that service to all of the 
+        other components.
+     --services will make all the AJAX calls to our backend methods for database.
+            services can be used by any component that needs them.
+
+            variable and class name of the service will be type, put that into the 
+            parameter list of the constructor.
+
+    Injectable
+        -services use the @Injectable() decorator.
+        -means the service itself can use other services that will be injected into them
+            (e.g. created service will have the HttpClient service injected into it)
+
+    creating a service
+        >ng generate service [servicename]
+
+            -creates the service in the current directory (app folder)
+            -Adds the service to the associated module
+            -Generated services include 'providedIn: root' in the decorate and 
+                no longer need to be added to the providers key in the app module.
+
+        Example on page 133 & 134 of the powerpoint/pdf.
+        
+        import {SystemService} from './services/system.service';
+        constructor(private sys: SystemService)
+
+    Using a service
+        -to use a service in a component it must be inejcted via the constructor
+        -add private, protected, or public to constructor creating a local property in the class
+            constructor(private syssvc: SystemService)
+
+    Services for data access
+
+        -Service is used to access data from a server, some rules to follow include:
+            --1 service per server controller: UserService for UsersController.
+            --1 service function per server controller method:
+                UserService.list() for UsersController.GetAllUsers()
+            --Services are singletons.  There is only a single instance existing at any time.
+
+        --so 5 or 6 methods in the controller, 5 or 6 service functions.
+
+    Asynchronous Communication
+
+            -Async comm means the request and response will be delayed and may never complete.
+            -Using subscribe(..) handles the response whtn it completes or when it errors.
+                first parameter is when it works, second parameter is when it fails.
+            -The rest of the code continues running when the asynchronous called is running.
+
+    HttpClient
+
+        -service class within HttpClient Module providing AJAX async calls.
+        -import 'HttpClientModule' from '@angular/common/http' in AppModule.
+        -Requires import of 'Oberservble' from 'rxjs'
+        -Injected into component via constructor
+        -import 'HttpClient' from '@angular/common/http';
+        -Provides get, post, put, delete methods
+
+    Observable
+
+        -observables are constructs to handle async calls
+        -provided by importing from rxjs
+        -observable provides subscribe method to handle data return async.
+
+            this.http.get(url).subscribe({
+                next: res => {console.log(res)},
+                error: err => {console.error(err)}
+            });
+                //whatever comes back from subscribe will display
+                //make sure to put curly braces around next & error.
+
+    Subscribe
+
+            -Called only when async call returns
+            -Lambda variable exists Only within the subscribe function.
+            -subscribe takes 1 or 2 parameters
+                -1st if successful
+                -2nd if failed.
+
+    Example Ajax Service
+        import { Injectable } from ‘@angular/core’;
+        import { HttpClient } from ‘@angular/common/http’;
+        import { Observable } from ‘rxjs’;
+
+// assuming a user class in user.ts
+        import { User } from ‘./user’;
+
+        const url = ‘http://localhost:12345/api/users/’
+        @Injectable({providedIn: ‘root’})
+        export class UserService {
+            constructor(
+                private http: HttpClient
+            ) {}
+        // service functions here
+        }
+
+// service functions
+                 //get all users.
+        List(): Observable<User[]> {
+            return this.http.get(`${url}`)
+                            as Observable<User[]>;
+        }
+                //get by id.
+        Get(id: number): Observable<User> {
+            return this.http.get(`${url}/${id}`)
+                            as Observable<User>;
+        }               //if you dont do this as, it returns something different.
+
+
+Example using a service  page 140's
+
+    import { UserService } from ‘./user.service’;
+    users: User[];
+    constructor(
+        private UserSvc: UserService
+    ) {}
+    …
+    this.UserSvc.List().subscribe({
+        next: users => {
+            this.users = users; console.log(users)
+        },
+        error: err => console.log(err)
+    });
+
+
+Build our service
+
+AppModule
+    import { HttpClientModule } from '@angular/common/http'
+      imports: [
+        BrowserModule, HttpClientModule
+        ],
+
+   -new folder under app called employee
+    -new file as employee.class.ts
+        entered the properties from C# project.
+    -ng g s employee/employee
+        now we have employee.service.ts
+
+    export class EmployeeService {
+
+    constructor(
+        private http: HttpClient
+    ) { }
+    }
+    ---import httpclient.
+
+
+    export class EmployeeService {
+  baseurl: string = "http://localhost:5432/api/employees";
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  list(): Observable<Employee[]> {
+    return this.http.get(`${this.baseurl}`) as Observable<Employee[]>
+  }
+}
+
+app.component.ts
+--added this in.. 
+  constructor(private emplsvc: EmployeeService) {
+    this.emplsvc.list().subscribe(
+      {
+        next: (res) => {console.log(res);},
+        error: (err) => {console.error(err);}
+      }
+    );
+  }
+
+  Added in employees: Employee[] = [];
+  then in the next: (res) => {console.log(res); this.employees = res;},
+
+    This will allow us to take res which is the employee list and will stuff it into
+    this.employees which is an array.  NOW we can display that array on the webpage.
+
+    that data only existed inside the constructor and in console.log.
+
+    
