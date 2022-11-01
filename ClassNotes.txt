@@ -334,3 +334,61 @@ SCRUM
 --fade in and fade out a message on screen instead of the alert message.
 
 
+10/31 && 11/01
+Capstone    
+    Can create a Footer to show on everypage after <rounter-outlet></router-outlet>
+        that would say created by Josh Scott.. etc.
+    Or could have the login info of the user that logged in.
+
+ADD searching in Capstone.  Check Angular notes for searching and the ERSNG project.
+    Phone & email might be NULL.  Add a NULL check.
+
+
+
+
+Started up ERS system without visual studio
+    Git bash -> need to be in the same folder as .csproj file.
+    dotnet run.
+
+    it will run the application without visual studio.
+
+
+Use ng new --help to see a list of options for creating a new angular app
+
+
+Assessment for JavaScript
+
+--global attributes of HTML
+    ones you can put on anything in the body tag.  Class, Id, Style, etc.
+--know which HTML statements have a closing tag.  All but Input, Img, link.
+--know the CSS style to make text display in italic.  font-style: italic;
+--know how to make a table expand the width of page.  width: 100%
+--know how to style two div tags <div id="div1"></div>
+
+--side by side, display: inline-block; 49px; since 50px goes over.
+    <style> div {min-height; 300px; vertical-align; top; width: 49%; display: inline-block;}
+    </style> <body> <div> <ol> <li>This is the left div</li></ol></div>
+    <div>This si the right div</div></body></html> 
+        //see block-inline folder with side-by-side-divs.html.
+
+--know the syntax of anonymous javascript function.  const blah = () => { } 
+        anonymous does not have a name.
+        .done = (0) => {something..}
+--Core javascript data types. string, number, boolean, could do Array or Object.
+--Know difference between == and ===.  the data could be same but type different.
+        == data the same?   === types are the same?
+--know the syntax of iterating through a collection.  for(let fred of freds) {..}
+--set or retreive data in input tag. Value Attribute.  value=Train@MAX
+            in JavaScript file its .val() to get and .val("") to set
+
+
+
+
+
+Git Bash > go to the folder with csproj.user file
+    >start dotnet run
+
+will open and run in windows cmd prompt.
+
+
+

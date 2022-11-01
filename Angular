@@ -896,7 +896,10 @@ SERVICES
                 first parameter is when it works, second parameter is when it fails.
             -The rest of the code continues running when the asynchronous called is running.
 
-    HttpClient
+
+
+
+*******HttpClient*****
 
         -service class within HttpClient Module providing AJAX async calls.
         -import 'HttpClientModule' from '@angular/common/http' in AppModule.
@@ -904,6 +907,8 @@ SERVICES
         -Injected into component via constructor
         -import 'HttpClient' from '@angular/common/http';
         -Provides get, post, put, delete methods
+
+
 
     Observable
 
@@ -1027,3 +1032,773 @@ app.component.ts
     that data only existed inside the constructor and in console.log.
 
     
+
+
+=================
+
+Routing
+    -routhing is where the url is used as data for displaying the approriate component.
+    -Angular URL
+    -Components are injected into HTML containing the special pseudo-HTML tags
+        <router-outlet></router-outlet>
+        routed components go between these two tags. 
+        the first route will be executed.
+    -Requires a module to define the routes and the components associated with each route.
+    -Order of routes is SIGNIFICANT!!
+        Can name them so we dont have to worry too much about the order they are in.
+
+Routes are visible in the browser/URL, but the routes to the backend are not visible.
+    RouterModule
+    Example:
+            import { RouterModule, Routes } from
+            ‘@angular/router’;
+we import ->import { HomeComponent } from ‘./home.component’;
+          ->import { GetComponent } from ‘./get.component’;
+          ->import { E404Component } from ‘./e404.component’;
+            const routes: Routes = [
+            { path:'', redirectTo:'/home', pathMatch:'full' },
+            { path:‘home’, component: HomeComponent },
+            { path:‘get/:id’, component: GetComponent },
+            { path:'**', component: E404Component }
+            ];
+
+        @NgModule({
+        imports: [ RouterModule.forRoot(routes) ],
+        exports: [ RouterModule ]
+        })
+        export class AppRouterModule {}
+
+
+routerLink
+
+    -a special Angular attribute for <a> tages to link to a different component.
+    -use it instead of a href.
+        <a routerLink="/about> About </a>
+    -Note: using href in <a> will display correctly, but will refresh the application.
+            could potentially log people out or require they log back in.  Annoying.
+            use a routerLink=
+
+Route (almost all of our routes will be like this)
+
+    -defines which component to load based on the info in the address line of the browser.
+    -Two keys, a path and a component.
+        {path: 'app', component: AppComponent}
+    -path: defines the route (without leading slash) NO SLASHES!!!
+    -component: the class name of the component to load, MUST BE IMPORTED.
+
+
+Route path at startup (special route that probably use)
+
+    -There is a special path used to handle app start-up when no route info is provided.
+    {path: '', redirectTo:'/home', pathMatch:'full'}
+
+        -path: empty string(no route)
+        -redirectTo: link to normal url
+        -pathMatch: look at the entire path
+        -Must be FIRST path defined.
+
+    This says go to path.. which is empty.. so then redirectTo /home.
+    So after 4200 it puts that path in.
+
+Put this in the app routing module first when created.  
+Make sure its the first one and do not put anything above it.
+
+
+Catch-all route path (LAST will catch anything put in that does not match)
+
+    -there is a special path used to handle routes not mapped.
+    {path: '**', component: AppComponent}
+
+        -path: double astericks
+        -component: any imported component
+        -Must be LAST path defined.
+
+    Usually create a E404 Component and path this to it.
+        In HTML put something like route is not found. Or invalid route.
+        Dont path to home, since you dont know if it was error or not.
+
+
+
+
+----------
+
+    Inject into your Parameter list of your constructor.
+        use '' and not the tab `. will have to import HttpClient
+
+                    import { HttpClient } from '@angular/common/http';
+                    import { Injectable } from '@angular/core';
+                    import { Observable } from 'rxjs';
+                    import { Employee } from './employee.class';
+
+                    @Injectable({
+                    providedIn: 'root'
+                    })
+                    export class EmployeeService {
+                    baseurl: string = "http://localhost:5432/api/employees";
+
+                    constructor(
+                        private http: HttpClient
+                    ) { }
+
+                    list(): Observable<Employee[]> {
+                        return this.http.get(`${this.baseurl}`) as Observable<Employee[]>
+                    }
+                    }
+
+                    Could also do..
+                    http: HttpClient;
+
+                    constructor(http:HttpClient){ this.http = http;}
+
+Need all methods that the controller has after the constructor.
+      list(): Observable<Employee[]> {
+        return this.http.get(`${this.baseurl}`) as Observable<Employee[]>
+        }
+      get(id: number): Observable<Employee> {
+        return this.http.get(`${this.baseurl}/${id}`) as Observable<Employee>;
+        }
+
+Subscribe goes into the app.component.ts, instead of in the service. We pass it back to 
+the component so it can handle the call when its successful or when it fails.
+
+          constructor(private emplsvc: EmployeeService) {
+            this.emplsvc.list().subscribe(
+            {
+                next: (res) => {console.log(res); this.employees = res;},
+                error: (err) => {console.error(err);} } ); }
+
+Create a folder for Employee
+Create an Employee class . ts
+    with all properties, same as C#.
+and Employee.service.ts
+    will contain the URL and all methods in the EmployeeController in C#.
+
+Post has 2 parameters, the url and then the body of the instance. So it returns it back to you with ID.
+    create(fred var: Employee): Observable<Employee> {
+        return this.http.post(`${this.baseurl}`, fred var) as Observable<Employee>;
+        }
+
+Put doesnt really return anything, so we put any on it.  Also want to pass in the entire instance
+    change(fred var: Employee): Observable<any> {
+        return this.http.put(`${this.baseurl}/${empl.id}`, empl) as Observable<any>;
+    }
+
+Delete is similar to get with any in there
+    remove(id: number): Observable<any> {
+        return this.http.delete(`${this.baseurl}/${id}`) as Observable<any>;
+    }
+
+Login is passing in the email and password.
+    login(email: string, password: string): Observable<Employee> {
+        return this.http.get(`${this.baseurl}/${email}/${password}`) as Observable<Employee>;
+    }
+
+Common mistake on post and put is forgetting to put the ID on the URL.
+Also, make sure your Observable's are same.  Url is correct to send the body of the request to controller.
+
+Create a new folder for each of the other C# Classes
+    ie. Expense, Expenselines, item.
+
+
+
+
+
+
+
+
+==================
+ON SETUP 
+
+-first thing is to import into app module
+    the FormsModule and HttpClient.
+            import { HttpClient } from '@angular/common/http';
+
+                @NgModule({
+                    declarations: [
+                        AppComponent
+                    ],
+                    imports: [
+                        BrowserModule, HttpClientModule, FormsModule
+                    ],
+
+
+AppComponent.html -> ctrl A delete all and put back in <router-outlet></router-outlet>
+    app -> new folder > msc
+    git bash generate -> home, about, e404 pages.
+        ng g c misc/home  ng g c misc/about  ng g c misc/e404
+    --need one more for menu to navigate between them. 
+            ng g c misc/menu
+
+
+appmodule will have routing for all 3 components, home, about, e404.
+    copy & paste into the app-routing.module.ts
+
+            Setup the Routes = [
+                {path: "", redirectTo: "/home", pathMatch: "full" },
+            
+                {path: "home", component: HomeComponent },
+                {path: "about", component: AboutComponent },
+
+                {path: "**", component: E404Component }
+            ];
+
+menu -> create class ->menu.class.ts
+    export class Menu {
+        display: string = "";
+        route: string = "";
+
+        constructor(display: string, route: string) {
+            this.display = display;
+            this.route = route;
+        }
+    }
+menu.component.ts
+    after export class menucomponent.
+          menus: Menu[] = [
+            new Menu("Home", "/home"),
+            new Menu("About", "/about")
+        ];
+
+menu html
+    put all components in div tags. and do *ngFor to loop through menu class instead of 
+    typing each one out.
+    <div id="component">
+        <nav>
+            <ul>
+                <li *ngFor="let m of menus">
+                <a routerLink="{{m.route}}">{{m.display}}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+Styling.
+Put in Bootstrap -> past in Index.html
+
+We dont want menus to show up until they login, so dont put it in app.component.html
+    put it home html above the paragraph tag <app-menu></app-menu>
+
+start the styling for the menu;
+menu.component.css
+    nav { background-color: #454545 }
+    ul { padding-left: 5px;} //so the menu goes more to the left.
+    li { display: inline-block; padding: 0 10px; } //padding spreads them out a bit.
+
+for the a tag we want to get rid of the blue color and the underline
+a {
+    color: silver;
+    text-decoration: none;
+}
+Add a hover to change the highlight when you hover over the menu items.
+a:hover {
+    color: white;
+    background-color: black;
+}
+
+---->>>Could do the parent/child for the menu with menuitem.component instead<<<----
+
+
+Create folders for Employee, Expense, Expenselines, Items etc.
+
+Create employee.class.ts under employee
+git bash -> ng g s employee/employee
+    to create the service
+
+You want different components for each method.
+on detail you will put in Delete and juse use that instead of another component.
+
+git bash -> ng g c employee/employee-list
+        /employee-detail
+        /employee-create
+        /employee-change
+
+start with class first export class Employee {
+    list out all of the properties, same as C# class.
+    must name exactly the same except the first letter is lowercase.  All other case must match!
+}
+        in git bash can use curl http://localhost:5432/api/employees/1 to check the names.
+
+
+Employee Service
+    under export class employeeservice
+    baseurl: string = "http://localhost:5432/api/employees";
+    
+    constructor(private http: HttpClient) { } //will auto import.
+(properties above construtor, methods below)
+
+start creating the methods.. 
+    login() {} 
+    list() {} 
+    get(id: number) {}
+    create(empl: Employee) {}
+    change(empl: Employee) {}
+    remove(id: number) {}
+
+    then add the code to it.  : Observable<Employee[]>, Observable<Employee>, Observable<any>.
+        return.this.http.get(), return.this.http.post, .put, .delete.
+`${this.basurl}` | `${this.basurl}/${id}` | `${this.basurl}`, empl | `${this.basurl}/${empl.id}`, empl
+always put on the end as Observable whatever return was in the beginning <Employee[]>, <Employee>, <any>
+
+-->>can check these notes, scroll up for more info on syntax if needed.
+
+
+Route for all teh components
+    -just the list for the 
+
+Open app.module.ts to get your imports for components and paste in the app-routing.module.ts.
+
+    putting them between the startup path and home.
+    const routes: Routes = [
+    {path: "", redirectTo: "/home", pathMatch: "full" },
+
+    {path: "empl/list", component: EmployeeListComponent}
+  
+    {path: "home", component: HomeComponent },
+
+Make four of them then do Create, then Detail with /detail/:id
+        basically the path of the url.. so its empl/detail/1 to read first id. or whatever.
+
+            {path: "empl/list", component: EmployeeListComponent},
+            {path: "empl/create", component: EmployeeCreateComponent},
+            {path: "empl/detail/:id", component: EmployeeDetailComponent},
+            {path: "empl/change/:id", component: EmployeeChangeComponent},
+
+to the menu.components.ts and add in the Employees menu..
+  menus: Menu[] = [
+    new Menu("Home", "/home"),
+    new Menu("Employees", "/empl/list"),
+    new Menu("About", "/about")
+  ];
+
+
+Start building the Employee List component
+    Open the ts and html files -> start with data first on the ts file.
+
+    inject employee service, so we can use it.
+      constructor(
+            private emplsvc: EmployeeService
+        ) { }
+
+    property to store the list/collection
+        empls: Employee[] = [];
+
+    ngOnInit is where it goes to pull the data, and want to put it in the property Employee[].
+
+                        ngOnInit(): void {
+                            this.emplsvc.list().subscribe({
+                            next: (res) => {
+                                console.debug("Employees:", res);  //Verbose in web console.
+                                this.empls = res //or res as Employee[];
+                            },
+                            error: (err) => {
+                                console.error(err);
+                            }
+                            });
+                        }
+in the web page console, click Verbose in default so it displays the debug info.
+
+First component to display, spend more time on how the HTML is going to look.
+    if you do it quick n dirty and later decide something else, you have lots of changes to make.
+    so, first one make sure it displays the way you want to save time later.
+
+    Components to have a header, all the same.  Make one header and put all the work in there.
+        heading needs menu, page title. styling and location should be the same.
+
+ Create a folder under app called >common.
+    then >ng g c common/head //to create the component for the header to display.
+    in head html put <header> <app-menu></app-menu> </header>
+
+    then in employee-list html, put in <app-head></app-head>
+    and in the head html you can put the page title.. 
+                <header>
+                    <app-menu></app-menu>
+                    <span id="page-title">Page Title</span>
+                </header>
+
+Since head is a child component to employee-list, we can pass the name into head.
+head component.ts -> add a property @Input() pageTitle: string = "No Title"; //default.
+    then in head html put in {{pageTitle}} inside of the tags to display the page titel.
+                <header>
+                    <app-menu></app-menu>
+                    <span id="page-title">{{ pageTitle }}</span>
+                </header>
+
+Employee list component.ts -> add property pageTitle
+                export class EmployeeListComponent implements OnInit {
+
+                pageTitle: string = "Employee List";
+                empls: Employee[] = [];
+
+Employeelist html we can then add this.. 
+                <div id="component">
+                    <app-head [pageTitle]="pageTitle"></app-head>
+                </div> 
+
+--> then in Employee list html under the app-head page title above we can put in 
+    <table class="table table-sm table-striped"> </table>
+        built out the table headings with <thead><tr><th>Id</th>
+
+
+--> in Employee Detail
+
+export class EmployeeDetailComponent implements OnInit {
+
+  pageTitle: string = "Employee Detail";
+  empl!: Employee;
+
+  constructor(
+    private emplsvc: EmployeeService,
+    private route: ActivatedRoute
+
+  ) { }
+
+   //Adding the private route: ActivatedRoute to pass the id through of the employee.
+   //Then empl: Employee; error says not initialized or in constructor.
+      so put an ! on it, since we are passing it in.
+
+Then add in the id, as let id = this.route.snapshot.params["id"].. like a dictionary.
+it reads the number and passes it through.  
+get that value off the url and put it in here.  
+But it will be a STRING and we want NUMBER.
+
+  ngOnInit(): void {
+    let id = +this.route.snapshot.params["id"];
+  }
+
+Add the rest for employee service like before
+                this.emplsvc.get(id).subscribe({
+                    next: (res) => {
+                        console.debug("Employee:", res);
+                        this.empl = res;
+                    },
+                    error: (err) => {
+                        console.error(err);
+                    }
+
+                });
+                }
+
+
+Then to the employee-detail html
+most of the employee list html with a few changes.
+
+Input is disabled, so cannot be overwritten
+
+        <div id="component">
+            <app-head [pageTitle]="pageTitle"></app-head>
+            <main id="main">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td><input [(ngModel)]="empl.id" type="number" disabled></td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td><input [(ngModel)]="empl.name" type="text" [disabled]="IsDetailPage"></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td><input [(ngModel)]="empl.email" type="text" [disabled]="IsDetailPage"></td>
+                        </tr>
+                        <tr>
+                            <th>Admin</th>
+                            <td><input [(ngModel)]="empl.admin" type="checkbox" [disabled]="IsDetailPage"></td>
+                        </tr>
+                        <tr>
+                            <th>Expenses Due</th>
+                            <td><input [(ngModel)]="empl.expensesDue" type="number" disabled></td>
+                        </tr>
+                        <tr>
+                            <th>Expenses Paid</th>
+                            <td><input [(ngModel)]="empl.expensesPaid" type="number" disabled></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </main>
+            
+            <app-foot></app-foot>
+        </div>
+
+TypeError shows for Id as the empl is undefined until the data comes back.
+we put empl!: Employee; in order to get around the error at first.
+
+Go to table data and add in *ngIf="empl", so it does not render the table data until the 
+data is there.  Once empl has data in it, then render it!
+    <table class="table tabe-sm" *ngIf="empl"> 
+Now no error!
+
+styles.css
+    to add style to all input tags and select
+                input, select {
+                    border-radius: 7px;
+                }
+
+    text like email you can go to html and put size="40" or 30.
+        <td><input [(ngModel)]="empl.email" type="text" [disabled]="IsDetailPage" size="30"></td>
+
+
+Employee-Create component .ts
+    created a save method. 
+    ----See the ERSNG folder/files for the full breakdown.
+
+Employee-Detail has the delete functionality
+    check the html and component.ts files
+    added a verify delete button to show up only when the first is clicked.
+
+
+PIPES
+
+    we used   <td>{{e.expensesDue|currency}}</td>
+        pipe to display numbers as currency.
+
+
+    generate pipes >bash shell
+        >ng g p common/bool-display
+
+        generates a bool-display.pipe.ts.
+
+    -Generates a template with pipe name and class with transform template.
+    -type over the template and put what you want
+        from  transform(value: unknown, .....args: unknown)
+        to   transform(aBool: boolean): unknown { return null; }
+
+        then we need a return type, which will be a string to show yes or no.
+        in order to return yes or no, we use Ternary statement in the return.
+
+          transform(aBool: boolean): string {
+            return aBool ? "Yes" : "No";
+            }
+
+    -might want your Pipe to different things, like different languages.
+        it can return English by default and French if selected.
+
+                transform(aBool: boolean, lang: string = "en"): string {
+                    if(lang === "fr") 
+                    return aBool ? "Oui" : "Non"
+                    else 
+                    return aBool ? "Yes" : "No";
+                }
+
+            if we put in {{admin|bool:"fr"}} -it then displays the if results.
+
+
+Searching
+
+    -create another Pipe.
+    >ng g p employee/employee-search
+
+--after the ngFor getting the collection of employees.  Going to take that collection and filter
+    the list.
+
+            <tbody>
+                <tr *ngFor="let e of empls | employeeSearch">
+                    <td>{{e.id}}</td>
+                    <td>{{e.name}}</td>
+
+we want the transform to have the Employee class of an array to return the entire list.
+the search: string = ""; this is empty so it will return them all if nothing is entered.
+        transform(empls: Employee[], search: string = ""): Employee[] {
+
+ -then we want a foreach loop to iterate through the collection. 
+    -set a variable to contain the array of employee that could be an empty array
+    if nothign is returned.
+
+                transform(empls: Employee[], search: string = ""): Employee[] {
+                    let selected: Employee[] = [];
+                    for(let e of empls) {
+                    if(e.name.includes(search)) {
+                        selected.push(e);
+                    }
+                    }
+                    return selected;
+                }
+
+
+-then updated so the search string does not have to be case sensative.
+adding in search.toLowerCase(); and if(e.name.toLowerCase().includes(search))
+
+
+    <main id="main">
+        <br><a routerLink="/empl/create">Create New</a> | 
+        <input [(ngModel)]="searchCriteria" placeholder="Employee Search">
+        <table class="table table-sm table-striped">
+
+            <tbody>
+                <tr *ngFor="let e of empls | employeeSearch:searchCriteria">
+                    <td>{{e.id}}</td>
+                    <td>{{e.name}}</td>
+
+--added property into the Employee-List component
+            pageTitle: string = "Employee List";
+            empls: Employee[] = [];
+            searchCriteria: string = "";
+
+
+--change search pipe to include the email as well.
+if statement expand with || e.email.toLowerCase().includes(search).
+
+Take off the border on the search bar
+-style.css
+.noborder {
+    border-width: 0;
+}
+
+--Need to take care of searching something that could be NULL.
+    add a check to make sure its not NULL before..
+    if(e.name.toLowerCase().includes(search) 
+      || (e.email !== null && e.email.toLowerCase().includes(search))) {
+        selected.push(e); } 
+
+
+Sort Pipe
+
+    -give the user a way to sort the data. Could do dropdown, but not the best.
+    -click on the heading on the list to sort by that column.
+        -by default sort by ascending order.
+        -click on name or email, to sort by ascending.
+        -click on it twice will flip to descending.
+    
+--created a sort pipe. ng g p common/sort.
+
+    transform(arr: any[], column: string = "", asc: boolean = true): any[] {
+
+        arr.sort() works for strings or numbers, but not objects. It wont know what to sort.
+        create a function and pass that into sort.
+        another issue with string sorting is "1", then "11", "12".. "19" "2" "20" "21"
+
+ const sortFN = (a: any, b: any) => {..} //both are arrays, a & b.
+ 
+ both are instance of employee[].
+
+ return usually either -1, 0, or 1.
+-take into account if its case sensative, users dont like it, so make them lowercase.
+ToLowerCase(); return either positive, negative, or zero. To determine which is greater.
+
+get the value of column.. 
+create 2 new variables to manipulate a or b.
+    let x = a[column]
+
+const sortFn = (a: any, b: any) => {
+      let x = typeof a[column] === "number" ? a[column] : a[column].toString().toLowerCase();
+
+//we are putting into var x, the typeof a var column 
+    //which ternary if == "number" then a[column] otherwise not a number a[column].toString(); and
+    //want to make sure not case sensative, so .toLowerCase();
+
+it would be var[email] if its number, put that into x.
+compare the two vars x & y together and if equal return 0.  if x > y return 1.
+
+    const sortFn = (a: any, b: any) => {
+      let x = typeof a[column] === "number" ? a[column] : a[column].toString().toLowerCase();
+      let y = typeof b[column] === "number" ? b[column] : b[column].toString().toLowerCase();
+      if(x === y) return 0;
+      return (x > y) ? 1 : -1;
+    }
+
+    return arr.sort(sortFn);
+  }
+
+//going to return arr.sort with the sortFn passed in. 
+//this doesnt handle if NULL.  
+added these in under const sortFn and before x & y variable.
+    const sortFn = (a: any, b: any): number => {
+      if(a[column] === null)
+        a[column] = "";
+      if(b[column] === null)
+        b[column] = "";
+
+
+search first and then sort the result.  You dont want to sort if no data is returned.
+
+      if(x === y) return 0;
+      if(asc)                   //to sort by asc or desc. switch the 1 or -1.
+        return (x > y) ? 1 : -1;
+      else
+        return (x > y) ? -1 : 1;
+    }
+
+    return arr.sort(sortFn);
+  }
+
+--changed Name to button-link.
+               <tr>
+                    <th>Id</th>
+                    <th><button (click)="sortBy('name')" class="btn btn-link">Name</button></th>
+
+pageTitle: string = "Employee List";
+  empls: Employee[] = [];
+  searchCriteria: string = "";
+  sortColumn: string = "id";
+  sortAsc: boolean = true;
+
+  constructor(
+    private emplsvc: EmployeeService
+  ) { }
+
+  sortBy(column: string): void {
+
+  }
+
+changed this to those new properties made of sortColumn and sortASC
+  <tr *ngFor="let e of empls | employeeSearch:searchCriteria | sort:sortColumn:sortAsc">
+
+Now the sortBy function.. if they are already sorting then flip it.
+  sortBy(column: string): void {
+    if(column === this.sortColumn) {
+      this.sortAsc = !this.sortAsc;
+      return;
+    }
+   this.sortColumn = column;
+    this.sortAsc = true;
+  }
+
+same for email..
+<th><button (click)="sortBy('email')" class="btn btn-link">Email</button></th>
+
+then maybe get an arrow that flips up or down.
+
+Can switch the names to last name, first name to sort by last name.
+We can use this to sort all of our lists.
+
+
+=============
+Another way to look at the sort function.
+
+[
+    {id: 1, name: "Joe", age: 32}
+    {id: 2, name: "Mary", age: 22}
+    {id: 3, name: "Bob", age: 52}
+    {id: 4, name: "Joyce", age: 42}
+    {id: 5, name: "Charlie", age: 62}
+]
+
+Someone says sort this data.  
+We would ask sort by what? And ascending or descending?
+
+we need a function that would handle sorting the columns
+
+The sort function takes 2 instances of the array.  A instance and B instance, 
+which is 2 rows and compares them
+
+      let x = typeof a[column] === "number" ? a[column] : a[column].toString().toLowerCase();
+      let y = typeof b[column] === "number" ? b[column] : b[column].toString().toLowerCase();
+
+this will take typeof a[name] === "number" NO. : change to string and lowercase.  So, "joe".
+then will take the next name in line and change to string and lowercase... so, "mary".
+
+Then it goes back to mary as a, and bob as b.  Then keeps cycling through the names.
+
+Described as starting from bottom up. 
+    Is Charlie < Joyce.. yes. move it up.
+    Is Charlie < Bob ... NO.
+        so now is Bob < Mary.. yes, move bob up.
+        is Bob < Joe.. yes, move bob up. Now its top.
+    Is Joyce < Charlie.. NO.
+        so is Charlie < Mary .. yes, move charlie up.
+        is Charlie < Joe.. yes, move charlie up.
+            already knows Charlie is > Bob or Bob is < Charlie, skips.
+Now we have Bob then Charlie at the top sorted.
+
+    Keep moving through all until they are all sorted and equate correctly.
+
