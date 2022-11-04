@@ -1211,7 +1211,7 @@ ON SETUP
 
 -first thing is to import into app module
     the FormsModule and HttpClient.
-            import { HttpClient } from '@angular/common/http';
+            import { HttpClientModule } from '@angular/common/http';
 
                 @NgModule({
                     declarations: [
@@ -1296,7 +1296,7 @@ a:hover {
 }
 
 ---->>>Could do the parent/child for the menu with menuitem.component instead<<<----
-
+            --search menuitem in here--
 
 Create folders for Employee, Expense, Expenselines, Items etc.
 
@@ -1801,4 +1801,165 @@ Described as starting from bottom up.
 Now we have Bob then Charlie at the top sorted.
 
     Keep moving through all until they are all sorted and equate correctly.
+
+=========
+
+dont embed the baseurl with the localhost string in the code.
+use an external file of Json.
+
+Make One Service that wont make calls to controllers, but we can pass around to 
+    all of the other services. ie.. employee, expense, expenseline, items.
+
+Calling it the System Service.  or ng g s common/system.  It creates system.service.test
+add in the baseurl to be used for all the services.  Cant have /employee or whatever, since 
+all will use it and add that on.
+
+                export class SystemService {
+
+                baseurl: string = "http://localhost:5432/api";
+
+
+inject into employee service 
+        constructor(
+            private sys: SystemService,
+            private http: HttpClient
+            ) { }
+
+
+baseurl: string = `${this.sys.baseurl}/employees`;
+  //using interpolated string adding in sys.baseurl and then /employees.
+    //now employeeservice this.baseurl is the entire localhost and /employees.
+
+
+login before accessing the app.
+
+employee: any = null;
+
+now inject system service into the employee login.
+
+add in our system service to the login function. If successful, we want to pass res 
+    to the system service employee.
+And add to make them null to start, so have to login.
+
+  login(): void {
+    this.sys.employee = null;
+    this.emplsvc.login(this.email, this.password).subscribe({
+      next: (res) => {
+        console.debug("Employee:", res);
+        this.sys.employee = res;
+        this.router.navigateByUrl("/empl/list");
+
+now back to system service to add a function to check for login.
+
+  constructor(
+    private router: Router
+  ) { }
+
+  chkLogin(): void {
+    if(this.employee === null) {
+      this.router.navigateByUrl("/empl/login");
+    }
+  }
+
+  If employee is logged in it will skip this and be fine.
+
+--add in constructor the 
+private sys: SystemService,
+
+
+--then put this.sys.chkLogin();
+
+ ngOnInit(): void {
+    this.sys.chkLogin();
+    this.emplsvc.list().subscribe({
+      next: (res) => {
+        console.debug("Employees:", res);
+        this.empls = res;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+
+
+Assets folder   
+    -> new file config.Json
+{
+    "baseurl": "http://localhost:5432/api"
+}
+
+Create new service.. app-init in main app area, so no folders in gitbash
+    -> create a function getSettings(): Promise<any> { 
+        return this.http.get("./assets/config.json").firstValueFrom
+        }
+
+    -add properties.. config: any;
+
+  getSettings(): Promise<any> {
+    return this.http.get("./assets/config.json").toPromise().then(
+      (data:any) => {
+        this.config = data;
+      }
+    )
+  }
+
+app.module.ts
+        export function startupServiceFactory(appInit: AppInitService): Function {
+        return () => appInit.getSettings();
+        }
+
+    -function to call to cause that getsettings to execute and read the data in the configuration.
+
+down to proviers area - add the following
+
+            providers: [
+                AppInitService, {
+                provide: APP_INITIALIZER,
+                useFactory: startupServiceFactory,
+                    deps: [AppInitService],
+                    multi: true
+                }
+            ],
+
+--in app init services inside of the getsettings we added under this.config = data;
+    console.log("Config:", this.config).
+    the first "Config:" is giving it a name to show in the console.
+
+--go to system service and inject the appinit service, and change the baseurl.
+
+  constructor(
+    private appInit: AppInitService,
+    private router: Router
+  ) { }
+
+  baseurl: string = this.appInit.config.baseurl;
+
+Now when you push things up to hosting website.
+You just go into the config.json and change the URL to talk to the controllers in the cloud.
+Our code is not dependant upon a particular URL and we removed it from our code. 
+Its now only in the config.json file.
+
+
+
+ng build --configuration production --base-href="./"
+
+its going to build and generate all the files. dist/ers-ng folder shows up with files in it.
+ --> it took all the code and html and generated the main js file.  Its a mess. lol.
+
+
+Create a folder on winhost and drop these things into a folder and it will work.
+    ->change the config.json url.
+
+  in the index.html it has all sytle refs and script scr, need all of those for it to run.
+  the js files, the css and index.    
+
+
+
+When you pull down the projects the node files will not be pushed up.
+Use the npm update and it will look for the ones used and re-download them.
+
+    >npm update.   ***************<-----------------
+
 

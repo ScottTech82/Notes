@@ -334,15 +334,6 @@ SCRUM
 --fade in and fade out a message on screen instead of the alert message.
 
 
-10/31 && 11/01
-Capstone    
-    Can create a Footer to show on everypage after <rounter-outlet></router-outlet>
-        that would say created by Josh Scott.. etc.
-    Or could have the login info of the user that logged in.
-
-ADD searching in Capstone.  Check Angular notes for searching and the ERSNG project.
-    Phone & email might be NULL.  Add a NULL check.
-
 
 
 
@@ -391,4 +382,195 @@ Git Bash > go to the folder with csproj.user file
 will open and run in windows cmd prompt.
 
 
+
+
+10/31 && 11/01
+Capstone    
+    Can create a Footer to show on everypage after <rounter-outlet></router-outlet>
+        that would say created by Josh Scott.. etc.
+    Or could have the login info of the user that logged in.
+
+ADD searching in Capstone.  Check Angular notes for searching and the ERSNG project.
+    Phone & email might be NULL.  Add a NULL check.
+
+Login is in a FORM and the FORM is centered on teh page.
+    input box in a form, you have to add 
+        name="something unique"
+
+on the MENU on far right is the username [sa] 
+    you can put the name and style so its on the right side of the MENU
+    login user stored in teh system service when you get logged in.
+
+User/Vendor have no foreign key.  So nothing too bad.
+Product has a foreign key to Vendor.
+    -->have to read in all foreign key values and put in drop down list
+    -->allow the user to select the vendor to put the foreign key into the product.
+
+Request List the other issue is the Lines link, after Detail | Edit | Lines.
+    --> you have a single request on top part and then all the request Lines
+    --> on the bottom table.  It looks like 2 tables on top of one another.
+
+    --> then after changing request lines.. editing or creating there is a link
+        under Actions that says Submit For Review.  Since its >$50 its set to REVIEW.
+
+    --> no request lines in the menu, they are worked off of the request with line link.
+
+If a reviewer you can click review the request and you cant change anything
+    but there is an Approve | Reject button links on bottom left.
+    Approve works
+    Reject pops in a reason | input box for typing in the reason then a submit button.
+
+
+
+Push up your work in Capstone every single day, so he can see where you are at with it.
+
+
+80/100 pts to be certified.
+
+
+dont embed the baseurl with the localhost string in the code.
+use an external file of Json.
+
+
+
+Make One Service that wont make calls to controllers, but we can pass around to 
+    all of the other services. ie.. employee, expense, expenseline, items.
+
+Calling it the System Service.  or ng g s common/system.  It creates system.service.test
+add in the baseurl to be used for all the services.  Cant have /employee or whatever, since 
+all will use it and add that on.
+
+                export class SystemService {
+
+                baseurl: string = "http://localhost:5432/api";
+
+
+inject into employee service 
+        constructor(
+            private sys: SystemService,
+            private http: HttpClient
+            ) { }
+
+
+baseurl: string = `${this.sys.baseurl}/employees`;
+  //using interpolated string adding in sys.baseurl and then /employees.
+    //now employeeservice this.baseurl is the entire localhost and /employees.
+
+
+login before accessing the app.
+
+employee: any = null;
+
+now inject system service into the employee login.
+
+add in our system service to the login function. If successful, we want to pass res 
+    to the system service employee.
+And add to make them null to start, so have to login.
+
+  login(): void {
+    this.sys.employee = null;
+    this.emplsvc.login(this.email, this.password).subscribe({
+      next: (res) => {
+        console.debug("Employee:", res);
+        this.sys.employee = res;
+        this.router.navigateByUrl("/empl/list");
+
+now back to system service to add a function to check for login.
+
+  constructor(
+    private router: Router
+  ) { }
+
+  chkLogin(): void {
+    if(this.employee === null) {
+      this.router.navigateByUrl("/empl/login");
+    }
+  }
+
+  If employee is logged in it will skip this and be fine.
+
+--add in constructor the 
+private sys: SystemService,
+
+
+--then put this.sys.chkLogin();
+
+ ngOnInit(): void {
+    this.sys.chkLogin();
+    this.emplsvc.list().subscribe({
+      next: (res) => {
+        console.debug("Employees:", res);
+        this.empls = res;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+
+
+Assets folder   
+    -> new file config.Json
+{
+    "baseurl": "http://localhost:5432/api"
+}
+
+Create new service.. app-init in main app area, so no folders in gitbash
+    -> create a function getSettings(): Promise<any> { 
+        return this.http.get("./assets/config.json").firstValueFrom
+        }
+
+    -add properties.. config: any;
+
+  getSettings(): Promise<any> {
+    return this.http.get("./assets/config.json").toPromise().then(
+      (data:any) => {
+        this.config = data;
+      }
+    )
+  }
+
+app.module.ts
+        export function startupServiceFactory(appInit: AppInitService): Function {
+        return () => appInit.getSettings();
+        }
+
+    -function to call to cause that getsettings to execute and read the data in the configuration.
+
+down to proviers area - add the following
+
+            providers: [
+                AppInitService, {
+                provide: APP_INITIALIZER,
+                useFactory: startupServiceFactory,
+                    deps: [AppInitService],
+                    multi: true
+                }
+            ],
+
+
+
+Capstone/Angular
+***Finished Product-List.***
+
+1. Can I disable the original Delete button once the Verify Delete button is showing?
+2. Not sure I like the Delete button for User or Vendor.  Move location?
+3. Work on the User Login
+4. Move the URL from SystemService to Config.JSON.
+5. Create the sorting feature for the tables by column header, asc & desc
+6. figure out the FK 
+
+* Drop down list in products and requests?
+
+
+
+
+DEMO day
+
+-Asked to either be part of a small team to do a demonstration of the Capstone PRS 
+-Or not doing the demo, you have a short presentation to do.
+
+reading notes, but want to get down to bullet point notes
+    --cant read off a sheet of paper.
 
