@@ -610,12 +610,9 @@ Capstone/Angular
 1. Done.
 
 
-
-
 Other things to do..
-1. Can I disable the original Delete button once the Verify Delete button is showing?
-2. Create the sorting feature for the tables by column header, asc & desc
-3. Create search feature.
+1. Add PO
+2. Can I disable the original Delete button once the Verify Delete button is showing?
 
 
 
@@ -775,6 +772,3 @@ Pick a project to talk about.
     fly, so less are automtically approved.
 
 
-vendor name in products
-add code so only admins can add change or delete, users vendors or products.
-    edit and create 

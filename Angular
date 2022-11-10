@@ -1595,7 +1595,7 @@ Searching
                 <tr *ngFor="let e of empls | employeeSearch">
                     <td>{{e.id}}</td>
                     <td>{{e.name}}</td>
-
+to New PIPE created:
 we want the transform to have the Employee class of an array to return the entire list.
 the search: string = ""; this is empty so it will return them all if nothing is entered.
         transform(empls: Employee[], search: string = ""): Employee[] {
@@ -1618,7 +1618,7 @@ the search: string = ""; this is empty so it will return them all if nothing is 
 -then updated so the search string does not have to be case sensative.
 adding in search.toLowerCase(); and if(e.name.toLowerCase().includes(search))
 
-
+back to HTML
     <main id="main">
         <br><a routerLink="/empl/create">Create New</a> | 
         <input [(ngModel)]="searchCriteria" placeholder="Employee Search">
@@ -1721,6 +1721,7 @@ search first and then sort the result.  You dont want to sort if no data is retu
     return arr.sort(sortFn);
   }
 
+In the HTML
 --changed Name to button-link.
                <tr>
                     <th>Id</th>
