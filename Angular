@@ -1963,3 +1963,44 @@ Use the npm update and it will look for the ones used and re-download them.
     >npm update.   ***************<-----------------
 
 
+
+
+
+
+
+
+
+
+
+Requestlines
+    -2 things you will do and remain in the component, not navigate to list.
+        inside class is method;  "submit for review"
+        you dont want to navigate away, you want to see the status update.
+        second is delete request line, you want to stay on the request and see the 
+        line deleted is gone.
+
+        -re-read the request and store it in the page.
+        -You cannot navigate into the same page again. But need to refresh.
+
+            request: Request; //read by pk in OnInit store in request.
+
+            submitForReview(): void {
+                update request;
+                call refresh();
+            }
+
+            deleteRequestline(): void {
+                delete requestline;
+                call refresh();
+            }
+
+            refresh(): void {
+                instead of ngOnInit, we are reading by request PK and storing here, 
+                then calling this in OnInit.
+            }
+
+            ngOnInit(): void {
+                this.refresh();
+                //read a single request by pk and store in request above.
+            }
+

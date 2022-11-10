@@ -517,9 +517,7 @@ Assets folder
 }
 
 Create new service.. app-init in main app area, so no folders in gitbash
-    -> create a function getSettings(): Promise<any> { 
-        return this.http.get("./assets/config.json").firstValueFrom
-        }
+    -> create a function getSettings(): Promise<any> see below.
 
     -add properties.. config: any;
 
@@ -538,7 +536,7 @@ app.module.ts
 
     -function to call to cause that getsettings to execute and read the data in the configuration.
 
-down to proviers area - add the following
+down to providers area - add the following
 
             providers: [
                 AppInitService, {
@@ -549,21 +547,153 @@ down to proviers area - add the following
                 }
             ],
 
+Angular Review;
+-know the purpose and use of the app.module.ts and app-routing.module.ts
+    app module;   app-routing provides the routes & paths for all the components.
+    -Every object used in the application must be known to the app module.
+    -Modules are similar to:
+        an EXE or DLL in .NET
+        a JAR in Java
+
+-know what is required to add components to app.module.ts
+    --if manually adding them, import and declarations key.
+
+-know proper way to generate components.
+    --ng g c in folder and inject the service into the component, through constructor.
+-know the unique features of services and why they are used to make calls to back-end.
+    --services are shared. multiple components can use them.  Comps dont use other comps.
+-know the decorator names of the component, service, and properties
+    --@ sign and app-user-list. Pipe is pipe and services is Injectable.
+    --app component decorator has selectors like app-root. Or app-user-list.
+    --service decorator is @Injectable({ providedIn: 'root' })
+    --@Component({ JSON data })
+    --never add a semi colon!!!
+
+-know the directives *ngIf, *ngFor, *ngSwitch, one-way binding, two-way binding 
+and how to use each one.  (not much of switch)
+    --ngIf is for restricting access, like an Admin. *ngIf="IsAdmin === true"
+        control whether or not something shows up.
+    --ngFor iterates through a collection or array.
+    --one-way binding is {{user.username}} and cannot be changed by the user interaction.
+    --two-way binding is [(ngModel)] and allows user to interact & change values.
+
+-know the purpose and the use of pipes
+    --sorting and searching.  Use for currency too. Or bools.
+    --{{p.price|currency}}
+
+-know how to define a route in the app-routing.module.ts
+    --no slash in app-routing {path: "user/list", component: UserListComponent} 
+    --import component name.. if it doesnt auto import.
+
+-Know the main purpose of the constructor in components
+    --inject services. Not to initialize data.
+    --ie. private sys: SystemService, private usersvc: UserService, etc.
+
+-Know how a component gets access to a service
+    --we inject them into the constructor.
+    --same as the above.
+
+-Know the syntax and differences of one-way and two-way binding.
+    form control with input boxes, select lists, and so on. 
+    two-way is built for user to interact with.
+    one-way is not for user to interact with.
+
+
+
+
+
+
 
 
 Capstone/Angular
-***Finished Product-List.***
 
+1. Done.
+
+
+
+
+Other things to do..
 1. Can I disable the original Delete button once the Verify Delete button is showing?
-2. Not sure I like the Delete button for User or Vendor.  Move location?
-3. Work on the User Login
-4. Move the URL from SystemService to Config.JSON.
-5. Create the sorting feature for the tables by column header, asc & desc
-6. figure out the FK 
-
-* Drop down list in products and requests?
+2. Create the sorting feature for the tables by column header, asc & desc
+3. Create search feature.
 
 
+
+**FK -remember when do the HTML for the FK its dropdown type select.
+    select statement you only need ngModel, point to vendorId of the product.
+        then options ngFor, loop thru vendors. value points to v.id.
+        --might have to do value="{{v.id}}" ??
+        --I did [ngValue]="v.id"
+
+Foreign Key =product
+    in HTML have a select list to show the user the vendors.
+        <select> tag ngModel points to product.vendor.id.
+        <option> tag have ngFor loops through collection of vendors.
+            that read in the ngOnInit. Then needed [ngValue]="vendor.id"
+
+    Vendor instance in the product.  When we read the product we can see the 
+        entire instance.  Backend we used .include.
+        -that vendor instance you only want to read it and not pass it in.
+
+    Request 
+        Really important to make sure you have an import statement for the 
+        request class in all components.
+            -manually put it in.
+
+Requestlines
+    -2 things you will do and remain in the component, not navigate to list.
+        inside class is method;  "submit for review"
+        you dont want to navigate away, you want to see the status update.
+        second is delete request line, you want to stay on the request and see the 
+        line deleted is gone.
+
+        -re-read the request and store it in the page.
+        -You cannot navigate into the same page again. But need to refresh.
+
+            request: Request; //read by pk in OnInit store in request.
+
+            submitForReview(): void {
+                update request;
+                call refresh();
+            }
+
+            deleteRequestline(): void {
+                delete requestline;
+                call refresh();
+            }
+
+            refresh(): void {
+                instead of ngOnInit, we are reading by request PK and storing here, 
+                then calling this in OnInit.
+            }
+
+            ngOnInit(): void {
+                this.refresh();
+                //read a single request by pk and store in request above.
+            }
+
+
+
+review to get all reviews not owned.  
+    -reject needs a text box to complete and has to show up on the request.
+    -
+
+
+
+Cap Cert process
+-He will watch what is on our screen and he will go show me this and that.
+-Dont care what data is in there.
+    -check out login, fail & successful
+    -list component.  create, edit, show details an delete.
+    -request: go into, show normal functions. Create a new one, modify..
+        create a new requestline.  \
+    -set request to review status.
+    -have a reviewer that can set things to approve or reject.
+
+duchess@theagency.com | Duchess | Train@MAX  (admin & reviewer)
+bob@loblaw.com | Bobloblaw | bll1
+atest@b.com | SysReviewer | xxx   (reviewer only)
+test@a.com | Test1 | 123 (neither)
 
 
 DEMO day
@@ -574,3 +704,77 @@ DEMO day
 reading notes, but want to get down to bullet point notes
     --cant read off a sheet of paper.
 
+Pick a project to talk about.
+90 seconds long
+    -not really a powerpoint but can use images only
+    -no text since they feel like you are covering all text showing
+    -5 bullet points = major topics you want to talk about.
+        --break down to sub bullet points.
+
+--3 to 5 bulleted topics to talk about.
+
+    I wanted to talk about our PRS or Purchase Request System we built.
+
+    *User authentication and authorization to review
+        --users are able to log in and create a new purchase request which 
+        will auto populate their username on the request and submit it for review.
+        They can view the status of their requests.
+        
+        --building the system service which stores the logged in user
+        and is then checked for authorization access to certain data.
+
+    *Request reviewed by reviewers and not each user
+        --request data is not accessable to every user.  They have to have a specific 
+        reviewer status that is checked prior to displaying the data.
+
+    *Automated business rules.
+        --setting up automated rules for individual business needs. 
+        for example we have setup where requests less than or equal to $50 
+        will automatically be marked to approved.  As opposed to needing a 
+        reviewer logged in to review the requests.
+
+        --rules enforced automatically
+
+    *Future Purchase Order generation for vendor
+
+
+
+**regular people not technical, keep simple**
+    **raise voice, or put emphasis on something.**
+    
+      --definitely not forced to talk to you about
+    I wanted to talk about our PRS or Purchase Request System we built and some
+    of the features we implemented.  It was really fun to build and this might be 
+    boring for you, so i'll try to be brief.
+
+    ---Users are required to login prior to accessing the system and can be setup 
+    to have different roles like a Reviewer, an Admin, or just regular users. This
+    can be customized based on business needs. 
+
+    ---all users can create purchase requests under their login / username. 
+    And see their requests or make changes if the need arises.
+
+    ---Only certain users, like a manager for example, have access to 
+    approve or reject these requests.  The status for the logged in user 
+    is checked prior to displaying the data. So only those who are authorized
+    have specific accesses.
+
+    ---One of the cooler features we did was
+     automated business rules that can be setup for individual business needs.
+    For example we setup where requests less than or equal to $50 will 
+    automatically be marked as Approved; rather than getting everyone involved 
+    for the smaller requests and freeing up business resources.
+
+    ---These automated rules can be scaled if the business decides they want more or less. 
+    It's done automatically so business rules themselves do not need to be changed. 
+    And people do not have to be re-trained. Its automatically implemented and who 
+    doesn't like that!
+       
+        <could add>
+    If company wants to tighten up financially the rules can be scaled or changed on the 
+    fly, so less are automtically approved.
+
+
+vendor name in products
+add code so only admins can add change or delete, users vendors or products.
+    edit and create 
