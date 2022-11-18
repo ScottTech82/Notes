@@ -614,6 +614,8 @@ Other things to do..
 1. Add PO
 2. Can I disable the original Delete button once the Verify Delete button is showing?
 
+Unable to sort by vendor name in Products and username in Requests.
+    vendor_name?
 
 
 **FK -remember when do the HTML for the FK its dropdown type select.
@@ -687,11 +689,6 @@ Cap Cert process
     -set request to review status.
     -have a reviewer that can set things to approve or reject.
 
-duchess@theagency.com | Duchess | Train@MAX  (admin & reviewer)
-bob@loblaw.com | Bobloblaw | bll1
-atest@b.com | SysReviewer | xxx   (reviewer only)
-test@a.com | Test1 | 123 (neither)
-
 
 DEMO day
 
@@ -740,7 +737,7 @@ Pick a project to talk about.
     **raise voice, or put emphasis on something.**
     
       --definitely not forced to talk to you about
-    I wanted to talk about our PRS or Purchase Request System we built and some
+    I wanted to talk about the Purchase Request System we built and some
     of the features we implemented.  It was really fun to build and this might be 
     boring for you, so i'll try to be brief.
 
@@ -748,12 +745,12 @@ Pick a project to talk about.
     to have different roles like a Reviewer, an Admin, or just regular users. This
     can be customized based on business needs. 
 
-    ---all users can create purchase requests under their login / username. 
+    ---all users can create purchase requests under their username. 
     And see their requests or make changes if the need arises.
 
-    ---Only certain users, like a manager for example, have access to 
-    approve or reject these requests.  The status for the logged in user 
-    is checked prior to displaying the data. So only those who are authorized
+    But, only certain users, like a manager for example, have access to 
+    approve or reject these requests.  **The status for the logged in user 
+    is checked prior to displaying the data.** So only those who are authorized
     have specific accesses.
 
     ---One of the cooler features we did was
@@ -763,6 +760,7 @@ Pick a project to talk about.
     for the smaller requests and freeing up business resources.
 
     ---These automated rules can be scaled if the business decides they want more or less. 
+    We can change the code once instead of changing 
     It's done automatically so business rules themselves do not need to be changed. 
     And people do not have to be re-trained. Its automatically implemented and who 
     doesn't like that!
@@ -770,5 +768,81 @@ Pick a project to talk about.
         <could add>
     If company wants to tighten up financially the rules can be scaled or changed on the 
     fly, so less are automtically approved.
+
+
+
+
+review SQL & C#.  We will get questions.
+
+
+
+
+get, put, post, and patch.
+    http methods that our restful webservice used to get, create, chnage and delete data from the SQL table.
+
+Interface.  It is a contract (magical word) 
+    variable of type interface and a class that implments all methods of the interface.
+    we used the animals project.
+
+
+Bootstrap.  CSS Library.  class styles built into bootstrap.
+
+
+
+
+Time Spent for these.
+
+
+Job Search
+
+    How many days a week?  5
+    How many hours a day? 4 to 5
+
+    Checking Email. 
+        -will get blasted by recruiters.
+            I recently graduated from a bootcamp and do not have experience, is this going to match?
+            --send to them right off the bat.
+
+    Spending time on Indeed, LinkedIn, Dice.  (heard Monday morning at 10am, they get posted)
+
+    OH Means Jobs -see jobs posted there that are not posted anywhere else.
+
+    BeHearty get on there.
+
+        --maybe an hour each day looking for leads, but need to apply for jobs.
+
+Coding
+
+    time.. 5 days a week for sure.
+    2 - 4hours a day. 
+    Push something up each day!  Git Green.
+
+Change posted resumes.
+    ->each week change the already posted resumes. to refresh the system and stack order.
+    -> can have the same resume as 2 file names and cylce back and forth.
+
+
+Cincy Chamber used to be good, but now using Mason Chamber.
+
+Meetups.  Do some. lol.
+
+
+SCOUT   (used to be called Gaslight)
+    -they have apprenticeship with 2 per 1 SR. For 6 months.
+    -if we do this talk to Annette first though.
+
+
+
+On linkedin if you see that someone at MAX is a 2nd level connection.
+    reach out to them and see if you can connect with them directly.
+
+
+Send thank you's to everyone we meet at speed interviews.
+    
+
+
+
+
+
 
 

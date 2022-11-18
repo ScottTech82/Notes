@@ -30,10 +30,10 @@ Using windows IIS
         -if you only have one project, in process is fine.  But if you have multiple
         you need out of process or they will conflict.
 
-        may have to put on the .getconnectionstring, options => options.EnableRetryOnFailure());
+        may have to put on the .getconnectionstring, options => options.EnableRetryOnFailure()); --probably not was some other error for Greg.
 
 Put in RELEASE and package manager update-database.
-Then open up Azure connection to the winhost database, with SQL login
+Then open up Azure Data Studio -> connection to the winhost database, with SQL login
     winhost user name and password.
 
 in Postman we would do;
