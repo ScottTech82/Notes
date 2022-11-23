@@ -112,7 +112,7 @@ Might get a Test from Employer on this with 100 values and find each one startin
             //using substring to pull just a portion of the name, 0, 1 is first initial
             string ch = name.Substring(0, 1).ToUpper();
             if(!dictionary.ContainsKey(ch)) {  //saying if its not in dictionary, then add key.
-                dictionary.Add(ch, 0);         //this is adding the array sting names to the dictionary.
+                dictionary.Add(ch, 0);         //this is adding the array string names to the dictionary.
             } 
             dictionary[ch]++;  //increment that integer for the key.
         }
